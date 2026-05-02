@@ -472,6 +472,55 @@ function ProjectCard({ project, featured }: {
   );
 }
 
+/* ─── Ver Todos Button ─── */
+function VerTodosButton() {
+  const [hovered, setHovered] = useState(false);
+  return (
+    <div
+      data-testid="button-ver-todos"
+      onMouseEnter={() => setHovered(true)}
+      onMouseLeave={() => setHovered(false)}
+      style={{
+        marginTop: 32,
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "space-between",
+        padding: "14px 18px 14px 28px",
+        borderRadius: 999,
+        background: hovered ? "#BFD962" : "#C8E870",
+        cursor: "pointer",
+        transition: "background 0.25s ease",
+        userSelect: "none",
+      }}
+    >
+      <span style={{
+        fontFamily: "'DM Sans', sans-serif",
+        fontWeight: 500,
+        fontSize: 16,
+        color: "#2C2A1E",
+      }}>
+        Ver todos
+      </span>
+      <span style={{
+        width: 40,
+        height: 40,
+        borderRadius: "50%",
+        background: "#3D4A1E",
+        display: "inline-flex",
+        alignItems: "center",
+        justifyContent: "center",
+        flexShrink: 0,
+        transition: "transform 0.35s ease",
+        transform: hovered ? "rotate(0deg)" : "rotate(45deg)",
+      }}>
+        <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
+          <path d="M3.5 9H14.5M14.5 9L9.5 4M14.5 9L9.5 14" stroke="#C8E870" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/>
+        </svg>
+      </span>
+    </div>
+  );
+}
+
 /* ─── Beach SVG illustration ─── */
 function BeachScene() {
   return (
@@ -562,7 +611,6 @@ export default function Home() {
     { title: "SisPat", desc: "Sistema público de patrimônio imobiliário. Redesign completo com foco em acessibilidade e eficiência para servidores públicos.", tags: ["Redesign", "UX Research", "UX Design"], img: "https://picsum.photos/seed/sispatbig/1200/700" },
     { title: "SGTran", desc: "Sistema de gestão de transporte.", tags: ["Logística", "UX Design"], img: "https://picsum.photos/seed/sgtran/800/500" },
     { title: "MundoLingo App", desc: "App mobile de eventos e idiomas.", tags: ["Eventos", "Product Design", "Mobile App"], img: "https://picsum.photos/seed/mundolingo/800/500" },
-    { title: "Em breve", desc: "", tags: [], placeholder: true },
   ];
 
   const tools = [
@@ -769,21 +817,7 @@ export default function Home() {
             <ProjectCard key={p.title} project={p} />
           ))}
         </div>
-        <div style={{ marginTop: 40, textAlign: "center" }}>
-          <button
-            data-testid="button-ver-todos"
-            style={{
-              background: "#A8CC2C", color: "#2C2A1E",
-              border: "none", padding: "14px 36px", borderRadius: 999,
-              fontFamily: "'DM Sans', sans-serif", fontWeight: 700, fontSize: 15,
-              cursor: "none", transform: "rotate(-2deg)",
-              boxShadow: "0 4px 20px rgba(168,204,44,0.3)",
-              animation: "bounce-btn 2s ease-in-out infinite",
-            }}
-          >
-            Ver todos →
-          </button>
-        </div>
+        <VerTodosButton />
       </section>
 
       {/* ── SOBRE ── */}
