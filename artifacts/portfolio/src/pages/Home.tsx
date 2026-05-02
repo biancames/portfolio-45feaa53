@@ -650,9 +650,29 @@ export default function Home() {
         </div>
 
         {/* Scroll indicator */}
-        <div style={{ position: "absolute", bottom: 32, left: "50%", transform: "translateX(-50%)", display: "flex", flexDirection: "column", alignItems: "center", gap: 6, opacity: 0.4 }}>
-          <div style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 11, letterSpacing: "0.12em", textTransform: "uppercase" }}>scroll</div>
-          <div style={{ width: 1, height: 40, background: "hsl(var(--foreground))" }} />
+        <div style={{
+          position: "absolute", bottom: 32, left: "50%", transform: "translateX(-50%)",
+          display: "flex", flexDirection: "column", alignItems: "center", gap: 8,
+          opacity: scrolled ? 0 : 1,
+          pointerEvents: "none",
+          transition: "opacity 0.5s ease",
+        }}>
+          <div style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 10, letterSpacing: "0.18em", textTransform: "uppercase", opacity: 0.45 }}>scroll</div>
+          {/* Mouse shape */}
+          <div style={{
+            width: 22, height: 34, borderRadius: 11,
+            border: "1.5px solid hsl(var(--foreground))",
+            opacity: 0.45,
+            position: "relative",
+            display: "flex", justifyContent: "center",
+          }}>
+            <div style={{
+              width: 3, height: 7, borderRadius: 2,
+              background: "hsl(var(--foreground))",
+              marginTop: 5,
+              animation: "scrollDot 1.6s ease-in-out infinite",
+            }} />
+          </div>
         </div>
       </section>
 
@@ -859,6 +879,12 @@ export default function Home() {
         @keyframes pulse {
           0%, 100% { opacity: 1; }
           50% { opacity: 0.4; }
+        }
+        @keyframes scrollDot {
+          0% { transform: translateY(0); opacity: 1; }
+          60% { transform: translateY(12px); opacity: 0; }
+          61% { transform: translateY(0); opacity: 0; }
+          100% { transform: translateY(0); opacity: 1; }
         }
         @media (max-width: 768px) {
           nav { padding: 12px 20px !important; }
