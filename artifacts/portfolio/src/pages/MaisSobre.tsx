@@ -193,27 +193,27 @@ export default function MaisSobre() {
 
         {/* ── POSTCARD ── */}
         <section style={{ padding: "0 40px 100px", background: "hsl(var(--muted)/0.25)" }}>
-          <div style={{ maxWidth: 1000, margin: "0 auto", position: "relative", paddingTop: 80 }}>
+          <div style={{ maxWidth: 1000, margin: "0 auto", position: "relative", paddingTop: 64 }}>
 
-            {/* Floating illustrations — above the photo (left 44% of the card) */}
-            <div style={{ position: "absolute", top: -16, left: 0, width: "46%", height: 100, pointerEvents: "none", zIndex: 10 }}>
+            {/* Illustrations overlaid on top of the postcard photo area */}
+            <div style={{ position: "absolute", top: 64, left: 0, width: "44%", height: 200, pointerEvents: "none", zIndex: 20 }}>
               <img src={cafeteiraIllustra} alt="" draggable={false}
-                style={{ position: "absolute", top: -8, left: "8%", height: 80, width: "auto",
+                style={{ position: "absolute", top: 16, left: "4%", height: 88, width: "auto",
                   transform: "rotate(-8deg)", animation: "msFloatA 3.4s ease-in-out infinite" }} />
-              <img src={caipiriIllustra} alt="" draggable={false}
-                style={{ position: "absolute", top: 4, left: "36%", height: 76, width: "auto",
-                  transform: "rotate(5deg)", animation: "msFloatB 3.1s ease-in-out infinite 0.7s" }} />
-              <img src={passportIllustra} alt="" draggable={false}
-                style={{ position: "absolute", top: -12, left: "62%", height: 96, width: "auto",
-                  transform: "rotate(-6deg)", animation: "msFloatA 3.6s ease-in-out infinite 1s" }} />
-              <img src={librosIllustra} alt="" draggable={false}
-                style={{ position: "absolute", top: 8, left: "80%", height: 72, width: "auto",
-                  transform: "rotate(8deg)", animation: "msFloatB 2.9s ease-in-out infinite 0.3s" }} />
               <img src={pcIllustra} alt="" draggable={false}
-                style={{ position: "absolute", top: 0, left: "24%", height: 68, width: "auto",
-                  transform: "rotate(4deg)", animation: "msFloatA 2.7s ease-in-out infinite 0.5s" }} />
-              <span style={{ position: "absolute", top: -4, left: "52%", fontSize: 16, color: "#A8CC2C", animation: "msFloatB 3s ease-in-out infinite" }}>✦</span>
-              <span style={{ position: "absolute", top: 20, left: "18%", fontSize: 12, color: "#3D4A1E", animation: "msFloatA 2.8s ease-in-out infinite 0.6s" }}>✧</span>
+                style={{ position: "absolute", top: 60, left: "26%", height: 72, width: "auto",
+                  transform: "rotate(5deg)", animation: "msFloatB 2.7s ease-in-out infinite 0.5s" }} />
+              <img src={caipiriIllustra} alt="" draggable={false}
+                style={{ position: "absolute", top: 8, left: "48%", height: 80, width: "auto",
+                  transform: "rotate(-5deg)", animation: "msFloatA 3.1s ease-in-out infinite 0.7s" }} />
+              <img src={passportIllustra} alt="" draggable={false}
+                style={{ position: "absolute", top: 44, left: "68%", height: 100, width: "auto",
+                  transform: "rotate(8deg)", animation: "msFloatB 3.6s ease-in-out infinite 1s" }} />
+              <img src={librosIllustra} alt="" draggable={false}
+                style={{ position: "absolute", top: 12, left: "82%", height: 76, width: "auto",
+                  transform: "rotate(-6deg)", animation: "msFloatA 2.9s ease-in-out infinite 0.3s" }} />
+              <span style={{ position: "absolute", top: 8, left: "38%", fontSize: 16, color: "#A8CC2C", animation: "msFloatB 3s ease-in-out infinite" }}>✦</span>
+              <span style={{ position: "absolute", top: 80, left: "14%", fontSize: 12, color: "#C8E870", animation: "msFloatA 2.8s ease-in-out infinite 0.6s" }}>✧</span>
             </div>
 
             <PostcardSection hideCta noFlip />
