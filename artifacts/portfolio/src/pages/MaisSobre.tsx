@@ -168,7 +168,7 @@ export default function MaisSobre() {
               <div style={{ width: 48, height: 4, background: "#A8CC2C", marginTop: 8, borderRadius: 4 }} />
             </div>
 
-            <div style={{ borderTop: "1.5px solid hsl(var(--border))" }}>
+            <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(284px, 1fr))", gap: 24 }}>
               {[
                 { role: "Product Designer", company: "Empresa atual", period: "2024 — presente", desc: "Descrição breve do trabalho, impactos e contexto.", current: true },
                 { role: "UX/UI Designer", company: "Empresa anterior", period: "2022 — 2024", desc: "Descrição breve do trabalho, impactos e contexto.", current: false },
@@ -176,70 +176,78 @@ export default function MaisSobre() {
               ].map((exp, i) => (
                 <div
                   key={i}
-                  className="exp-row"
                   style={{
-                    display: "grid",
-                    gridTemplateColumns: "160px 1fr",
-                    gap: "0 48px",
-                    padding: "32px 0",
-                    borderBottom: "1px solid hsl(var(--border))",
-                    transition: "background 0.25s ease",
-                    borderLeft: `4px solid ${exp.current ? "#A8CC2C" : "transparent"}`,
-                    paddingLeft: exp.current ? 20 : 4,
+                    borderRadius: 16,
+                    overflow: "hidden",
+                    border: "1px solid hsl(var(--border))",
+                    boxShadow: exp.current
+                      ? "0 8px 32px rgba(61,74,30,0.14)"
+                      : "0 4px 16px rgba(61,74,30,0.07)",
+                    transform: `rotate(${[-0.6, 0.5, -0.4][i]}deg)`,
+                    transition: "transform 0.3s ease, box-shadow 0.3s ease",
                   }}
-                  onMouseEnter={(e) => { (e.currentTarget as HTMLDivElement).style.background = "rgba(168,204,44,0.04)"; }}
-                  onMouseLeave={(e) => { (e.currentTarget as HTMLDivElement).style.background = "transparent"; }}
+                  onMouseEnter={(e) => {
+                    (e.currentTarget as HTMLDivElement).style.transform = "rotate(0deg) translateY(-4px)";
+                    (e.currentTarget as HTMLDivElement).style.boxShadow = "0 16px 40px rgba(61,74,30,0.16)";
+                  }}
+                  onMouseLeave={(e) => {
+                    (e.currentTarget as HTMLDivElement).style.transform = `rotate(${[-0.6, 0.5, -0.4][i]}deg)`;
+                    (e.currentTarget as HTMLDivElement).style.boxShadow = exp.current
+                      ? "0 8px 32px rgba(61,74,30,0.14)"
+                      : "0 4px 16px rgba(61,74,30,0.07)";
+                  }}
                 >
-                  {/* left: period */}
-                  <div style={{ paddingTop: 4 }}>
-                    <div style={{
-                      fontFamily: "'DM Mono', monospace",
-                      fontSize: 11,
-                      letterSpacing: "0.1em",
-                      color: exp.current ? "#A8CC2C" : "hsl(var(--muted-foreground))",
-                      lineHeight: 1.5,
-                      whiteSpace: "pre-line",
-                    }}>
-                      {exp.period.replace(" — ", "\n—\n")}
-                    </div>
-                    {exp.current && (
+                  {/* ── header block (olive) ── */}
+                  <div style={{
+                    background: exp.current ? "#3D4A1E" : "#4A5E28",
+                    padding: "20px 24px",
+                  }}>
+                    <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 8 }}>
                       <div style={{
-                        display: "inline-block",
-                        marginTop: 10,
                         fontFamily: "'DM Mono', monospace",
-                        fontSize: 9,
-                        letterSpacing: "0.16em",
+                        fontSize: 10,
+                        letterSpacing: "0.14em",
                         textTransform: "uppercase",
                         color: "#A8CC2C",
-                        background: "rgba(168,204,44,0.14)",
-                        padding: "3px 8px",
-                        borderRadius: 2,
-                      }}>agora</div>
-                    )}
+                      }}>
+                        {exp.period}
+                      </div>
+                      {exp.current && (
+                        <div style={{
+                          fontFamily: "'DM Mono', monospace",
+                          fontSize: 9,
+                          letterSpacing: "0.16em",
+                          textTransform: "uppercase",
+                          color: "#3D4A1E",
+                          background: "#A8CC2C",
+                          padding: "3px 8px",
+                          borderRadius: 2,
+                        }}>agora</div>
+                      )}
+                    </div>
+                    <div style={{
+                      fontFamily: "'DM Sans', sans-serif",
+                      fontSize: 15,
+                      fontWeight: 600,
+                      color: "#F5F0E8",
+                      letterSpacing: "0.01em",
+                    }}>
+                      {exp.company}
+                    </div>
                   </div>
 
-                  {/* right: content */}
-                  <div>
-                    <div style={{ display: "flex", alignItems: "baseline", gap: 12, flexWrap: "wrap", marginBottom: 8 }}>
-                      <div style={{
-                        fontFamily: "'Libre Baskerville', serif",
-                        fontStyle: "italic",
-                        fontSize: "clamp(1.1rem,2.5vw,1.4rem)",
-                        fontWeight: 700,
-                        color: "hsl(var(--foreground))",
-                        lineHeight: 1.2,
-                      }}>
-                        {exp.role}
-                      </div>
-                      <div style={{
-                        fontFamily: "'DM Sans', sans-serif",
-                        fontSize: 13,
-                        fontWeight: 500,
-                        color: "hsl(var(--muted-foreground))",
-                        letterSpacing: "0.02em",
-                      }}>
-                        @ {exp.company}
-                      </div>
+                  {/* ── body ── */}
+                  <div style={{ background: "hsl(var(--card))", padding: "20px 24px 24px" }}>
+                    <div style={{
+                      fontFamily: "'Libre Baskerville', serif",
+                      fontStyle: "italic",
+                      fontSize: "clamp(1.1rem, 2vw, 1.25rem)",
+                      fontWeight: 700,
+                      color: "hsl(var(--foreground))",
+                      lineHeight: 1.25,
+                      marginBottom: 12,
+                    }}>
+                      {exp.role}
                     </div>
                     <p style={{
                       fontFamily: "'DM Sans', sans-serif",
@@ -248,7 +256,6 @@ export default function MaisSobre() {
                       color: "hsl(var(--foreground))",
                       opacity: 0.6,
                       margin: 0,
-                      maxWidth: 520,
                     }}>
                       {exp.desc}
                     </p>
