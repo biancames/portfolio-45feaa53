@@ -8,6 +8,7 @@ import pcIllustra from "@assets/ilustraPC_1777742604142.png";
 import affinityIcon from "@assets/affinity_1777749697475.png";
 import lovableIcon from "@assets/lovable_1777749697475.png";
 import claudeIcon from "@assets/claude_1777749697475.png";
+import beachIllus from "@assets/Out_of_office_1777750379836.jpeg";
 
 function useDragBack(
   ref: React.RefObject<HTMLElement | null>,
@@ -525,52 +526,34 @@ function VerTodosButton() {
   );
 }
 
-/* ─── Beach SVG illustration ─── */
-function BeachScene() {
-  return (
-    <svg width="280" height="200" viewBox="0 0 280 200" fill="none" xmlns="http://www.w3.org/2000/svg" style={{ flexShrink: 0 }}>
-      <ellipse cx="45" cy="32" rx="28" ry="28" stroke="#D4713A" strokeWidth="2" fill="#D4713A" fillOpacity="0.18"/>
-      <line x1="45" y1="0" x2="45" y2="8" stroke="#D4713A" strokeWidth="1.5"/>
-      <line x1="45" y1="56" x2="45" y2="64" stroke="#D4713A" strokeWidth="1.5"/>
-      <line x1="13" y1="32" x2="5" y2="32" stroke="#D4713A" strokeWidth="1.5"/>
-      <line x1="77" y1="32" x2="85" y2="32" stroke="#D4713A" strokeWidth="1.5"/>
-      <line x1="21" y1="8" x2="15" y2="2" stroke="#D4713A" strokeWidth="1.5"/>
-      <line x1="69" y1="8" x2="75" y2="2" stroke="#D4713A" strokeWidth="1.5"/>
-      <line x1="21" y1="56" x2="15" y2="62" stroke="#D4713A" strokeWidth="1.5"/>
-      <line x1="69" y1="56" x2="75" y2="62" stroke="#D4713A" strokeWidth="1.5"/>
-      <rect x="100" y="130" width="140" height="60" rx="6" stroke="#3D4A1E" strokeWidth="2" fill="none"/>
-      {[0,1,2,3,4,5,6,7].map(i => (
-        <line key={i} x1={100} y1={130 + i*8 + 4} x2={240} y2={130 + i*8 + 4} stroke="#3D4A1E" strokeWidth={i%2===0 ? 3 : 0} strokeOpacity="0.5"/>
-      ))}
-      {[0,1,2,3,4,5,6].map(i => (
-        <rect key={i} x={104 + i*20} y={130} width={16} height={60} fill={i%2===0 ? "#3D4A1E" : "transparent"} fillOpacity="0.12"/>
-      ))}
-      <line x1="170" y1="60" x2="170" y2="130" stroke="#3D4A1E" strokeWidth="2.5" strokeLinecap="round"/>
-      <path d="M170 60 Q120 70 110 100 Q150 90 170 85" stroke="#3D4A1E" strokeWidth="2" fill="#3D4A1E" fillOpacity="0.15"/>
-      <path d="M170 60 Q220 68 230 95 Q190 88 170 85" stroke="#3D4A1E" strokeWidth="2" fill="#3D4A1E" fillOpacity="0.15"/>
-      <path d="M108 100 Q115 108 122 103" stroke="#3D4A1E" strokeWidth="1.5" fill="none"/>
-      <path d="M228 95 Q224 104 218 100" stroke="#3D4A1E" strokeWidth="1.5" fill="none"/>
-      <ellipse cx="65" cy="176" rx="12" ry="5" stroke="#3D4A1E" strokeWidth="1.5" transform="rotate(-20 65 176)"/>
-      <ellipse cx="65" cy="176" rx="5" ry="3" fill="#D4713A" fillOpacity="0.3" stroke="#D4713A" strokeWidth="1" transform="rotate(-20 65 176)"/>
-      <ellipse cx="82" cy="180" rx="12" ry="5" stroke="#3D4A1E" strokeWidth="1.5" transform="rotate(15 82 180)"/>
-      <ellipse cx="82" cy="180" rx="5" ry="3" fill="#D4713A" fillOpacity="0.3" stroke="#D4713A" strokeWidth="1" transform="rotate(15 82 180)"/>
-      <rect x="245" y="155" width="14" height="28" rx="4" stroke="#3D4A1E" strokeWidth="1.5"/>
-      <ellipse cx="252" cy="155" rx="7" ry="4" stroke="#A8CC2C" strokeWidth="1.5"/>
-      <line x1="252" y1="151" x2="252" y2="148" stroke="#3D4A1E" strokeWidth="1.5" strokeLinecap="round"/>
-      <path d="M100 195 Q170 185 280 192" stroke="#3D4A1E" strokeWidth="1.5" strokeLinecap="round" opacity="0.3"/>
-    </svg>
-  );
-}
+/* ─── Footer Name (appear on scroll) ─── */
+function FooterName() {
+  const ref = useRef<HTMLDivElement>(null);
+  const [visible, setVisible] = useState(false);
 
-/* ─── Marquee ─── */
-function Marquee({ text }: { text: string }) {
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    const obs = new IntersectionObserver(([e]) => { if (e.isIntersecting) setVisible(true); }, { threshold: 0.3 });
+    obs.observe(el);
+    return () => obs.disconnect();
+  }, []);
+
+  const base: React.CSSProperties = {
+    fontFamily: "'Libre Baskerville', serif",
+    fontSize: "clamp(4rem,11vw,10rem)",
+    fontWeight: 700,
+    color: "hsl(var(--foreground))",
+    opacity: visible ? 0.08 : 0,
+    lineHeight: 0.95,
+    display: "block",
+    transition: "opacity 0.8s ease, transform 0.8s ease",
+    whiteSpace: "nowrap",
+  };
+
   return (
-    <div style={{ overflow: "hidden", position: "relative" }}>
+    <div ref={ref} style={{ paddingBottom: 8 }}>
       <style>{`
-        @keyframes marquee {
-          from { transform: translateX(0); }
-          to { transform: translateX(-50%); }
-        }
         @keyframes float {
           0%, 100% { transform: translateY(0px); }
           50% { transform: translateY(-6px); }
@@ -583,20 +566,16 @@ function Marquee({ text }: { text: string }) {
           0%, 100% { transform: translateY(0px); }
           50% { transform: translateY(6px); }
         }
-        @keyframes bounce-btn {
-          0%, 100% { transform: rotate(-2deg) translateY(0); }
-          50% { transform: rotate(-2deg) translateY(-4px); }
-        }
         .project-card:hover .card-overlay { opacity: 1 !important; }
-        @keyframes stagger-in {
-          from { opacity: 0; transform: translateY(20px); }
-          to { opacity: 1; transform: translateY(0); }
-        }
       `}</style>
-      <div style={{ display: "inline-flex", animation: "marquee 18s linear infinite", whiteSpace: "nowrap" }}>
-        <span style={{ fontFamily: "'Libre Baskerville', serif", fontStyle: "italic", fontSize: "clamp(4rem,11vw,10rem)", fontWeight: 700, color: "hsl(var(--foreground))", opacity: 0.08, paddingRight: "4rem" }}>{text} &nbsp; {text} &nbsp;</span>
-        <span style={{ fontFamily: "'Libre Baskerville', serif", fontStyle: "italic", fontSize: "clamp(4rem,11vw,10rem)", fontWeight: 700, color: "hsl(var(--foreground))", opacity: 0.08, paddingRight: "4rem" }}>{text} &nbsp; {text} &nbsp;</span>
-      </div>
+      {/* Line 1: Bia (normal) + nca (italic) */}
+      <span style={{ ...base, transform: visible ? "translateY(0)" : "translateY(32px)", transitionDelay: "0s" }}>
+        <span style={{ fontStyle: "normal" }}>Bia</span><span style={{ fontStyle: "italic" }}>nca</span>
+      </span>
+      {/* Line 2: Mes (normal) + quita (italic) */}
+      <span style={{ ...base, transform: visible ? "translateY(0)" : "translateY(40px)", transitionDelay: "0.12s" }}>
+        <span style={{ fontStyle: "normal" }}>Mes</span><span style={{ fontStyle: "italic" }}>quita</span>
+      </span>
     </div>
   );
 }
@@ -967,14 +946,24 @@ export default function Home() {
           </div>
         </div>
 
-        {/* Banner with beach + marquee */}
+        {/* Banner with beach illustration + name */}
         <div style={{ marginTop: 80, position: "relative", overflow: "hidden" }}>
+          <style>{`
+            .beach-illus { transition: filter 0.4s ease; }
+            .dark .beach-illus { filter: sepia(1) saturate(4) hue-rotate(30deg) brightness(1.1); }
+          `}</style>
           <div style={{ display: "flex", alignItems: "flex-end", gap: 40, paddingLeft: 40 }}>
             <div style={{ animation: "float 3s ease-in-out infinite", flexShrink: 0 }}>
-              <BeachScene />
+              <img
+                src={beachIllus}
+                alt="Out of office"
+                className="beach-illus"
+                draggable={false}
+                style={{ height: 220, width: "auto", display: "block" }}
+              />
             </div>
             <div style={{ flex: 1, overflow: "hidden" }}>
-              <Marquee text="Bianca Mesquita" />
+              <FooterName />
             </div>
           </div>
           <div style={{ height: 24, background: "#3D4A1E", marginTop: -2 }} />
