@@ -1,7 +1,6 @@
-import { useEffect, useRef, useState, useCallback } from "react";
+import { useEffect, useRef, useState } from "react";
 import { SiBehance, SiDribbble, SiFigma, SiNotion, SiFramer, SiHotjar } from "react-icons/si";
 import postcardImg from "@assets/postc_1777742914935.png";
-import bioPhoto from "@assets/image_1777743631637.png";
 import figmaIllustra from "@assets/Figma_1777742554578.png";
 import caipirinhaIllustra from "@assets/ilustras_1777742559195.png";
 import cafeIllustra from "@assets/IlustraCafe_1777742604142.png";
@@ -108,49 +107,9 @@ function DraggableIllustration({
   );
 }
 
-/* ─── Postcard: static info card + draggable cover image peeking below ─── */
+/* ─── Postcard: flip card — front = info card, back = postcard cover ─── */
 function PostcardSection() {
-  const [dragY, setDragY] = useState(0);
-  const [snapped, setSnapped] = useState(false);
-  const startY = useRef(0);
-  const startDragY = useRef(0);
-  const isDragging = useRef(false);
-
-  const PEEK = 72;
-  const MAX_DRAG = 420;
-
-  const onDown = useCallback((e: React.MouseEvent) => {
-    if (snapped) return;
-    isDragging.current = true;
-    startY.current = e.clientY;
-    startDragY.current = dragY;
-    setCursor("grab");
-    e.preventDefault();
-  }, [dragY, snapped]);
-
-  useEffect(() => {
-    const onMove = (e: MouseEvent) => {
-      if (!isDragging.current) return;
-      const delta = startY.current - e.clientY;
-      const newY = Math.max(0, Math.min(MAX_DRAG, startDragY.current + delta));
-      setDragY(newY);
-    };
-    const onUp = () => {
-      if (!isDragging.current) return;
-      isDragging.current = false;
-      setCursor("default");
-      setDragY((y) => {
-        if (y > MAX_DRAG * 0.35) { setSnapped(true); return MAX_DRAG; }
-        return 0;
-      });
-    };
-    window.addEventListener("mousemove", onMove);
-    window.addEventListener("mouseup", onUp);
-    return () => { window.removeEventListener("mousemove", onMove); window.removeEventListener("mouseup", onUp); };
-  }, []);
-
-  const handleReset = () => { if (snapped) { setSnapped(false); setDragY(0); } };
-  const dragging = isDragging.current;
+  const [flipped, setFlipped] = useState(false);
 
   const tools = [
     { name: "Notion", icon: <SiNotion /> },
@@ -161,157 +120,137 @@ function PostcardSection() {
   ];
 
   return (
-    <div style={{ position: "relative" }}>
-
-      {/* ── Static front card ── */}
-      <div style={{
-        border: "1.5px dashed hsl(var(--border))",
-        borderRadius: 20,
-        background: "hsl(var(--background))",
-        overflow: "hidden",
-        display: "flex",
-        minHeight: 420,
-        boxShadow: "0 8px 40px rgba(61,74,30,0.08)",
-      }}>
-        {/* Left: photo + tool icons */}
-        <div style={{ flex: "0 0 44%", display: "flex", flexDirection: "column", minHeight: 420 }}>
-          <img
-            src={bioPhoto}
-            alt="Bianca Mesquita"
-            style={{ flex: 1, width: "100%", objectFit: "cover", objectPosition: "center top", display: "block" }}
-            draggable={false}
-          />
-          <div style={{
-            display: "flex", alignItems: "center", gap: 10, padding: "10px 16px",
-            background: "hsl(var(--background))", borderTop: "1px solid hsl(var(--border))",
-          }}>
-            {tools.map((t) => (
-              <div key={t.name} style={{
-                width: 34, height: 34, borderRadius: 8,
-                border: "1px solid hsl(var(--border))",
-                background: "hsl(var(--card))",
-                display: "flex", alignItems: "center", justifyContent: "center",
-                color: "#3D4A1E", fontSize: 16,
-              }}>
-                {t.icon}
-              </div>
-            ))}
-          </div>
-        </div>
-
-        {/* Right: name block + bio + button */}
-        <div style={{ flex: 1, display: "flex", flexDirection: "column", gap: 12, padding: "20px 20px 16px" }}>
-          {/* Name block */}
-          <div style={{
-            background: "#4A5E28", borderRadius: 12,
-            padding: "18px 20px",
-            color: "#F5F0E8",
-          }}>
-            <div style={{ fontFamily: "'Libre Baskerville', serif", fontSize: 20, fontWeight: 700, marginBottom: 4 }}>Bianca Mesquita</div>
-            <div style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 13, opacity: 0.85 }}>Product Designer ✦ UX/UI Designer</div>
-          </div>
-
-          {/* Bio block */}
-          <div style={{
-            flex: 1,
-            background: "hsl(var(--card))",
-            borderRadius: 12,
-            border: "1px solid hsl(var(--border))",
-            padding: "18px 20px",
-            display: "flex", flexDirection: "column", justifyContent: "space-between",
-          }}>
-            <div>
-              <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 13, lineHeight: 1.7, color: "hsl(var(--foreground))", margin: "0 0 12px" }}>
-                Tenho 25 anos, sou caiçara nascida e criada no litoral de SP e, fora das telas, você vai me encontrar entre a praia, cafés, corridas, livros, viagens e bons drinks.
-              </p>
-              <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 13, lineHeight: 1.7, color: "hsl(var(--foreground))", margin: 0 }}>
-                Com base em UX e experiência em sistemas digitais complexos, especialmente nas áreas de logística, transporte e setor público, atuo de ponta a ponta — da pesquisa à entrega.<br />
-                Acredito que bons produtos nascem do entendimento real de quem usa.
-              </p>
-            </div>
-            <div style={{ fontFamily: "'Caveat', cursive", fontSize: 20, color: "#D4713A", marginTop: 12, textAlign: "right" }}>
-              Bianca Mesquita
-            </div>
-          </div>
-
-          {/* Mais sobre mim button */}
-          <div style={{
-            background: "#C8E870",
-            borderRadius: 12,
-            padding: "14px 20px",
-            display: "flex", alignItems: "center", justifyContent: "space-between",
-            cursor: "none",
-          }}
-            onMouseEnter={() => setCursor("grab")}
-            onMouseLeave={() => setCursor("default")}
-          >
-            <span style={{ fontFamily: "'DM Sans', sans-serif", fontWeight: 600, fontSize: 14, color: "#2C2A1E" }}>Mais sobre mim</span>
-            <span style={{
-              width: 32, height: 32, borderRadius: "50%",
-              background: "#3D4A1E",
-              display: "flex", alignItems: "center", justifyContent: "center",
-              color: "#F5F0E8", fontSize: 16,
-            }}>↓</span>
-          </div>
-        </div>
-      </div>
-
-      {/* ── Draggable back cover image — peeking below, slides UP ── */}
+    <div
+      style={{ perspective: "1400px" }}
+      onMouseEnter={() => setCursor("grab")}
+      onMouseLeave={() => setCursor("default")}
+    >
+      {/* ── Flip wrapper ── */}
       <div
-        onMouseDown={onDown}
-        onMouseEnter={() => !snapped && setCursor("grab")}
-        onMouseLeave={() => setCursor("default")}
+        onClick={() => setFlipped((f) => !f)}
         style={{
           position: "relative",
-          height: PEEK,
-          marginTop: -4,
-          overflow: "hidden",
-          borderRadius: "0 0 16px 16px",
+          height: 460,
+          transformStyle: "preserve-3d",
+          transform: flipped ? "rotateY(180deg)" : "rotateY(0deg)",
+          transition: "transform 0.75s cubic-bezier(0.4, 0, 0.2, 1)",
           cursor: "none",
-          transform: `translateY(${-dragY}px)`,
-          transition: dragging ? "none" : "transform 0.5s cubic-bezier(0.34,1.4,0.64,1)",
-          zIndex: 2,
+          borderRadius: 20,
         }}
       >
-        <img
-          src={postcardImg}
-          alt="postcard back"
-          style={{ width: "100%", height: MAX_DRAG + PEEK, objectFit: "cover", objectPosition: "center bottom", display: "block", marginTop: -(MAX_DRAG) }}
-          draggable={false}
-        />
-        {!snapped && (
-          <div style={{
-            position: "absolute", top: 6, left: "50%", transform: "translateX(-50%)",
-            background: "#A8CC2C", borderRadius: 999,
-            padding: "2px 14px",
-            fontFamily: "Caveat, cursive", fontSize: 13, color: "#2C2A1E",
-            pointerEvents: "none", whiteSpace: "nowrap",
-            boxShadow: "0 2px 8px rgba(0,0,0,0.12)",
-          }}>
-            ↑ arraste
-          </div>
-        )}
-      </div>
 
-      {/* Snapped full-reveal overlay */}
-      {snapped && (
+        {/* ── FRONT FACE ── */}
         <div style={{
-          position: "absolute", top: 0, left: 0, right: 0,
-          height: MAX_DRAG + PEEK,
-          zIndex: 3,
+          position: "absolute",
+          inset: 0,
+          backfaceVisibility: "hidden",
+          WebkitBackfaceVisibility: "hidden" as React.CSSProperties["WebkitBackfaceVisibility"],
+          border: "1.5px dashed hsl(var(--border))",
+          borderRadius: 20,
+          background: "hsl(var(--background))",
+          overflow: "hidden",
+          display: "flex",
+          boxShadow: "0 8px 40px rgba(61,74,30,0.08)",
+        }}>
+          {/* Left: placeholder + tool icons */}
+          <div style={{ flex: "0 0 44%", display: "flex", flexDirection: "column" }}>
+            <div style={{
+              flex: 1,
+              background: "linear-gradient(145deg, #D8D0C0 0%, #C4B99A 60%, #B8AA8A 100%)",
+              display: "flex", alignItems: "center", justifyContent: "center",
+            }}>
+              <span style={{
+                fontFamily: "'Caveat', cursive", fontSize: 17,
+                color: "rgba(44,42,30,0.3)", letterSpacing: "0.06em",
+              }}>foto</span>
+            </div>
+            <div style={{
+              display: "flex", alignItems: "center", gap: 10, padding: "10px 16px",
+              background: "hsl(var(--background))", borderTop: "1px solid hsl(var(--border))",
+            }}>
+              {tools.map((t) => (
+                <div key={t.name} style={{
+                  width: 34, height: 34, borderRadius: 8,
+                  border: "1px solid hsl(var(--border))",
+                  background: "hsl(var(--card))",
+                  display: "flex", alignItems: "center", justifyContent: "center",
+                  color: "#3D4A1E", fontSize: 16,
+                }}>
+                  {t.icon}
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Right: name + bio + button */}
+          <div style={{ flex: 1, display: "flex", flexDirection: "column", gap: 12, padding: "20px 20px 16px" }}>
+            <div style={{ background: "#4A5E28", borderRadius: 12, padding: "18px 20px", color: "#F5F0E8" }}>
+              <div style={{ fontFamily: "'Libre Baskerville', serif", fontSize: 20, fontWeight: 700, marginBottom: 4 }}>Bianca Mesquita</div>
+              <div style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 13, opacity: 0.85 }}>Product Designer ✦ UX/UI Designer</div>
+            </div>
+
+            <div style={{
+              flex: 1, background: "hsl(var(--card))", borderRadius: 12,
+              border: "1px solid hsl(var(--border))", padding: "18px 20px",
+              display: "flex", flexDirection: "column", justifyContent: "space-between",
+            }}>
+              <div>
+                <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 13, lineHeight: 1.7, color: "hsl(var(--foreground))", margin: "0 0 12px" }}>
+                  Tenho 25 anos, sou caiçara nascida e criada no litoral de SP e, fora das telas, você vai me encontrar entre a praia, cafés, corridas, livros, viagens e bons drinks.
+                </p>
+                <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 13, lineHeight: 1.7, color: "hsl(var(--foreground))", margin: 0 }}>
+                  Com base em UX e experiência em sistemas digitais complexos, especialmente nas áreas de logística, transporte e setor público, atuo de ponta a ponta — da pesquisa à entrega.<br />
+                  Acredito que bons produtos nascem do entendimento real de quem usa.
+                </p>
+              </div>
+              <div style={{ fontFamily: "'Caveat', cursive", fontSize: 20, color: "#D4713A", marginTop: 12, textAlign: "right" }}>
+                Bianca Mesquita
+              </div>
+            </div>
+
+            <div style={{
+              background: "#C8E870", borderRadius: 12, padding: "14px 20px",
+              display: "flex", alignItems: "center", justifyContent: "space-between",
+            }}>
+              <span style={{ fontFamily: "'DM Sans', sans-serif", fontWeight: 600, fontSize: 14, color: "#2C2A1E" }}>Mais sobre mim</span>
+              <span style={{
+                width: 32, height: 32, borderRadius: "50%",
+                background: "#3D4A1E",
+                display: "flex", alignItems: "center", justifyContent: "center",
+                color: "#F5F0E8", fontSize: 14,
+              }}>↓</span>
+            </div>
+          </div>
+
+          {/* Flip hint */}
+          <div style={{
+            position: "absolute", bottom: 14, right: 18,
+            fontFamily: "'Caveat', cursive", fontSize: 13,
+            color: "#A8CC2C", opacity: 0.75, pointerEvents: "none",
+          }}>
+            ✦ virar
+          </div>
+        </div>
+
+        {/* ── BACK FACE — postcard cover ── */}
+        <div style={{
+          position: "absolute",
+          inset: 0,
+          backfaceVisibility: "hidden",
+          WebkitBackfaceVisibility: "hidden" as React.CSSProperties["WebkitBackfaceVisibility"],
+          transform: "rotateY(180deg)",
           borderRadius: 20,
           overflow: "hidden",
-          transform: `translateY(${-(MAX_DRAG - dragY)}px)`,
-          transition: dragging ? "none" : "transform 0.5s cubic-bezier(0.34,1.4,0.64,1)",
+          boxShadow: "0 8px 40px rgba(61,74,30,0.15)",
         }}>
           <img
             src={postcardImg}
-            alt="postcard back"
+            alt="postcard cover"
             style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }}
             draggable={false}
           />
           <button
-            onClick={handleReset}
+            onClick={(e) => { e.stopPropagation(); setFlipped(false); }}
             style={{
               position: "absolute", bottom: 20, left: "50%", transform: "translateX(-50%)",
               background: "rgba(245,240,232,0.92)", border: "none", borderRadius: 999,
@@ -320,10 +259,10 @@ function PostcardSection() {
               boxShadow: "0 2px 12px rgba(0,0,0,0.15)",
             }}
           >
-            ✦ fechar
+            ✦ voltar
           </button>
         </div>
-      )}
+      </div>
     </div>
   );
 }
