@@ -3,7 +3,6 @@ import { SiBehance, SiDribbble, SiFigma, SiNotion, SiFramer, SiHotjar, SiMiro } 
 import postcardImg from "@assets/postc_1777742914935.png";
 import bioPhoto from "@assets/Perfil_1777746393399.jpeg";
 import figmaIllustra from "@assets/Figma_1777742554578.png";
-import caipirinhaIllustra from "@assets/ilustras_1777742559195.png";
 import cafeIllustra from "@assets/IlustraCafe_1777742604142.png";
 import pcIllustra from "@assets/ilustraPC_1777742604142.png";
 
@@ -744,9 +743,6 @@ export default function Home() {
           </DraggableIllustration>
           <DraggableIllustration style={{ top: "60%", right: "28%", pointerEvents: "all" }}>
             <img src={pcIllustra} alt="Laptop" style={{ display: "block", height: 110, width: "auto", transform: "rotate(3deg)" }} draggable={false} />
-          </DraggableIllustration>
-          <DraggableIllustration style={{ top: "20%", right: "4%", pointerEvents: "all" }}>
-            <img src={caipirinhaIllustra} alt="Caipirinha" style={{ display: "block", height: 110, width: "auto", transform: "rotate(-5deg)" }} draggable={false} />
           </DraggableIllustration>
           {/* Non-draggable floating sparkles scattered among illustrations */}
           <div style={{ position: "absolute", top: "6%", right: "22%", animation: "floatA 3.2s ease-in-out infinite", pointerEvents: "none" }}>
