@@ -551,7 +551,6 @@ function FooterName() {
       ? "inset(-15% -2% -15% -2%)"
       : "inset(-15% 102% -15% -2%)",
     transition: `clip-path 1.5s cubic-bezier(0.22, 1, 0.36, 1) ${delay}`,
-    opacity: 0.45,
   });
 
   return (
