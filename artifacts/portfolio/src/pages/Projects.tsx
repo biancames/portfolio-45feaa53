@@ -117,7 +117,7 @@ export default function Projects() {
             { label: "Início", href: "/" },
             { label: "Projetos", href: "/projetos" },
             { label: "Sobre", href: "/#sobre" },
-            { label: "Contato", href: "/#contato" },
+            { label: "Contato", href: "#contato" },
           ].map(({ label, href }) => (
             <a
               key={label}

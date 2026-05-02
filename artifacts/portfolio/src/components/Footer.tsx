@@ -43,7 +43,7 @@ function FooterName() {
 
 export function Footer() {
   return (
-    <footer style={{ background: "hsl(var(--card))", borderTop: "1px solid hsl(var(--border))", padding: "80px 40px 0" }}>
+    <footer id="contato" style={{ background: "hsl(var(--card))", borderTop: "1px solid hsl(var(--border))", padding: "80px 40px 0" }}>
       <div style={{ maxWidth: 900, margin: "0 auto", textAlign: "center" }}>
         <div style={{ fontFamily: "'Caveat', cursive", fontSize: "clamp(1.5rem, 4vw, 2.5rem)", marginBottom: 20, color: "#3D4A1E" }}>
           Chegou até aqui e quer deixar um oi?
