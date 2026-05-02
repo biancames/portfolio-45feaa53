@@ -104,13 +104,22 @@ function PostcardSection() {
   const [btnHover, setBtnHover] = useState(false);
 
   const tools = [
-    { name: "Figma",      icon: <SiFigma size={18} /> },
-    { name: "Framer",     icon: <SiFramer size={18} /> },
-    { name: "Photoshop",  icon: <span style={{ fontFamily: "'DM Mono',monospace", fontSize: 12, fontWeight: 700, letterSpacing: "-0.5px" }}>Ps</span> },
-    { name: "Affinity",   icon: <span style={{ fontFamily: "'DM Mono',monospace", fontSize: 12, fontWeight: 700 }}>Ad</span> },
-    { name: "Notion",     icon: <SiNotion size={18} /> },
-    { name: "Maze",       icon: <span style={{ fontSize: 17, lineHeight: 1 }}>◎</span> },
     { name: "Miro",       icon: <SiMiro size={18} /> },
+    { name: "Figma",      icon: <SiFigma size={18} /> },
+    { name: "Photoshop",  icon: <span style={{ fontFamily: "'DM Mono',monospace", fontSize: 12, fontWeight: 700, letterSpacing: "-0.5px" }}>Ps</span> },
+    { name: "Notion",     icon: <SiNotion size={18} /> },
+    { name: "Framer",     icon: <SiFramer size={18} /> },
+    { name: "Hotjar",     icon: <SiHotjar size={18} /> },
+    { name: "Lovable",    icon: (
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+        <path d="M12 21C12 21 3 14.5 3 8.5C3 5.42 5.42 3 8.5 3C10.24 3 11.8 3.86 12 4C12.2 3.86 13.76 3 15.5 3C18.58 3 21 5.42 21 8.5C21 14.5 12 21 12 21Z" fill="#FF4A6E" stroke="none"/>
+      </svg>
+    )},
+    { name: "Claude",     icon: (
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+        <path d="M12 2L14.5 9H22L16 13.5L18.5 20.5L12 16L5.5 20.5L8 13.5L2 9H9.5L12 2Z" fill="#D4713A" stroke="none"/>
+      </svg>
+    )},
   ];
   const loopTools = [...tools, ...tools];
 
@@ -144,36 +153,40 @@ function PostcardSection() {
           boxShadow: "0 8px 40px rgba(61,74,30,0.08)",
         }}>
 
-          {/* ── Left: photo + tools overlay at bottom ── */}
-          <div style={{ flex: "0 0 44%", position: "relative", overflow: "hidden" }}>
+          {/* ── Left: photo + scrolling tools strip below ── */}
+          <div style={{ flex: "0 0 44%", display: "flex", flexDirection: "column", overflow: "hidden" }}>
             <img
               src={bioPhoto}
               alt="Bianca Mesquita"
-              style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: "center top", display: "block" }}
+              style={{ flex: 1, minHeight: 0, width: "100%", objectFit: "cover", objectPosition: "center top", display: "block" }}
               draggable={false}
             />
-            {/* Tool icons — frosted strip overlaying the bottom of the photo */}
+            {/* Scrolling tool icons marquee */}
             <div style={{
-              position: "absolute",
-              bottom: 0, left: 0, right: 0,
-              padding: "10px 14px",
-              background: "rgba(245,240,232,0.88)",
-              backdropFilter: "blur(6px)",
-              display: "flex",
-              gap: 8,
-              alignItems: "center",
+              overflow: "hidden",
+              background: "hsl(var(--background))",
+              borderTop: "1px solid hsl(var(--border))",
+              padding: "10px 0",
+              flexShrink: 0,
             }}>
-              {tools.map((t, i) => (
-                <div key={i} style={{
-                  width: 36, height: 36, borderRadius: 9,
-                  border: "1px solid rgba(61,74,30,0.15)",
-                  background: "hsl(var(--card))",
-                  display: "flex", alignItems: "center", justifyContent: "center",
-                  color: "#3D4A1E", flexShrink: 0,
-                }}>
-                  {t.icon}
-                </div>
-              ))}
+              <div style={{
+                display: "flex",
+                gap: 8,
+                width: "max-content",
+                animation: "toolsScroll 22s linear infinite",
+              }}>
+                {loopTools.map((t, i) => (
+                  <div key={i} style={{
+                    width: 36, height: 36, borderRadius: 9,
+                    border: "1px solid rgba(61,74,30,0.15)",
+                    background: "hsl(var(--card))",
+                    display: "flex", alignItems: "center", justifyContent: "center",
+                    color: "#3D4A1E", flexShrink: 0,
+                  }}>
+                    {t.icon}
+                  </div>
+                ))}
+              </div>
             </div>
           </div>
 
