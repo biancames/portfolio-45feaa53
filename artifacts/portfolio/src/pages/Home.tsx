@@ -3,7 +3,7 @@ import { HOME_PROJECTS } from "@/data/projects";
 import { SiBehance, SiDribbble, SiFigma, SiFramer, SiHotjar, SiNotion } from "react-icons/si";
 import { Linkedin } from "lucide-react";
 import { PostcardSection } from "@/components/PostcardSection";
-import figmaIllustra from "@assets/Figma_1777742554578.png";
+import figmaIllustra from "@assets/figma_1_1777756222620.png";
 import cafeIllustra from "@assets/IlustraCafe_1777742604142.png";
 import pcIllustra from "@assets/ilustraPC_1777742604142.png";
 import beachIllus from "@assets/Prancheta1_1777750622927.png";
@@ -571,7 +571,7 @@ export default function Home() {
             <img src={cafeIllustra} alt="Cafeteira" style={{ display: "block", height: 108, width: "auto", transform: "rotate(-8deg)" }} draggable={false} />
           </DraggableIllustration>
           <DraggableIllustration style={{ top: "44%", right: "14%", pointerEvents: "all" }}>
-            <img src={figmaIllustra} alt="Figma" style={{ display: "block", height: 88, width: "auto", transform: "rotate(6deg)", filter: "sepia(0.4) saturate(0.65) brightness(0.75) hue-rotate(10deg)" }} draggable={false} />
+            <img src={figmaIllustra} alt="Figma" style={{ display: "block", height: 88, width: "auto", transform: "rotate(6deg)" }} draggable={false} />
           </DraggableIllustration>
           <DraggableIllustration style={{ top: "56%", right: "36%", pointerEvents: "all" }}>
             <img src={pcIllustra} alt="Laptop" style={{ display: "block", height: 88, width: "auto", transform: "rotate(3deg)" }} draggable={false} />
