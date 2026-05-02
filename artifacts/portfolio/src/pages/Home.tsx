@@ -107,7 +107,7 @@ function DraggableIllustration({
   );
 }
 
-/* ─── Postcard (front slides DOWN to reveal back image peeking below) ─── */
+/* ─── Postcard: info card is static; back cover image is draggable UP from below ─── */
 function PostcardSection() {
   const [dragY, setDragY] = useState(0);
   const [snapped, setSnapped] = useState(false);
@@ -116,8 +116,9 @@ function PostcardSection() {
   const isDragging = useRef(false);
 
   const FRONT_H = 360;
-  const PEEK = 52; // back image visible at bottom when front is closed
+  const PEEK = 52;           // px of back image visible below front card
   const CONTAINER_H = FRONT_H + PEEK;
+  const MAX_DRAG = FRONT_H;  // how far up the back image can travel
 
   const onDown = useCallback((e: React.MouseEvent) => {
     if (snapped) return;
@@ -131,8 +132,9 @@ function PostcardSection() {
   useEffect(() => {
     const onMove = (e: MouseEvent) => {
       if (!isDragging.current) return;
-      const delta = e.clientY - startY.current;
-      const newY = Math.max(0, Math.min(FRONT_H, startDragY.current + delta));
+      // moving mouse UP = negative delta = back image moves up
+      const delta = startY.current - e.clientY;
+      const newY = Math.max(0, Math.min(MAX_DRAG, startDragY.current + delta));
       setDragY(newY);
     };
     const onUp = () => {
@@ -140,133 +142,48 @@ function PostcardSection() {
       isDragging.current = false;
       setCursor("default");
       setDragY((y) => {
-        if (y > FRONT_H * 0.4) {
-          setSnapped(true);
-          return FRONT_H;
-        }
+        if (y > MAX_DRAG * 0.4) { setSnapped(true); return MAX_DRAG; }
         return 0;
       });
     };
     window.addEventListener("mousemove", onMove);
     window.addEventListener("mouseup", onUp);
-    return () => {
-      window.removeEventListener("mousemove", onMove);
-      window.removeEventListener("mouseup", onUp);
-    };
+    return () => { window.removeEventListener("mousemove", onMove); window.removeEventListener("mouseup", onUp); };
   }, []);
 
-  const handleReset = () => {
-    if (snapped) { setSnapped(false); setDragY(0); }
-  };
+  const handleReset = () => { if (snapped) { setSnapped(false); setDragY(0); } };
 
-  const translateY = snapped ? FRONT_H : dragY;
+  // Back image: starts at top=FRONT_H (only PEEK px visible), slides up by dragY
+  const backTop = FRONT_H - dragY;  // 360 → 0 as dragY goes 0 → 360
   const dragging = isDragging.current;
 
   return (
-    <div style={{
-      position: "relative",
-      height: CONTAINER_H,
-      borderRadius: 16,
-      overflow: "hidden",
-      boxShadow: "0 20px 60px rgba(61,74,30,0.18)",
-    }}>
+    <div style={{ position: "relative", height: CONTAINER_H, borderRadius: 16, overflow: "hidden", boxShadow: "0 20px 60px rgba(61,74,30,0.18)" }}>
 
-      {/* ── Back layer: image sits at the bottom, peeking PEEK px ── */}
+      {/* ── Static front card (info) — always at top, zIndex 1 ── */}
       <div style={{
-        position: "absolute",
-        bottom: 0, left: 0, right: 0,
-        height: FRONT_H,
-        borderRadius: "0 0 16px 16px",
-        overflow: "hidden",
+        position: "absolute", top: 0, left: 0, right: 0, height: FRONT_H,
+        background: "hsl(var(--card))", display: "flex", overflow: "hidden",
+        borderRadius: 16, boxShadow: "0 4px 24px rgba(61,74,30,0.12)", zIndex: 1,
       }}>
-        <img
-          src={postcardImg}
-          alt="postcard back"
-          style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }}
-          draggable={false}
-        />
-        {snapped && (
-          <button
-            onClick={handleReset}
-            style={{
-              position: "absolute", top: 16, left: "50%", transform: "translateX(-50%)",
-              background: "rgba(245,240,232,0.88)", border: "none", borderRadius: 999,
-              padding: "8px 22px", fontFamily: "Caveat, cursive", fontSize: 16,
-              color: "#2C2A1E", cursor: "pointer", backdropFilter: "blur(4px)",
-              boxShadow: "0 2px 12px rgba(0,0,0,0.15)",
-            }}
-          >
-            ✦ fechar
-          </button>
-        )}
-      </div>
-
-      {/* ── Front card: absolutely positioned at top, draggable DOWN ── */}
-      <div
-        onMouseDown={onDown}
-        onMouseEnter={() => !snapped && setCursor("postcard")}
-        onMouseLeave={() => setCursor("default")}
-        style={{
-          position: "absolute",
-          top: 0, left: 0, right: 0,
-          height: FRONT_H,
-          transform: `translateY(${translateY}px)`,
-          transition: dragging ? "none" : "transform 0.55s cubic-bezier(0.34,1.4,0.64,1)",
-          cursor: "none",
-          background: "hsl(var(--card))",
-          display: "flex",
-          overflow: "hidden",
-          borderRadius: 16,
-          boxShadow: "0 8px 32px rgba(61,74,30,0.18)",
-          zIndex: 1,
-        }}
-      >
         {/* Stamp */}
         <div style={{
-          position: "absolute", top: 16, right: 16,
-          width: 48, height: 60,
-          border: "2px solid #D4713A", borderRadius: 3,
+          position: "absolute", top: 16, right: 16, width: 48, height: 60,
+          border: "2px solid #D4713A", borderRadius: 3, opacity: 0.6,
           display: "flex", alignItems: "center", justifyContent: "center", flexDirection: "column",
-          opacity: 0.6,
         }}>
           <span style={{ fontFamily: "Caveat, cursive", fontSize: 8, color: "#D4713A" }}>BRASIL</span>
           <span style={{ fontSize: 18 }}>🌿</span>
           <span style={{ fontFamily: "Caveat, cursive", fontSize: 7, color: "#D4713A" }}>DESIGN</span>
         </div>
-
-        {/* Drag handle hint — bottom right tab */}
-        <div style={{
-          position: "absolute", bottom: 0, right: 24,
-          background: "#A8CC2C",
-          borderRadius: "8px 8px 0 0",
-          padding: "4px 14px 2px",
-          fontFamily: "Caveat, cursive", fontSize: 13,
-          color: "#2C2A1E",
-          letterSpacing: "0.02em",
-          pointerEvents: "none",
-        }}>
-          arraste ↓
-        </div>
-
         {/* Left: avatar */}
-        <div style={{
-          flex: "0 0 40%", background: "hsl(var(--muted))",
-          display: "flex", alignItems: "center", justifyContent: "center",
-        }}>
-          <div style={{
-            width: 140, height: 140, borderRadius: "50%", background: "#3D4A1E",
-            display: "flex", alignItems: "center", justifyContent: "center",
-            boxShadow: "0 8px 32px rgba(61,74,30,0.3)",
-          }}>
+        <div style={{ flex: "0 0 40%", background: "hsl(var(--muted))", display: "flex", alignItems: "center", justifyContent: "center" }}>
+          <div style={{ width: 140, height: 140, borderRadius: "50%", background: "#3D4A1E", display: "flex", alignItems: "center", justifyContent: "center", boxShadow: "0 8px 32px rgba(61,74,30,0.3)" }}>
             <span style={{ fontFamily: "'Libre Baskerville', serif", fontSize: 48, color: "#F5F0E8", fontStyle: "italic", fontWeight: 700 }}>BM</span>
           </div>
         </div>
-
         {/* Right: info */}
-        <div style={{
-          flex: 1, background: "#3D4A1E", color: "#F5F0E8",
-          padding: "40px 36px", display: "flex", flexDirection: "column", justifyContent: "center", gap: 12,
-        }}>
+        <div style={{ flex: 1, background: "#3D4A1E", color: "#F5F0E8", padding: "40px 36px", display: "flex", flexDirection: "column", justifyContent: "center", gap: 12 }}>
           <div style={{ fontFamily: "'Libre Baskerville', serif", fontSize: 26, fontWeight: 700 }}>Bianca Mesquita</div>
           <div style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 13, opacity: 0.8 }}>Product Designer ✦ UX/UI Designer</div>
           <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 13, lineHeight: 1.65, opacity: 0.85, margin: "8px 0" }}>
@@ -278,12 +195,62 @@ function PostcardSection() {
           <div style={{ fontFamily: "'Caveat', cursive", fontSize: 22, color: "#A8CC2C", marginTop: 8 }}>Bianca Mesquita</div>
           <div style={{ display: "flex", gap: 12, marginTop: 8, flexWrap: "wrap" }}>
             {[<SiFigma key="figma"/>, <SiFramer key="framer"/>, <SiNotion key="notion"/>, <SiHotjar key="hotjar"/>].map((Icon, i) => (
-              <div key={i} style={{ width: 32, height: 32, borderRadius: 6, background: "rgba(245,240,232,0.12)", display: "flex", alignItems: "center", justifyContent: "center", color: "#F5F0E8", fontSize: 16 }}>
-                {Icon}
-              </div>
+              <div key={i} style={{ width: 32, height: 32, borderRadius: 6, background: "rgba(245,240,232,0.12)", display: "flex", alignItems: "center", justifyContent: "center", color: "#F5F0E8", fontSize: 16 }}>{Icon}</div>
             ))}
           </div>
         </div>
+      </div>
+
+      {/* ── Draggable back cover image — starts peeking below, slides UP ── */}
+      <div
+        onMouseDown={onDown}
+        onMouseEnter={() => !snapped && setCursor("grab")}
+        onMouseLeave={() => setCursor("default")}
+        style={{
+          position: "absolute",
+          top: backTop,
+          left: 0, right: 0,
+          height: FRONT_H + PEEK,   // tall enough to fill container when fully up
+          transition: dragging ? "none" : "top 0.55s cubic-bezier(0.34,1.4,0.64,1)",
+          cursor: "none",
+          zIndex: 2,
+          borderRadius: "16px 16px 0 0",
+          overflow: "hidden",
+          boxShadow: "0 -4px 20px rgba(61,74,30,0.2)",
+        }}
+      >
+        <img
+          src={postcardImg}
+          alt="postcard back"
+          style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }}
+          draggable={false}
+        />
+        {/* Drag hint tab — visible at the top of the peeking strip */}
+        {!snapped && (
+          <div style={{
+            position: "absolute", top: 0, left: "50%", transform: "translateX(-50%)",
+            background: "#A8CC2C", borderRadius: "0 0 8px 8px",
+            padding: "3px 16px 5px",
+            fontFamily: "Caveat, cursive", fontSize: 13, color: "#2C2A1E",
+            pointerEvents: "none", whiteSpace: "nowrap",
+          }}>
+            ↑ arraste
+          </div>
+        )}
+        {snapped && (
+          <button
+            onClick={handleReset}
+            style={{
+              position: "absolute", bottom: 16, left: "50%", transform: "translateX(-50%)",
+              background: "rgba(245,240,232,0.9)", border: "none", borderRadius: 999,
+              padding: "8px 22px", fontFamily: "Caveat, cursive", fontSize: 16,
+              color: "#2C2A1E", cursor: "pointer", backdropFilter: "blur(4px)",
+              boxShadow: "0 2px 12px rgba(0,0,0,0.15)",
+            }}
+          >
+            ✦ fechar
+          </button>
+        )}
       </div>
     </div>
   );
