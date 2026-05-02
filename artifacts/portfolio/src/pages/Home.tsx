@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState, useCallback } from "react";
 import { SiBehance, SiDribbble, SiFigma, SiNotion, SiFramer, SiHotjar } from "react-icons/si";
 import postcardImg from "@assets/postc_1777742914935.png";
+import bioPhoto from "@assets/image_1777743631637.png";
 import figmaIllustra from "@assets/Figma_1777742554578.png";
 import caipirinhaIllustra from "@assets/ilustras_1777742559195.png";
 import cafeIllustra from "@assets/IlustraCafe_1777742604142.png";
@@ -107,7 +108,7 @@ function DraggableIllustration({
   );
 }
 
-/* ─── Postcard: info card is static; back cover image is draggable UP from below ─── */
+/* ─── Postcard: static info card + draggable cover image peeking below ─── */
 function PostcardSection() {
   const [dragY, setDragY] = useState(0);
   const [snapped, setSnapped] = useState(false);
@@ -115,10 +116,8 @@ function PostcardSection() {
   const startDragY = useRef(0);
   const isDragging = useRef(false);
 
-  const FRONT_H = 360;
-  const PEEK = 52;           // px of back image visible below front card
-  const CONTAINER_H = FRONT_H + PEEK;
-  const MAX_DRAG = FRONT_H;  // how far up the back image can travel
+  const PEEK = 72;
+  const MAX_DRAG = 420;
 
   const onDown = useCallback((e: React.MouseEvent) => {
     if (snapped) return;
@@ -132,7 +131,6 @@ function PostcardSection() {
   useEffect(() => {
     const onMove = (e: MouseEvent) => {
       if (!isDragging.current) return;
-      // moving mouse UP = negative delta = back image moves up
       const delta = startY.current - e.clientY;
       const newY = Math.max(0, Math.min(MAX_DRAG, startDragY.current + delta));
       setDragY(newY);
@@ -142,7 +140,7 @@ function PostcardSection() {
       isDragging.current = false;
       setCursor("default");
       setDragY((y) => {
-        if (y > MAX_DRAG * 0.4) { setSnapped(true); return MAX_DRAG; }
+        if (y > MAX_DRAG * 0.35) { setSnapped(true); return MAX_DRAG; }
         return 0;
       });
     };
@@ -152,106 +150,180 @@ function PostcardSection() {
   }, []);
 
   const handleReset = () => { if (snapped) { setSnapped(false); setDragY(0); } };
-
-  // Back image: starts at top=FRONT_H (only PEEK px visible), slides up by dragY
-  const backTop = FRONT_H - dragY;  // 360 → 0 as dragY goes 0 → 360
   const dragging = isDragging.current;
 
-  return (
-    <div style={{ position: "relative", height: CONTAINER_H, borderRadius: 16, overflow: "hidden", boxShadow: "0 20px 60px rgba(61,74,30,0.18)" }}>
+  const tools = [
+    { name: "Notion", icon: <SiNotion /> },
+    { name: "Framer", icon: <SiFramer /> },
+    { name: "Maze", icon: <span style={{ fontSize: 14, fontWeight: 700 }}>◎</span> },
+    { name: "Figma", icon: <SiFigma /> },
+    { name: "Ps", icon: <span style={{ fontSize: 13, fontWeight: 700 }}>Ps</span> },
+  ];
 
-      {/* ── Static front card (info) — always at top, zIndex 1 ── */}
+  return (
+    <div style={{ position: "relative" }}>
+
+      {/* ── Static front card ── */}
       <div style={{
-        position: "absolute", top: 0, left: 0, right: 0, height: FRONT_H,
-        background: "hsl(var(--card))", display: "flex", overflow: "hidden",
-        borderRadius: 16, boxShadow: "0 4px 24px rgba(61,74,30,0.12)", zIndex: 1,
+        border: "1.5px dashed hsl(var(--border))",
+        borderRadius: 20,
+        background: "hsl(var(--background))",
+        overflow: "hidden",
+        display: "flex",
+        minHeight: 420,
+        boxShadow: "0 8px 40px rgba(61,74,30,0.08)",
       }}>
-        {/* Stamp */}
-        <div style={{
-          position: "absolute", top: 16, right: 16, width: 48, height: 60,
-          border: "2px solid #D4713A", borderRadius: 3, opacity: 0.6,
-          display: "flex", alignItems: "center", justifyContent: "center", flexDirection: "column",
-        }}>
-          <span style={{ fontFamily: "Caveat, cursive", fontSize: 8, color: "#D4713A" }}>BRASIL</span>
-          <span style={{ fontSize: 18 }}>🌿</span>
-          <span style={{ fontFamily: "Caveat, cursive", fontSize: 7, color: "#D4713A" }}>DESIGN</span>
-        </div>
-        {/* Left: avatar */}
-        <div style={{ flex: "0 0 40%", background: "hsl(var(--muted))", display: "flex", alignItems: "center", justifyContent: "center" }}>
-          <div style={{ width: 140, height: 140, borderRadius: "50%", background: "#3D4A1E", display: "flex", alignItems: "center", justifyContent: "center", boxShadow: "0 8px 32px rgba(61,74,30,0.3)" }}>
-            <span style={{ fontFamily: "'Libre Baskerville', serif", fontSize: 48, color: "#F5F0E8", fontStyle: "italic", fontWeight: 700 }}>BM</span>
+        {/* Left: photo + tool icons */}
+        <div style={{ flex: "0 0 44%", display: "flex", flexDirection: "column", minHeight: 420 }}>
+          <img
+            src={bioPhoto}
+            alt="Bianca Mesquita"
+            style={{ flex: 1, width: "100%", objectFit: "cover", objectPosition: "center top", display: "block" }}
+            draggable={false}
+          />
+          <div style={{
+            display: "flex", alignItems: "center", gap: 10, padding: "10px 16px",
+            background: "hsl(var(--background))", borderTop: "1px solid hsl(var(--border))",
+          }}>
+            {tools.map((t) => (
+              <div key={t.name} style={{
+                width: 34, height: 34, borderRadius: 8,
+                border: "1px solid hsl(var(--border))",
+                background: "hsl(var(--card))",
+                display: "flex", alignItems: "center", justifyContent: "center",
+                color: "#3D4A1E", fontSize: 16,
+              }}>
+                {t.icon}
+              </div>
+            ))}
           </div>
         </div>
-        {/* Right: info */}
-        <div style={{ flex: 1, background: "#3D4A1E", color: "#F5F0E8", padding: "40px 36px", display: "flex", flexDirection: "column", justifyContent: "center", gap: 12 }}>
-          <div style={{ fontFamily: "'Libre Baskerville', serif", fontSize: 26, fontWeight: 700 }}>Bianca Mesquita</div>
-          <div style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 13, opacity: 0.8 }}>Product Designer ✦ UX/UI Designer</div>
-          <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 13, lineHeight: 1.65, opacity: 0.85, margin: "8px 0" }}>
-            Tenho 25 anos, sou caiçara nascida e criada no litoral de SP e, fora das telas, você vai me encontrar entre a praia, cafés, corridas, livros, viagens e bons drinks.
-          </p>
-          <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 13, lineHeight: 1.65, opacity: 0.85, margin: 0 }}>
-            Com base em UX e experiência em sistemas digitais complexos, atuo de ponta a ponta — da pesquisa à entrega.
-          </p>
-          <div style={{ fontFamily: "'Caveat', cursive", fontSize: 22, color: "#A8CC2C", marginTop: 8 }}>Bianca Mesquita</div>
-          <div style={{ display: "flex", gap: 12, marginTop: 8, flexWrap: "wrap" }}>
-            {[<SiFigma key="figma"/>, <SiFramer key="framer"/>, <SiNotion key="notion"/>, <SiHotjar key="hotjar"/>].map((Icon, i) => (
-              <div key={i} style={{ width: 32, height: 32, borderRadius: 6, background: "rgba(245,240,232,0.12)", display: "flex", alignItems: "center", justifyContent: "center", color: "#F5F0E8", fontSize: 16 }}>{Icon}</div>
-            ))}
+
+        {/* Right: name block + bio + button */}
+        <div style={{ flex: 1, display: "flex", flexDirection: "column", gap: 12, padding: "20px 20px 16px" }}>
+          {/* Name block */}
+          <div style={{
+            background: "#4A5E28", borderRadius: 12,
+            padding: "18px 20px",
+            color: "#F5F0E8",
+          }}>
+            <div style={{ fontFamily: "'Libre Baskerville', serif", fontSize: 20, fontWeight: 700, marginBottom: 4 }}>Bianca Mesquita</div>
+            <div style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 13, opacity: 0.85 }}>Product Designer ✦ UX/UI Designer</div>
+          </div>
+
+          {/* Bio block */}
+          <div style={{
+            flex: 1,
+            background: "hsl(var(--card))",
+            borderRadius: 12,
+            border: "1px solid hsl(var(--border))",
+            padding: "18px 20px",
+            display: "flex", flexDirection: "column", justifyContent: "space-between",
+          }}>
+            <div>
+              <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 13, lineHeight: 1.7, color: "hsl(var(--foreground))", margin: "0 0 12px" }}>
+                Tenho 25 anos, sou caiçara nascida e criada no litoral de SP e, fora das telas, você vai me encontrar entre a praia, cafés, corridas, livros, viagens e bons drinks.
+              </p>
+              <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 13, lineHeight: 1.7, color: "hsl(var(--foreground))", margin: 0 }}>
+                Com base em UX e experiência em sistemas digitais complexos, especialmente nas áreas de logística, transporte e setor público, atuo de ponta a ponta — da pesquisa à entrega.<br />
+                Acredito que bons produtos nascem do entendimento real de quem usa.
+              </p>
+            </div>
+            <div style={{ fontFamily: "'Caveat', cursive", fontSize: 20, color: "#D4713A", marginTop: 12, textAlign: "right" }}>
+              Bianca Mesquita
+            </div>
+          </div>
+
+          {/* Mais sobre mim button */}
+          <div style={{
+            background: "#C8E870",
+            borderRadius: 12,
+            padding: "14px 20px",
+            display: "flex", alignItems: "center", justifyContent: "space-between",
+            cursor: "none",
+          }}
+            onMouseEnter={() => setCursor("grab")}
+            onMouseLeave={() => setCursor("default")}
+          >
+            <span style={{ fontFamily: "'DM Sans', sans-serif", fontWeight: 600, fontSize: 14, color: "#2C2A1E" }}>Mais sobre mim</span>
+            <span style={{
+              width: 32, height: 32, borderRadius: "50%",
+              background: "#3D4A1E",
+              display: "flex", alignItems: "center", justifyContent: "center",
+              color: "#F5F0E8", fontSize: 16,
+            }}>↓</span>
           </div>
         </div>
       </div>
 
-      {/* ── Draggable back cover image — starts peeking below, slides UP ── */}
+      {/* ── Draggable back cover image — peeking below, slides UP ── */}
       <div
         onMouseDown={onDown}
         onMouseEnter={() => !snapped && setCursor("grab")}
         onMouseLeave={() => setCursor("default")}
         style={{
-          position: "absolute",
-          top: backTop,
-          left: 0, right: 0,
-          height: FRONT_H + PEEK,   // tall enough to fill container when fully up
-          transition: dragging ? "none" : "top 0.55s cubic-bezier(0.34,1.4,0.64,1)",
-          cursor: "none",
-          zIndex: 2,
-          borderRadius: "16px 16px 0 0",
+          position: "relative",
+          height: PEEK,
+          marginTop: -4,
           overflow: "hidden",
-          boxShadow: "0 -4px 20px rgba(61,74,30,0.2)",
+          borderRadius: "0 0 16px 16px",
+          cursor: "none",
+          transform: `translateY(${-dragY}px)`,
+          transition: dragging ? "none" : "transform 0.5s cubic-bezier(0.34,1.4,0.64,1)",
+          zIndex: 2,
         }}
       >
         <img
           src={postcardImg}
           alt="postcard back"
-          style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }}
+          style={{ width: "100%", height: MAX_DRAG + PEEK, objectFit: "cover", objectPosition: "center bottom", display: "block", marginTop: -(MAX_DRAG) }}
           draggable={false}
         />
-        {/* Drag hint tab — visible at the top of the peeking strip */}
         {!snapped && (
           <div style={{
-            position: "absolute", top: 0, left: "50%", transform: "translateX(-50%)",
-            background: "#A8CC2C", borderRadius: "0 0 8px 8px",
-            padding: "3px 16px 5px",
+            position: "absolute", top: 6, left: "50%", transform: "translateX(-50%)",
+            background: "#A8CC2C", borderRadius: 999,
+            padding: "2px 14px",
             fontFamily: "Caveat, cursive", fontSize: 13, color: "#2C2A1E",
             pointerEvents: "none", whiteSpace: "nowrap",
+            boxShadow: "0 2px 8px rgba(0,0,0,0.12)",
           }}>
             ↑ arraste
           </div>
         )}
-        {snapped && (
+      </div>
+
+      {/* Snapped full-reveal overlay */}
+      {snapped && (
+        <div style={{
+          position: "absolute", top: 0, left: 0, right: 0,
+          height: MAX_DRAG + PEEK,
+          zIndex: 3,
+          borderRadius: 20,
+          overflow: "hidden",
+          transform: `translateY(${-(MAX_DRAG - dragY)}px)`,
+          transition: dragging ? "none" : "transform 0.5s cubic-bezier(0.34,1.4,0.64,1)",
+        }}>
+          <img
+            src={postcardImg}
+            alt="postcard back"
+            style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }}
+            draggable={false}
+          />
           <button
             onClick={handleReset}
             style={{
-              position: "absolute", bottom: 16, left: "50%", transform: "translateX(-50%)",
-              background: "rgba(245,240,232,0.9)", border: "none", borderRadius: 999,
-              padding: "8px 22px", fontFamily: "Caveat, cursive", fontSize: 16,
+              position: "absolute", bottom: 20, left: "50%", transform: "translateX(-50%)",
+              background: "rgba(245,240,232,0.92)", border: "none", borderRadius: 999,
+              padding: "8px 24px", fontFamily: "Caveat, cursive", fontSize: 16,
               color: "#2C2A1E", cursor: "pointer", backdropFilter: "blur(4px)",
               boxShadow: "0 2px 12px rgba(0,0,0,0.15)",
             }}
           >
             ✦ fechar
           </button>
-        )}
-      </div>
+        </div>
+      )}
     </div>
   );
 }
