@@ -266,97 +266,64 @@ export default function MaisSobre() {
               <div style={{ width: 48, height: 4, background: "#A8CC2C", marginTop: 8, borderRadius: 4 }} />
             </div>
 
-            <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(284px, 1fr))", gap: 24 }}>
+            <div style={{ display: "flex", flexDirection: "column" }}>
               {[
-                { role: "Product Designer", company: "Empresa atual", period: "2024 — presente", desc: "Descrição breve do trabalho, impactos e contexto.", current: true },
-                { role: "UX/UI Designer", company: "Empresa anterior", period: "2022 — 2024", desc: "Descrição breve do trabalho, impactos e contexto.", current: false },
-                { role: "Designer Jr.", company: "Primeira empresa", period: "2021 — 2022", desc: "Descrição breve do trabalho, impactos e contexto.", current: false },
-              ].map((exp, i) => (
-                <div
-                  key={i}
-                  style={{
-                    borderRadius: 16,
-                    overflow: "hidden",
-                    border: "1px solid hsl(var(--border))",
-                    boxShadow: exp.current
-                      ? "0 8px 32px rgba(61,74,30,0.14)"
-                      : "0 4px 16px rgba(61,74,30,0.07)",
-                    transform: `rotate(${[-0.6, 0.5, -0.4][i]}deg)`,
-                    transition: "transform 0.3s ease, box-shadow 0.3s ease",
-                  }}
-                  onMouseEnter={(e) => {
-                    (e.currentTarget as HTMLDivElement).style.transform = "rotate(0deg) translateY(-4px)";
-                    (e.currentTarget as HTMLDivElement).style.boxShadow = "0 16px 40px rgba(61,74,30,0.16)";
-                  }}
-                  onMouseLeave={(e) => {
-                    (e.currentTarget as HTMLDivElement).style.transform = `rotate(${[-0.6, 0.5, -0.4][i]}deg)`;
-                    (e.currentTarget as HTMLDivElement).style.boxShadow = exp.current
-                      ? "0 8px 32px rgba(61,74,30,0.14)"
-                      : "0 4px 16px rgba(61,74,30,0.07)";
-                  }}
-                >
-                  {/* ── header block (olive) ── */}
+                { role: "Product Designer", company: "Empresa atual", period: "2024 — presente", current: true },
+                { role: "UX/UI Designer", company: "Empresa anterior", period: "2022 — 2024", current: false },
+                { role: "Designer Jr.", company: "Primeira empresa", period: "2021 — 2022", current: false },
+              ].map((exp, i, arr) => (
+                <div key={i} style={{
+                  display: "grid",
+                  gridTemplateColumns: "160px 1fr",
+                  gap: "0 40px",
+                  alignItems: "center",
+                  padding: "24px 0",
+                  borderBottom: i < arr.length - 1 ? "1px solid hsl(var(--border))" : "none",
+                }}>
                   <div style={{
-                    background: exp.current ? "#3D4A1E" : "#4A5E28",
-                    padding: "20px 24px",
+                    fontFamily: "'DM Mono', monospace",
+                    fontSize: 11,
+                    letterSpacing: "0.12em",
+                    textTransform: "uppercase",
+                    color: "hsl(var(--foreground))",
+                    opacity: 0.45,
                   }}>
-                    <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 8 }}>
+                    {exp.period}
+                  </div>
+                  <div style={{ display: "flex", alignItems: "center", gap: 16 }}>
+                    <div>
+                      <span style={{
+                        fontFamily: "'Libre Baskerville', serif",
+                        fontStyle: "italic",
+                        fontSize: "clamp(1rem, 2vw, 1.2rem)",
+                        fontWeight: 700,
+                        color: "hsl(var(--foreground))",
+                      }}>
+                        {exp.role}
+                      </span>
+                      <span style={{
+                        fontFamily: "'DM Sans', sans-serif",
+                        fontSize: 14,
+                        color: "hsl(var(--foreground))",
+                        opacity: 0.55,
+                        marginLeft: 12,
+                      }}>
+                        {exp.company}
+                      </span>
+                    </div>
+                    {exp.current && (
                       <div style={{
                         fontFamily: "'DM Mono', monospace",
-                        fontSize: 10,
-                        letterSpacing: "0.14em",
+                        fontSize: 9,
+                        letterSpacing: "0.16em",
                         textTransform: "uppercase",
-                        color: "#A8CC2C",
-                      }}>
-                        {exp.period}
-                      </div>
-                      {exp.current && (
-                        <div style={{
-                          fontFamily: "'DM Mono', monospace",
-                          fontSize: 9,
-                          letterSpacing: "0.16em",
-                          textTransform: "uppercase",
-                          color: "#3D4A1E",
-                          background: "#A8CC2C",
-                          padding: "3px 8px",
-                          borderRadius: 2,
-                        }}>agora</div>
-                      )}
-                    </div>
-                    <div style={{
-                      fontFamily: "'DM Sans', sans-serif",
-                      fontSize: 15,
-                      fontWeight: 600,
-                      color: "#F5F0E8",
-                      letterSpacing: "0.01em",
-                    }}>
-                      {exp.company}
-                    </div>
-                  </div>
-
-                  {/* ── body ── */}
-                  <div style={{ background: "hsl(var(--card))", padding: "20px 24px 24px" }}>
-                    <div style={{
-                      fontFamily: "'Libre Baskerville', serif",
-                      fontStyle: "italic",
-                      fontSize: "clamp(1.1rem, 2vw, 1.25rem)",
-                      fontWeight: 700,
-                      color: "hsl(var(--foreground))",
-                      lineHeight: 1.25,
-                      marginBottom: 12,
-                    }}>
-                      {exp.role}
-                    </div>
-                    <p style={{
-                      fontFamily: "'DM Sans', sans-serif",
-                      fontSize: 14,
-                      lineHeight: 1.75,
-                      color: "hsl(var(--foreground))",
-                      opacity: 0.6,
-                      margin: 0,
-                    }}>
-                      {exp.desc}
-                    </p>
+                        color: "#3D4A1E",
+                        background: "#A8CC2C",
+                        padding: "3px 8px",
+                        borderRadius: 2,
+                        flexShrink: 0,
+                      }}>agora</div>
+                    )}
                   </div>
                 </div>
               ))}
