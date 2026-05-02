@@ -121,6 +121,8 @@ export default function Projects() {
             <a
               key={label}
               href={href}
+              className="nav-link"
+              data-active={label === "Projetos" ? "true" : "false"}
               style={{
                 fontFamily: "'DM Sans', sans-serif",
                 fontSize: 16,
@@ -129,6 +131,8 @@ export default function Projects() {
                 opacity: label === "Projetos" ? 1 : 0.8,
                 fontWeight: label === "Projetos" ? 600 : 400,
                 transition: "opacity 0.2s",
+                position: "relative",
+                paddingBottom: 2,
               }}
               onMouseEnter={(e) => (e.currentTarget.style.opacity = "1")}
               onMouseLeave={(e) => (e.currentTarget.style.opacity = label === "Projetos" ? "1" : "0.8")}
@@ -228,6 +232,38 @@ export default function Projects() {
       </main>
 
       <style>{`
+        .nav-link::before,
+        .nav-link::after {
+          font-family: 'Libre Baskerville', serif;
+          font-style: italic;
+          font-size: 1em;
+          color: #A8CC2C;
+          position: absolute;
+          top: 50%;
+          opacity: 0;
+          transition: opacity 0.2s ease, transform 0.2s ease;
+          pointer-events: none;
+        }
+        .nav-link::before {
+          content: '[';
+          right: calc(100% + 2px);
+          transform: translateY(-50%) translateX(6px);
+        }
+        .nav-link::after {
+          content: ']';
+          left: calc(100% + 2px);
+          transform: translateY(-50%) translateX(-6px);
+        }
+        .nav-link:hover::before,
+        .nav-link[data-active="true"]::before {
+          opacity: 1;
+          transform: translateY(-50%) translateX(0);
+        }
+        .nav-link:hover::after,
+        .nav-link[data-active="true"]::after {
+          opacity: 1;
+          transform: translateY(-50%) translateX(0);
+        }
         @media (max-width: 768px) {
           nav { padding: 12px 20px !important; }
           main { padding: 100px 20px 80px !important; }

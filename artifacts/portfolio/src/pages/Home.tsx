@@ -792,20 +792,37 @@ export default function Home() {
           61% { transform: translateY(0); opacity: 0; }
           100% { transform: translateY(0); opacity: 1; }
         }
+        .nav-link::before,
         .nav-link::after {
-          content: '';
+          font-family: 'Libre Baskerville', serif;
+          font-style: italic;
+          font-size: 1em;
+          color: #A8CC2C;
           position: absolute;
-          bottom: -2px;
-          left: 0;
-          width: 0;
-          height: 1.5px;
-          background: #A8CC2C;
-          transition: width 0.25s ease;
-          border-radius: 2px;
+          top: 50%;
+          opacity: 0;
+          transition: opacity 0.2s ease, transform 0.2s ease;
+          pointer-events: none;
+        }
+        .nav-link::before {
+          content: '[';
+          right: calc(100% + 2px);
+          transform: translateY(-50%) translateX(6px);
+        }
+        .nav-link::after {
+          content: ']';
+          left: calc(100% + 2px);
+          transform: translateY(-50%) translateX(-6px);
+        }
+        .nav-link:hover::before,
+        .nav-link[data-active="true"]::before {
+          opacity: 1;
+          transform: translateY(-50%) translateX(0);
         }
         .nav-link:hover::after,
         .nav-link[data-active="true"]::after {
-          width: 100%;
+          opacity: 1;
+          transform: translateY(-50%) translateX(0);
         }
         @media (max-width: 768px) {
           nav { padding: 12px 20px !important; }
