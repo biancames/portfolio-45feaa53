@@ -547,7 +547,6 @@ function FooterName() {
     fontFamily: "'Libre Baskerville', serif",
     fontSize: "clamp(4rem,11vw,10rem)",
     fontWeight: 700,
-    color: "#3D4A1E",
     lineHeight: 0.95,
     display: "block",
     whiteSpace: "nowrap",
@@ -573,13 +572,15 @@ function FooterName() {
           50% { transform: translateY(6px); }
         }
         .project-card:hover .card-overlay { opacity: 1 !important; }
+        .footer-name { color: #3D4A1E; }
+        .dark .footer-name { color: #A8CC2C; }
       `}</style>
       {/* Line 1: Bia (normal) + nca (italic) */}
-      <span style={lineStyle("0s")}>
+      <span className="footer-name" style={lineStyle("0s")}>
         <span style={{ fontStyle: "normal" }}>Bia</span><span style={{ fontStyle: "italic" }}>nca</span>
       </span>
       {/* Line 2: Mes (normal) + quita (italic) */}
-      <span style={lineStyle("0.25s")}>
+      <span className="footer-name" style={lineStyle("0.25s")}>
         <span style={{ fontStyle: "normal" }}>Mes</span><span style={{ fontStyle: "italic" }}>quita</span>
       </span>
     </div>
