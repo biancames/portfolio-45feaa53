@@ -720,7 +720,9 @@ export default function Home() {
             border: "1.5px dashed #A8CC2C",
             marginBottom: 32,
             fontFamily: "'DM Sans', sans-serif",
-            fontSize: 12,
+            fontSize: 11,
+            letterSpacing: "0.1em",
+            textTransform: "uppercase",
             color: "#8A8878",
           }}>
             <span style={{ width: 8, height: 8, borderRadius: "50%", background: "#A8CC2C", display: "inline-block", animation: "pulse 2s infinite" }} />
