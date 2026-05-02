@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { SiBehance, SiDribbble, SiFigma, SiNotion, SiFramer, SiHotjar } from "react-icons/si";
 import postcardImg from "@assets/postc_1777742914935.png";
+import bioPhoto from "@assets/Perfil_1777746393399.jpeg";
 import figmaIllustra from "@assets/Figma_1777742554578.png";
 import caipirinhaIllustra from "@assets/ilustras_1777742559195.png";
 import cafeIllustra from "@assets/IlustraCafe_1777742604142.png";
@@ -154,16 +155,12 @@ function PostcardSection() {
         }}>
           {/* Left: placeholder + tool icons */}
           <div style={{ flex: "0 0 44%", display: "flex", flexDirection: "column" }}>
-            <div style={{
-              flex: 1,
-              background: "linear-gradient(145deg, #D8D0C0 0%, #C4B99A 60%, #B8AA8A 100%)",
-              display: "flex", alignItems: "center", justifyContent: "center",
-            }}>
-              <span style={{
-                fontFamily: "'Caveat', cursive", fontSize: 17,
-                color: "rgba(44,42,30,0.3)", letterSpacing: "0.06em",
-              }}>foto</span>
-            </div>
+            <img
+              src={bioPhoto}
+              alt="Bianca Mesquita"
+              style={{ flex: 1, width: "100%", objectFit: "cover", objectPosition: "center top", display: "block", minHeight: 0 }}
+              draggable={false}
+            />
             <div style={{
               display: "flex", alignItems: "center", gap: 10, padding: "10px 16px",
               background: "hsl(var(--background))", borderTop: "1px solid hsl(var(--border))",
