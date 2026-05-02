@@ -668,9 +668,8 @@ export default function Home() {
             display: "inline-flex", alignItems: "center", gap: 8,
             padding: "6px 16px", borderRadius: 999,
             border: "1.5px dashed #A8CC2C",
-            marginBottom: 32,
+            marginBottom: 24,
             fontFamily: "'DM Sans', sans-serif",
-            fontStyle: "italic",
             fontSize: 13,
             color: "#3D4A1E",
           }}>
@@ -682,10 +681,10 @@ export default function Home() {
             <span style={{ display: "block", fontSize: "clamp(5rem, 11vw, 9rem)", fontStyle: "italic", fontWeight: 700, color: "#3D4A1E", lineHeight: 0.9 }}>Bia,</span>
             <span style={{ display: "block", fontSize: "clamp(1.5rem, 4vw, 3rem)", fontStyle: "normal", fontWeight: 700, color: "#A8CC2C", fontFamily: "'DM Mono', monospace", letterSpacing: "-0.02em" }}>product_designer</span>
           </h1>
-          <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 17, lineHeight: 1.65, marginTop: 28, opacity: 0.75, maxWidth: 440 }}>
+          <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 17, lineHeight: 1.65, marginTop: 20, opacity: 0.75, maxWidth: 440 }}>
             que transforma necessidades dos usuários em experiências digitais claras e funcionais.
           </p>
-          <div style={{ marginTop: 40, display: "flex", gap: 14 }}>
+          <div style={{ marginTop: 32, display: "flex", gap: 14 }}>
             <a
               href="#projetos"
               data-testid="link-ver-projetos"
