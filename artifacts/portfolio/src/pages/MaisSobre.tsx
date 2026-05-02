@@ -237,42 +237,69 @@ export default function MaisSobre() {
               <div style={{ width: 48, height: 4, background: "#A8CC2C", marginTop: 8, borderRadius: 4 }} />
             </div>
 
-            <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(200px, 1fr))", gap: 24 }}>
+            <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(220px, 1fr))", gap: 32 }}>
               {[
-                { label: "livro favorito", emoji: "📖", content: "Título do livro favorito aqui", sub: "Autor" },
-                { label: "música do momento", emoji: "🎵", content: "Nome da música", sub: "Artista" },
-                { label: "viagem favorita", emoji: "✈️", content: "Destino", sub: "foto em breve" },
-                { label: "meu pet", emoji: "🐾", content: "Nome do pet", sub: "foto em breve" },
+                {
+                  label: "livro favorito",
+                  content: "Título do livro favorito aqui",
+                  sub: "Autor",
+                  img: "https://images.unsplash.com/photo-1512820790803-83ca734da794?w=400&h=280&fit=crop",
+                },
+                {
+                  label: "música do momento",
+                  content: "Nome da música",
+                  sub: "Artista",
+                  img: "https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?w=400&h=280&fit=crop",
+                },
+                {
+                  label: "viagem favorita",
+                  content: "Destino",
+                  sub: "troque pela sua foto",
+                  img: "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=400&h=280&fit=crop",
+                },
+                {
+                  label: "meu pet",
+                  content: "Nome do pet",
+                  sub: "troque pela sua foto",
+                  img: "https://images.unsplash.com/photo-1543466835-00a7907e9de1?w=400&h=280&fit=crop",
+                },
               ].map((card, i) => (
                 <div
                   key={i}
                   style={{
                     background: "hsl(var(--card))",
-                    border: "1.5px dashed hsl(var(--border))",
-                    borderRadius: 16,
-                    padding: "24px 20px",
+                    border: "1.5px solid hsl(var(--border))",
+                    borderRadius: 4,
+                    padding: "12px 12px 20px",
                     transform: `rotate(${[1.2, -0.8, 1.5, -1.2][i]}deg)`,
-                    boxShadow: "0 4px 20px rgba(61,74,30,0.08)",
-                    transition: "transform 0.25s ease, box-shadow 0.25s ease",
+                    boxShadow: "0 6px 24px rgba(61,74,30,0.12)",
+                    transition: "transform 0.3s ease, box-shadow 0.3s ease",
                     cursor: "default",
                   }}
                   onMouseEnter={(e) => {
-                    (e.currentTarget as HTMLDivElement).style.transform = "rotate(0deg) translateY(-4px)";
-                    (e.currentTarget as HTMLDivElement).style.boxShadow = "0 12px 32px rgba(61,74,30,0.14)";
+                    (e.currentTarget as HTMLDivElement).style.transform = "rotate(0deg) translateY(-6px)";
+                    (e.currentTarget as HTMLDivElement).style.boxShadow = "0 16px 40px rgba(61,74,30,0.18)";
                   }}
                   onMouseLeave={(e) => {
                     (e.currentTarget as HTMLDivElement).style.transform = `rotate(${[1.2, -0.8, 1.5, -1.2][i]}deg)`;
-                    (e.currentTarget as HTMLDivElement).style.boxShadow = "0 4px 20px rgba(61,74,30,0.08)";
+                    (e.currentTarget as HTMLDivElement).style.boxShadow = "0 6px 24px rgba(61,74,30,0.12)";
                   }}
                 >
-                  <div style={{ fontSize: 32, marginBottom: 12 }}>{card.emoji}</div>
-                  <div style={{ fontFamily: "'DM Mono', monospace", fontSize: 11, letterSpacing: "0.1em", textTransform: "uppercase", color: "#A8CC2C", marginBottom: 8 }}>
+                  {/* photo area */}
+                  <div style={{ borderRadius: 2, overflow: "hidden", marginBottom: 16, height: 160, background: "hsl(var(--muted))" }}>
+                    <img
+                      src={card.img}
+                      alt={card.label}
+                      style={{ width: "100%", height: "100%", objectFit: "cover", display: "block", filter: "sepia(0.08) contrast(1.02)" }}
+                    />
+                  </div>
+                  <div style={{ fontFamily: "'DM Mono', monospace", fontSize: 10, letterSpacing: "0.12em", textTransform: "uppercase", color: "#A8CC2C", marginBottom: 6 }}>
                     {card.label}
                   </div>
-                  <div style={{ fontFamily: "'Libre Baskerville', serif", fontStyle: "italic", fontSize: 16, color: "hsl(var(--foreground))", marginBottom: 4, lineHeight: 1.4 }}>
+                  <div style={{ fontFamily: "'Libre Baskerville', serif", fontStyle: "italic", fontSize: 15, color: "hsl(var(--foreground))", marginBottom: 4, lineHeight: 1.35 }}>
                     {card.content}
                   </div>
-                  <div style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 13, color: "hsl(var(--muted-foreground))", opacity: 0.7 }}>
+                  <div style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 12, color: "hsl(var(--muted-foreground))", opacity: 0.65 }}>
                     {card.sub}
                   </div>
                 </div>
