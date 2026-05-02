@@ -22,7 +22,6 @@ export default function MaisSobre() {
 
   return (
     <div style={{ fontFamily: "'DM Sans', sans-serif", overflowX: "hidden" }}>
-
       {/* ── NAV ── */}
       <nav style={{
         position: "fixed", top: 0, left: 0, right: 0, zIndex: 1000,
@@ -69,7 +68,6 @@ export default function MaisSobre() {
           </div>
         </div>
       </nav>
-
       {/* ── PAGE CONTENT ── */}
       <main style={{ paddingTop: 80 }}>
 
@@ -90,9 +88,7 @@ export default function MaisSobre() {
             >
               ← Voltar
             </a>
-            <h1 style={{ fontFamily: "'Libre Baskerville', serif", fontStyle: "italic", fontSize: "clamp(1.5rem,4vw,2.5rem)", color: "hsl(var(--foreground))", margin: "0 0 8px" }}>
-              [Mais sobre mim]
-            </h1>
+            <h1 style={{ fontFamily: "'Libre Baskerville', serif", fontStyle: "italic", fontSize: "clamp(1.5rem,4vw,2.5rem)", color: "hsl(var(--foreground))", margin: "0 0 8px" }}>[Por trás dos pixels]</h1>
             <div style={{ width: 48, height: 4, background: "#A8CC2C", borderRadius: 4 }} />
           </div>
 
@@ -238,70 +234,146 @@ export default function MaisSobre() {
               <div style={{ width: 48, height: 4, background: "#A8CC2C", marginTop: 8, borderRadius: 4 }} />
             </div>
 
-            <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(220px, 1fr))", gap: 32 }}>
+            {/* ── Scrapbook cards ── */}
+            <div style={{ display: "flex", flexWrap: "wrap", gap: 48, alignItems: "flex-start", paddingTop: 24 }}>
               {[
                 {
                   label: "livro favorito",
-                  content: "Título do livro favorito aqui",
+                  content: "Título do livro",
                   sub: "Autor",
-                  img: "https://images.unsplash.com/photo-1512820790803-83ca734da794?w=400&h=280&fit=crop",
+                  img: "https://images.unsplash.com/photo-1512820790803-83ca734da794?w=400&h=520&fit=crop",
+                  tape: "#A8CC2C",
+                  tapeRot: -5,
+                  cardRot: -2.5,
+                  w: 196,
+                  imgH: 220,
                 },
                 {
                   label: "música do momento",
                   content: "Nome da música",
                   sub: "Artista",
-                  img: "https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?w=400&h=280&fit=crop",
+                  img: "https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?w=400&h=400&fit=crop",
+                  tape: "#A35C1C",
+                  tapeRot: 4,
+                  cardRot: 1.8,
+                  w: 212,
+                  imgH: 212,
                 },
                 {
                   label: "viagem favorita",
                   content: "Destino",
                   sub: "troque pela sua foto",
-                  img: "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=400&h=280&fit=crop",
+                  img: "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=500&h=400&fit=crop",
+                  tape: "#4A5E28",
+                  tapeRot: -3,
+                  cardRot: -1.2,
+                  w: 240,
+                  imgH: 200,
+                },
+                {
+                  label: "drink favorito",
+                  content: "Nome do drink",
+                  sub: "",
+                  img: "https://images.unsplash.com/photo-1551538827-9c037cb4f32a?w=400&h=440&fit=crop",
+                  tape: "#C8E870",
+                  tapeRot: 6,
+                  cardRot: 2.2,
+                  w: 188,
+                  imgH: 200,
                 },
                 {
                   label: "meu pet",
                   content: "Nome do pet",
                   sub: "troque pela sua foto",
-                  img: "https://images.unsplash.com/photo-1543466835-00a7907e9de1?w=400&h=280&fit=crop",
+                  img: "https://images.unsplash.com/photo-1543466835-00a7907e9de1?w=400&h=460&fit=crop",
+                  tape: "#A35C1C",
+                  tapeRot: -5,
+                  cardRot: -2,
+                  w: 204,
+                  imgH: 216,
                 },
               ].map((card, i) => (
                 <div
                   key={i}
+                  className="scrapbook-card"
                   style={{
-                    background: "hsl(var(--card))",
-                    border: "1.5px solid hsl(var(--border))",
-                    borderRadius: 4,
-                    padding: "12px 12px 20px",
-                    transform: `rotate(${[1.2, -0.8, 1.5, -1.2][i]}deg)`,
-                    boxShadow: "0 6px 24px rgba(61,74,30,0.12)",
-                    transition: "transform 0.3s ease, box-shadow 0.3s ease",
+                    position: "relative",
+                    width: card.w,
+                    background: "#FDFCF6",
+                    padding: "12px 12px 24px",
+                    boxShadow: "0 4px 20px rgba(44,42,30,0.13), 0 1px 4px rgba(44,42,30,0.06)",
+                    transform: `rotate(${card.cardRot}deg)`,
+                    transition: "transform 0.35s cubic-bezier(.22,1,.36,1), box-shadow 0.35s ease",
                     cursor: "default",
+                    flexShrink: 0,
+                    marginTop: [0, 32, 8, 40, 16][i],
                   }}
                   onMouseEnter={(e) => {
-                    (e.currentTarget as HTMLDivElement).style.transform = "rotate(0deg) translateY(-6px)";
-                    (e.currentTarget as HTMLDivElement).style.boxShadow = "0 16px 40px rgba(61,74,30,0.18)";
+                    (e.currentTarget as HTMLDivElement).style.transform = "rotate(0deg) translateY(-8px)";
+                    (e.currentTarget as HTMLDivElement).style.boxShadow = "0 20px 48px rgba(44,42,30,0.18), 0 2px 8px rgba(44,42,30,0.08)";
                   }}
                   onMouseLeave={(e) => {
-                    (e.currentTarget as HTMLDivElement).style.transform = `rotate(${[1.2, -0.8, 1.5, -1.2][i]}deg)`;
-                    (e.currentTarget as HTMLDivElement).style.boxShadow = "0 6px 24px rgba(61,74,30,0.12)";
+                    (e.currentTarget as HTMLDivElement).style.transform = `rotate(${card.cardRot}deg)`;
+                    (e.currentTarget as HTMLDivElement).style.boxShadow = "0 4px 20px rgba(44,42,30,0.13), 0 1px 4px rgba(44,42,30,0.06)";
                   }}
                 >
-                  {/* photo area */}
-                  <div style={{ borderRadius: 2, overflow: "hidden", marginBottom: 16, height: 160, background: "hsl(var(--muted))" }}>
+                  {/* washi tape strip */}
+                  <div style={{
+                    position: "absolute",
+                    top: -14,
+                    left: "50%",
+                    transform: `translateX(-50%) rotate(${card.tapeRot}deg)`,
+                    width: 72,
+                    height: 28,
+                    background: card.tape,
+                    opacity: 0.82,
+                    borderRadius: 2,
+                    zIndex: 2,
+                  }} />
+
+                  {/* photo */}
+                  <div style={{ overflow: "hidden", height: card.imgH, background: "#E8E4D8", marginBottom: 0 }}>
                     <img
                       src={card.img}
                       alt={card.label}
-                      style={{ width: "100%", height: "100%", objectFit: "cover", display: "block", filter: "sepia(0.08) contrast(1.02)" }}
+                      draggable={false}
+                      style={{ width: "100%", height: "100%", objectFit: "cover", display: "block", filter: "sepia(0.12) contrast(1.04) saturate(0.9)" }}
                     />
                   </div>
-                  <div style={{ fontFamily: "'DM Mono', monospace", fontSize: 10, letterSpacing: "0.12em", textTransform: "uppercase", color: "#A8CC2C", marginBottom: 6 }}>
-                    {card.label}
-                  </div>
-                  <div style={{ fontFamily: "'Libre Baskerville', serif", fontStyle: "italic", fontSize: 15, color: "hsl(var(--foreground))", marginBottom: 4, lineHeight: 1.35 }}>
-                    {card.content}
-                  </div>
-                  <div style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 12, color: "hsl(var(--muted-foreground))", opacity: 0.65 }}>
-                    {card.sub}
+
+                  {/* caption area */}
+                  <div style={{ paddingTop: 12 }}>
+                    <div style={{
+                      fontFamily: "'DM Mono', monospace",
+                      fontSize: 9,
+                      letterSpacing: "0.14em",
+                      textTransform: "uppercase",
+                      color: card.tape === "#C8E870" ? "#4A5E28" : card.tape,
+                      marginBottom: 6,
+                      opacity: 0.9,
+                    }}>
+                      {card.label}
+                    </div>
+                    <div style={{
+                      fontFamily: "'Caveat', cursive",
+                      fontSize: 20,
+                      fontWeight: 600,
+                      color: "#2C2A1E",
+                      lineHeight: 1.25,
+                      marginBottom: card.sub ? 4 : 0,
+                    }}>
+                      {card.content}
+                    </div>
+                    {card.sub && (
+                      <div style={{
+                        fontFamily: "'DM Mono', monospace",
+                        fontSize: 10,
+                        color: "#6B6650",
+                        opacity: 0.7,
+                      }}>
+                        {card.sub}
+                      </div>
+                    )}
                   </div>
                 </div>
               ))}
@@ -310,9 +382,7 @@ export default function MaisSobre() {
         </section>
 
       </main>
-
       <Footer />
-
       <style>{`
         @keyframes msFloatA {
           0%, 100% { transform: translateY(0px); }
