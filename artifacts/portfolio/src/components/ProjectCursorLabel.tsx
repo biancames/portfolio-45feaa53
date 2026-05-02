@@ -36,7 +36,7 @@ export function ProjectCursorLabel() {
         background: "#A8CC2C",
         color: "#2C2A1E",
         fontFamily: "'DM Sans', sans-serif",
-        fontWeight: 600,
+        fontWeight: 400,
         fontSize: 13,
         padding: "3px 10px 4px",
         borderRadius: 3,
