@@ -11,7 +11,7 @@ export default function DarkModeSwitch({ dark, onToggle }: Props) {
       style={{
         position: "fixed",
         bottom: 32,
-        left: 32,
+        right: 32,
         zIndex: 9998,
         background: "none",
         border: "none",
