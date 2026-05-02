@@ -152,39 +152,36 @@ function PostcardSection() {
           boxShadow: "0 8px 40px rgba(61,74,30,0.08)",
         }}>
 
-          {/* ── Left: photo + marquee strip ── */}
-          <div style={{ flex: "0 0 44%", display: "flex", flexDirection: "column", overflow: "hidden" }}>
+          {/* ── Left: photo + tools overlay at bottom ── */}
+          <div style={{ flex: "0 0 44%", position: "relative", overflow: "hidden" }}>
             <img
               src={bioPhoto}
               alt="Bianca Mesquita"
-              style={{ flex: 1, width: "100%", objectFit: "cover", objectPosition: "center top", display: "block", minHeight: 0 }}
+              style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: "center top", display: "block" }}
               draggable={false}
             />
-            {/* Infinite marquee tool strip */}
+            {/* Tool icons — frosted strip overlaying the bottom of the photo */}
             <div style={{
-              overflow: "hidden",
-              background: "hsl(var(--background))",
-              borderTop: "1px solid hsl(var(--border))",
-              padding: "10px 0",
+              position: "absolute",
+              bottom: 0, left: 0, right: 0,
+              padding: "10px 14px",
+              background: "rgba(245,240,232,0.88)",
+              backdropFilter: "blur(6px)",
+              display: "flex",
+              gap: 8,
+              alignItems: "center",
             }}>
-              <div style={{
-                display: "flex",
-                gap: 10,
-                width: "max-content",
-                animation: "toolsScroll 20s linear infinite",
-              }}>
-                {loopTools.map((t, i) => (
-                  <div key={i} style={{
-                    width: 36, height: 36, borderRadius: 9,
-                    border: "1px solid hsl(var(--border))",
-                    background: "hsl(var(--card))",
-                    display: "flex", alignItems: "center", justifyContent: "center",
-                    color: "#3D4A1E", flexShrink: 0,
-                  }}>
-                    {t.icon}
-                  </div>
-                ))}
-              </div>
+              {tools.map((t, i) => (
+                <div key={i} style={{
+                  width: 36, height: 36, borderRadius: 9,
+                  border: "1px solid rgba(61,74,30,0.15)",
+                  background: "hsl(var(--card))",
+                  display: "flex", alignItems: "center", justifyContent: "center",
+                  color: "#3D4A1E", flexShrink: 0,
+                }}>
+                  {t.icon}
+                </div>
+              ))}
             </div>
           </div>
 
@@ -226,38 +223,45 @@ function PostcardSection() {
               </div>
             </div>
 
-            {/* CTA button — hover swaps colors, arrow rotates */}
+            {/* CTA button — full pill matching Ver Todos style */}
             <div
               onMouseEnter={() => setBtnHover(true)}
               onMouseLeave={() => setBtnHover(false)}
               onClick={(e) => e.stopPropagation()}
               style={{
-                background: btnHover ? "#3D4A1E" : "#C8E870",
-                borderRadius: 14,
-                padding: "13px 18px",
-                display: "flex", alignItems: "center", justifyContent: "space-between",
-                transition: "background 0.25s ease",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "space-between",
+                padding: "11px 14px 11px 22px",
+                borderRadius: 999,
+                background: btnHover ? "#BFD962" : "#C8E870",
                 cursor: "pointer",
+                transition: "background 0.25s ease",
+                userSelect: "none",
               }}
             >
               <span style={{
-                fontFamily: "'DM Sans', sans-serif", fontWeight: 600, fontSize: 14,
-                color: btnHover ? "#C8E870" : "#2C2A1E",
-                transition: "color 0.25s ease",
+                fontFamily: "'DM Sans', sans-serif",
+                fontWeight: 500,
+                fontSize: 15,
+                color: "#2C2A1E",
               }}>
                 Mais sobre mim
               </span>
               <span style={{
-                width: 34, height: 34, borderRadius: "50%",
-                background: btnHover ? "#C8E870" : "#3D4A1E",
-                display: "inline-flex", alignItems: "center", justifyContent: "center",
-                color: btnHover ? "#2C2A1E" : "#F5F0E8",
-                fontSize: 17,
-                transition: "background 0.25s ease, color 0.25s ease, transform 0.35s ease",
-                transform: btnHover ? "rotate(-45deg)" : "rotate(0deg)",
+                width: 38, height: 38,
+                borderRadius: "50%",
+                background: "#3D4A1E",
+                display: "inline-flex",
+                alignItems: "center",
+                justifyContent: "center",
                 flexShrink: 0,
+                transition: "transform 0.35s ease",
+                transform: btnHover ? "rotate(0deg)" : "rotate(45deg)",
               }}>
-                ↓
+                <svg width="16" height="16" viewBox="0 0 18 18" fill="none">
+                  <path d="M3.5 9H14.5M14.5 9L9.5 4M14.5 9L9.5 14" stroke="#C8E870" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/>
+                </svg>
               </span>
             </div>
           </div>
