@@ -543,8 +543,8 @@ function FooterName() {
     fontFamily: "'Libre Baskerville', serif",
     fontSize: "clamp(4rem,11vw,10rem)",
     fontWeight: 700,
-    color: "hsl(var(--foreground))",
-    opacity: visible ? 0.08 : 0,
+    color: "#3D4A1E",
+    opacity: visible ? 0.45 : 0,
     lineHeight: 0.95,
     display: "block",
     transition: "opacity 0.8s ease, transform 0.8s ease",
@@ -952,17 +952,17 @@ export default function Home() {
             .beach-illus { transition: filter 0.4s ease; }
             .dark .beach-illus { filter: sepia(1) saturate(4) hue-rotate(30deg) brightness(1.1); }
           `}</style>
-          <div style={{ display: "flex", alignItems: "flex-end", gap: 40, paddingLeft: 40 }}>
-            <div style={{ animation: "float 3s ease-in-out infinite", flexShrink: 0 }}>
+          <div style={{ display: "flex", alignItems: "stretch", gap: 40, paddingLeft: 40 }}>
+            <div style={{ flexShrink: 0, display: "flex", alignItems: "flex-end" }}>
               <img
                 src={beachIllus}
                 alt="Out of office"
                 className="beach-illus"
                 draggable={false}
-                style={{ height: 220, width: "auto", display: "block" }}
+                style={{ height: "100%", width: "auto", display: "block", maxHeight: "100%" }}
               />
             </div>
-            <div style={{ flex: 1, overflow: "hidden" }}>
+            <div style={{ flex: 1, overflow: "hidden", display: "flex", alignItems: "flex-end" }}>
               <FooterName />
             </div>
           </div>
