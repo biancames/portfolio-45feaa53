@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { SiBehance, SiDribbble } from "react-icons/si";
 import { Linkedin } from "lucide-react";
 import { PostcardSection } from "@/components/PostcardSection";
@@ -10,6 +10,104 @@ import cafeteiraIllustra from "@assets/Group_1777757144289.png";
 import pcIllustra       from "@assets/pcc_1_1777757144289.png";
 
 const skills = ["UX Research", "UX Design", "Product Design", "Interaction Design", "Design System", "Prototipação", "Visual Design"];
+
+const SLIDES = [
+  { label: "livro favorito", content: "Um Estudo em Vermelho", sub: "Arthur Conan Doyle", img: "https://images.unsplash.com/photo-1512820790803-83ca734da794?w=1200&h=700&fit=crop" },
+  { label: "música do momento", content: "Vienna", sub: "Billy Joel", img: "https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?w=1200&h=700&fit=crop" },
+  { label: "viagem favorita", content: "Destino", sub: "troque pela sua foto", img: "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=1200&h=700&fit=crop" },
+  { label: "drink favorito", content: "Moscow Mule", sub: "", img: "https://images.unsplash.com/photo-1551538827-9c037cb4f32a?w=1200&h=700&fit=crop" },
+  { label: "meu pet", content: "Nome do pet", sub: "troque pela sua foto", img: "https://images.unsplash.com/photo-1543466835-00a7907e9de1?w=1200&h=700&fit=crop" },
+];
+
+function ImageCarousel() {
+  const [active, setActive] = useState(0);
+  const prev = useCallback(() => setActive((a) => (a - 1 + SLIDES.length) % SLIDES.length), []);
+  const next = useCallback(() => setActive((a) => (a + 1) % SLIDES.length), []);
+
+  return (
+    <>
+      {/* carousel track */}
+      <div style={{ position: "relative", borderRadius: 16, overflow: "hidden", height: 480, background: "#2C2A1E" }}>
+        <div style={{
+          display: "flex", height: "100%",
+          transform: `translateX(-${active * 100}%)`,
+          transition: "transform 0.55s cubic-bezier(0.4, 0, 0.2, 1)",
+        }}>
+          {SLIDES.map((s, i) => (
+            <div key={i} style={{ minWidth: "100%", height: "100%", position: "relative", flexShrink: 0 }}>
+              <img src={s.img} alt={s.label} draggable={false}
+                style={{ width: "100%", height: "100%", objectFit: "cover", display: "block", filter: "sepia(0.1) contrast(1.05) saturate(0.88)" }} />
+              <div style={{
+                position: "absolute", bottom: 0, left: 0, right: 0,
+                background: "linear-gradient(to top, rgba(44,42,30,0.82) 0%, transparent 100%)",
+                padding: "48px 32px 28px",
+              }}>
+                <div style={{ fontFamily: "'DM Mono', monospace", fontSize: 10, letterSpacing: "0.16em", textTransform: "uppercase", color: "#A8CC2C", marginBottom: 6 }}>
+                  {s.label}
+                </div>
+                <div style={{ fontFamily: "'Caveat', cursive", fontSize: 32, fontWeight: 600, color: "#F5F0E8", lineHeight: 1.1 }}>
+                  {s.content}
+                </div>
+                {s.sub && (
+                  <div style={{ fontFamily: "'DM Mono', monospace", fontSize: 11, color: "#F5F0E8", opacity: 0.6, marginTop: 4 }}>
+                    {s.sub}
+                  </div>
+                )}
+              </div>
+            </div>
+          ))}
+        </div>
+
+        {/* arrow left */}
+        <button onClick={prev} aria-label="anterior" style={{
+          position: "absolute", left: 16, top: "50%", transform: "translateY(-50%)",
+          width: 44, height: 44, borderRadius: "50%",
+          background: "rgba(245,240,232,0.15)", backdropFilter: "blur(6px)",
+          border: "1px solid rgba(245,240,232,0.25)", cursor: "pointer",
+          display: "flex", alignItems: "center", justifyContent: "center",
+          color: "#F5F0E8", fontSize: 20, transition: "background 0.2s ease", zIndex: 4,
+        }}
+          onMouseEnter={(e) => { (e.currentTarget as HTMLButtonElement).style.background = "rgba(168,204,44,0.35)"; }}
+          onMouseLeave={(e) => { (e.currentTarget as HTMLButtonElement).style.background = "rgba(245,240,232,0.15)"; }}
+        >←</button>
+
+        {/* arrow right */}
+        <button onClick={next} aria-label="próximo" style={{
+          position: "absolute", right: 16, top: "50%", transform: "translateY(-50%)",
+          width: 44, height: 44, borderRadius: "50%",
+          background: "rgba(245,240,232,0.15)", backdropFilter: "blur(6px)",
+          border: "1px solid rgba(245,240,232,0.25)", cursor: "pointer",
+          display: "flex", alignItems: "center", justifyContent: "center",
+          color: "#F5F0E8", fontSize: 20, transition: "background 0.2s ease", zIndex: 4,
+        }}
+          onMouseEnter={(e) => { (e.currentTarget as HTMLButtonElement).style.background = "rgba(168,204,44,0.35)"; }}
+          onMouseLeave={(e) => { (e.currentTarget as HTMLButtonElement).style.background = "rgba(245,240,232,0.15)"; }}
+        >→</button>
+
+        {/* counter */}
+        <div style={{
+          position: "absolute", top: 20, right: 20, zIndex: 4,
+          fontFamily: "'DM Mono', monospace", fontSize: 11,
+          color: "rgba(245,240,232,0.7)", letterSpacing: "0.1em",
+        }}>
+          {String(active + 1).padStart(2, "0")} / {String(SLIDES.length).padStart(2, "0")}
+        </div>
+      </div>
+
+      {/* dots */}
+      <div style={{ display: "flex", gap: 8, justifyContent: "center", marginTop: 20 }}>
+        {SLIDES.map((_, i) => (
+          <button key={i} onClick={() => setActive(i)} aria-label={`slide ${i + 1}`} style={{
+            width: i === active ? 24 : 8, height: 8, borderRadius: 4,
+            background: i === active ? "#A8CC2C" : "hsl(var(--border))",
+            border: "none", cursor: "pointer", padding: 0,
+            transition: "width 0.3s ease, background 0.3s ease",
+          }} />
+        ))}
+      </div>
+    </>
+  );
+}
 
 export default function MaisSobre() {
   const [scrolled, setScrolled] = useState(false);
@@ -269,157 +367,13 @@ export default function MaisSobre() {
         {/* ── PESSOAL ── */}
         <section style={{ padding: "100px 40px" }}>
           <div style={{ maxWidth: 1000, margin: "0 auto" }}>
-            <div style={{ marginBottom: 56 }}>
+            <div style={{ marginBottom: 40 }}>
               <h2 className="section-heading" style={{ fontFamily: "'Libre Baskerville', serif", fontSize: "clamp(1.5rem,4vw,2.5rem)", fontStyle: "italic", margin: 0 }}>
                 [Além do trabalho]
               </h2>
               <div style={{ width: 48, height: 4, background: "#A8CC2C", marginTop: 8, borderRadius: 4 }} />
             </div>
-
-            {/* ── Scrapbook cards ── */}
-            <div style={{ display: "flex", flexWrap: "wrap", gap: 48, alignItems: "flex-start", paddingTop: 24 }}>
-              {[
-                {
-                  label: "livro favorito",
-                  content: "Um Estudo em Vermelho",
-                  sub: "Arthur Conan Doyle",
-                  img: "https://images.unsplash.com/photo-1512820790803-83ca734da794?w=400&h=520&fit=crop",
-                  tape: "#A8CC2C",
-                  tapeRot: -5,
-                  cardRot: -2.5,
-                  w: 196,
-                  imgH: 220,
-                },
-                {
-                  label: "música do momento",
-                  content: "Vienna",
-                  sub: "Billy Joel",
-                  img: "https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?w=400&h=400&fit=crop",
-                  tape: "#A35C1C",
-                  tapeRot: 4,
-                  cardRot: 1.8,
-                  w: 212,
-                  imgH: 212,
-                },
-                {
-                  label: "viagem favorita",
-                  content: "Destino",
-                  sub: "troque pela sua foto",
-                  img: "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=500&h=400&fit=crop",
-                  tape: "#4A5E28",
-                  tapeRot: -3,
-                  cardRot: -1.2,
-                  w: 240,
-                  imgH: 200,
-                },
-                {
-                  label: "drink favorito",
-                  content: "Moscow Mule",
-                  sub: "",
-                  img: "https://images.unsplash.com/photo-1551538827-9c037cb4f32a?w=400&h=440&fit=crop",
-                  tape: "#C8E870",
-                  tapeRot: 6,
-                  cardRot: 2.2,
-                  w: 188,
-                  imgH: 200,
-                },
-                {
-                  label: "meu pet",
-                  content: "Nome do pet",
-                  sub: "troque pela sua foto",
-                  img: "https://images.unsplash.com/photo-1543466835-00a7907e9de1?w=400&h=460&fit=crop",
-                  tape: "#A35C1C",
-                  tapeRot: -5,
-                  cardRot: -2,
-                  w: 204,
-                  imgH: 216,
-                },
-              ].map((card, i) => (
-                <div
-                  key={i}
-                  className="scrapbook-card"
-                  style={{
-                    position: "relative",
-                    width: card.w,
-                    background: "#FDFCF6",
-                    padding: "12px 12px 24px",
-                    boxShadow: "0 4px 20px rgba(44,42,30,0.13), 0 1px 4px rgba(44,42,30,0.06)",
-                    transform: `rotate(${card.cardRot}deg)`,
-                    transition: "transform 0.35s cubic-bezier(.22,1,.36,1), box-shadow 0.35s ease",
-                    cursor: "default",
-                    flexShrink: 0,
-                    marginTop: [0, 32, 8, 40, 16][i],
-                  }}
-                  onMouseEnter={(e) => {
-                    (e.currentTarget as HTMLDivElement).style.transform = "rotate(0deg) translateY(-8px)";
-                    (e.currentTarget as HTMLDivElement).style.boxShadow = "0 20px 48px rgba(44,42,30,0.18), 0 2px 8px rgba(44,42,30,0.08)";
-                  }}
-                  onMouseLeave={(e) => {
-                    (e.currentTarget as HTMLDivElement).style.transform = `rotate(${card.cardRot}deg)`;
-                    (e.currentTarget as HTMLDivElement).style.boxShadow = "0 4px 20px rgba(44,42,30,0.13), 0 1px 4px rgba(44,42,30,0.06)";
-                  }}
-                >
-                  {/* washi tape strip */}
-                  <div style={{
-                    position: "absolute",
-                    top: -14,
-                    left: "50%",
-                    transform: `translateX(-50%) rotate(${card.tapeRot}deg)`,
-                    width: 72,
-                    height: 28,
-                    background: card.tape,
-                    opacity: 0.82,
-                    borderRadius: 2,
-                    zIndex: 2,
-                  }} />
-
-                  {/* photo */}
-                  <div style={{ overflow: "hidden", height: card.imgH, background: "#E8E4D8", marginBottom: 0 }}>
-                    <img
-                      src={card.img}
-                      alt={card.label}
-                      draggable={false}
-                      style={{ width: "100%", height: "100%", objectFit: "cover", display: "block", filter: "sepia(0.12) contrast(1.04) saturate(0.9)" }}
-                    />
-                  </div>
-
-                  {/* caption area */}
-                  <div style={{ paddingTop: 12 }}>
-                    <div style={{
-                      fontFamily: "'DM Mono', monospace",
-                      fontSize: 9,
-                      letterSpacing: "0.14em",
-                      textTransform: "uppercase",
-                      color: card.tape === "#C8E870" ? "#4A5E28" : card.tape,
-                      marginBottom: 6,
-                      opacity: 0.9,
-                    }}>
-                      {card.label}
-                    </div>
-                    <div style={{
-                      fontFamily: "'Caveat', cursive",
-                      fontSize: 20,
-                      fontWeight: 600,
-                      color: "#2C2A1E",
-                      lineHeight: 1.25,
-                      marginBottom: card.sub ? 4 : 0,
-                    }}>
-                      {card.content}
-                    </div>
-                    {card.sub && (
-                      <div style={{
-                        fontFamily: "'DM Mono', monospace",
-                        fontSize: 10,
-                        color: "#6B6650",
-                        opacity: 0.7,
-                      }}>
-                        {card.sub}
-                      </div>
-                    )}
-                  </div>
-                </div>
-              ))}
-            </div>
+            <ImageCarousel />
           </div>
         </section>
 
