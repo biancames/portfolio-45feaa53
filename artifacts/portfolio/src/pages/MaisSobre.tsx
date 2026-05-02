@@ -2,6 +2,11 @@ import { useState, useEffect } from "react";
 import { SiBehance, SiDribbble } from "react-icons/si";
 import { Linkedin } from "lucide-react";
 import { PostcardSection } from "@/components/PostcardSection";
+import librosIllustra   from "@assets/libros_1_1777757144289.png";
+import passportIllustra from "@assets/passport_1_1777757144289.png";
+import caipiriIllustra  from "@assets/caipiri_1777757144289.png";
+import cafeteiraIllustra from "@assets/Group_1777757144289.png";
+import pcIllustra       from "@assets/pcc_1_1777757144289.png";
 
 const skills = ["UX Research", "UX Design", "Product Design", "Interaction Design", "Design System", "Prototipação", "Visual Design"];
 
@@ -68,8 +73,8 @@ export default function MaisSobre() {
       <main style={{ paddingTop: 80 }}>
 
         {/* ── HEADER ── */}
-        <section style={{ padding: "80px 40px 64px" }}>
-          <div style={{ maxWidth: 1000, margin: "0 auto" }}>
+        <section style={{ padding: "80px 40px 64px", position: "relative", overflow: "hidden", minHeight: 260 }}>
+          <div style={{ maxWidth: 1000, margin: "0 auto", position: "relative", zIndex: 2 }}>
             <a
               href="/"
               style={{
@@ -88,6 +93,29 @@ export default function MaisSobre() {
               [Mais sobre mim]
             </h1>
             <div style={{ width: 48, height: 4, background: "#A8CC2C", borderRadius: 4 }} />
+          </div>
+
+          {/* Floating illustrations — right side */}
+          <div style={{ position: "absolute", right: 0, top: 0, bottom: 0, width: "44%", pointerEvents: "none", zIndex: 1 }}>
+            <img src={cafeteiraIllustra} alt="" draggable={false}
+              style={{ position: "absolute", top: "8%", right: "30%", height: 88, width: "auto",
+                transform: "rotate(-6deg)", animation: "msFloatA 3.4s ease-in-out infinite" }} />
+            <img src={librosIllustra} alt="" draggable={false}
+              style={{ position: "absolute", top: "38%", right: "8%", height: 88, width: "auto",
+                transform: "rotate(5deg)", animation: "msFloatB 2.9s ease-in-out infinite 0.3s" }} />
+            <img src={caipiriIllustra} alt="" draggable={false}
+              style={{ position: "absolute", top: "60%", right: "36%", height: 88, width: "auto",
+                transform: "rotate(-4deg)", animation: "msFloatA 3.1s ease-in-out infinite 0.7s" }} />
+            <img src={passportIllustra} alt="" draggable={false}
+              style={{ position: "absolute", top: "18%", right: "4%", height: 80, width: "auto",
+                transform: "rotate(10deg)", animation: "msFloatB 3.6s ease-in-out infinite 1s" }} />
+            <img src={pcIllustra} alt="" draggable={false}
+              style={{ position: "absolute", top: "72%", right: "10%", height: 80, width: "auto",
+                transform: "rotate(-3deg)", animation: "msFloatA 2.7s ease-in-out infinite 0.5s" }} />
+            {/* sparkles */}
+            <span style={{ position: "absolute", top: "30%", right: "24%", fontSize: 20, color: "#A8CC2C", animation: "msFloatB 3s ease-in-out infinite" }}>✦</span>
+            <span style={{ position: "absolute", top: "55%", right: "52%", fontSize: 14, color: "#3D4A1E", animation: "msFloatA 2.8s ease-in-out infinite 0.6s" }}>✧</span>
+            <span style={{ position: "absolute", top: "80%", right: "30%", fontSize: 16, color: "#A8CC2C", animation: "msFloatB 3.3s ease-in-out infinite 1.1s" }}>✦</span>
           </div>
         </section>
 
@@ -256,6 +284,14 @@ export default function MaisSobre() {
       </main>
 
       <style>{`
+        @keyframes msFloatA {
+          0%, 100% { transform: translateY(0px); }
+          50%       { transform: translateY(-10px); }
+        }
+        @keyframes msFloatB {
+          0%, 100% { transform: translateY(0px); }
+          50%       { transform: translateY(10px); }
+        }
         .nav-link::before,
         .nav-link::after {
           font-family: 'Libre Baskerville', serif;
