@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { SiBehance, SiDribbble } from "react-icons/si";
 import { Linkedin } from "lucide-react";
 import { PostcardSection } from "@/components/PostcardSection";
+import { Footer } from "@/components/Footer";
 import librosIllustra   from "@assets/libros_1_1777757144289.png";
 import passportIllustra from "@assets/passport_1_1777757144289.png";
 import caipiriIllustra  from "@assets/caipiri_1777757144289.png";
@@ -309,6 +310,8 @@ export default function MaisSobre() {
         </section>
 
       </main>
+
+      <Footer />
 
       <style>{`
         @keyframes msFloatA {

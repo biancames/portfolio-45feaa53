@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { SiBehance, SiDribbble } from "react-icons/si";
 import { Linkedin } from "lucide-react";
+import { Footer } from "@/components/Footer";
 import { ALL_PROJECTS, type Category } from "@/data/projects";
 
 type FilterOption = "Todos" | Category;
@@ -230,6 +231,8 @@ export default function Projects() {
         </div>
 
       </main>
+
+      <Footer />
 
       <style>{`
         .nav-link::before,
