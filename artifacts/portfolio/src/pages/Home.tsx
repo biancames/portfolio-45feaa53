@@ -587,7 +587,9 @@ const ROLES = ["product_designer", "ux/ui_designer", "graphic_designer"];
 
 export default function Home() {
   const [scrolled, setScrolled] = useState(false);
+  const [typedText, setTypedText] = useState("");
   const [roleIdx, setRoleIdx] = useState(0);
+  const [isDeleting, setIsDeleting] = useState(false);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 40);
@@ -596,9 +598,26 @@ export default function Home() {
   }, []);
 
   useEffect(() => {
-    const t = setInterval(() => setRoleIdx(i => (i + 1) % ROLES.length), 2800);
-    return () => clearInterval(t);
-  }, []);
+    const current = ROLES[roleIdx];
+    let delay: number;
+    if (!isDeleting && typedText === current) {
+      delay = 1800;
+      const t = setTimeout(() => setIsDeleting(true), delay);
+      return () => clearTimeout(t);
+    } else if (isDeleting && typedText === "") {
+      setIsDeleting(false);
+      setRoleIdx(i => (i + 1) % ROLES.length);
+      return;
+    } else if (isDeleting) {
+      delay = 38;
+      const t = setTimeout(() => setTypedText(s => s.slice(0, -1)), delay);
+      return () => clearTimeout(t);
+    } else {
+      delay = 72;
+      const t = setTimeout(() => setTypedText(current.slice(0, typedText.length + 1)), delay);
+      return () => clearTimeout(t);
+    }
+  }, [typedText, isDeleting, roleIdx]);
 
   const projects = [
     { title: "SisPat", desc: "Sistema público de patrimônio imobiliário. Redesign completo com foco em acessibilidade e eficiência para servidores públicos.", tags: ["Redesign", "UX Research", "UX Design"], img: "https://picsum.photos/seed/sispatbig/1200/700" },
@@ -676,7 +695,7 @@ export default function Home() {
             display: "inline-flex", alignItems: "center", gap: 8,
             padding: "8px 16px", borderRadius: 999,
             border: "1.5px dashed #A8CC2C",
-            marginBottom: 24,
+            marginBottom: 32,
             fontFamily: "'DM Sans', sans-serif",
             fontSize: 12,
             color: "#3D4A1E",
@@ -685,15 +704,17 @@ export default function Home() {
             Disponível para trabalho
           </div>
           <h1 style={{ fontFamily: "'Libre Baskerville', serif", lineHeight: 1.1, margin: 0 }}>
-            <span style={{ display: "block", fontSize: "clamp(1.4rem, 3vw, 2rem)", fontStyle: "italic", fontWeight: 400, color: "hsl(var(--foreground))" }}>
+            <span style={{ display: "block", fontSize: "clamp(1.2rem, 2.5vw, 1.6rem)", fontStyle: "italic", fontWeight: 400, color: "hsl(var(--foreground))", marginBottom: 4 }}>
               Oi, eu sou a <span style={{ fontWeight: 700 }}>Bia,</span>
             </span>
-            <span key={roleIdx} style={{ display: "block", fontSize: "clamp(2.6rem, 6.5vw, 5.5rem)", fontStyle: "normal", fontWeight: 700, color: "#A8CC2C", fontFamily: "'DM Mono', monospace", letterSpacing: "-0.03em", lineHeight: 1.05, animation: "roleFadeIn 0.45s ease" }}>{ROLES[roleIdx]}</span>
+            <span style={{ display: "block", fontSize: "clamp(2.6rem, 6.5vw, 5.5rem)", fontStyle: "normal", fontWeight: 700, color: "#A8CC2C", fontFamily: "'DM Mono', monospace", letterSpacing: "-0.03em", lineHeight: 1.05, minHeight: "1.1em" }}>
+              {typedText}<span style={{ opacity: 1, animation: "cursorBlink 0.75s step-end infinite", color: "#A8CC2C" }}>|</span>
+            </span>
           </h1>
-          <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 16, lineHeight: 1.65, marginTop: 20, opacity: 0.75, maxWidth: 440 }}>
+          <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 16, lineHeight: 1.65, marginTop: 32, opacity: 0.75, maxWidth: 440 }}>
             que transforma necessidades dos usuários em experiências digitais claras e funcionais.
           </p>
-          <div style={{ marginTop: 32, display: "flex", gap: 16 }}>
+          <div style={{ marginTop: 48, display: "flex", gap: 16 }}>
             <a
               href="#projetos"
               data-testid="link-ver-projetos"
@@ -981,9 +1002,9 @@ export default function Home() {
           0%, 100% { opacity: 1; }
           50% { opacity: 0.4; }
         }
-        @keyframes roleFadeIn {
-          from { opacity: 0; transform: translateY(10px); }
-          to   { opacity: 1; transform: translateY(0); }
+        @keyframes cursorBlink {
+          0%, 100% { opacity: 1; }
+          50% { opacity: 0; }
         }
         @keyframes scrollDot {
           0% { transform: translateY(0); opacity: 1; }
