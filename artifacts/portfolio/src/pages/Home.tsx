@@ -145,7 +145,7 @@ function PostcardSection() {
           WebkitBackfaceVisibility: "hidden" as React.CSSProperties["WebkitBackfaceVisibility"],
           border: "1.5px dashed hsl(var(--border))",
           borderRadius: 20,
-          background: "hsl(var(--card))",
+          background: "hsl(var(--background))",
           overflow: "hidden",
           display: "flex",
           boxShadow: "0 12px 48px rgba(61,74,30,0.18)",
@@ -207,7 +207,7 @@ function PostcardSection() {
             {/* Bio block — light card */}
             <div style={{
               flex: 1,
-              background: "hsl(var(--muted))", borderRadius: 16,
+              background: "hsl(var(--card))", borderRadius: 16,
               border: "1px solid hsl(var(--border))", padding: "16px 20px",
               display: "flex", flexDirection: "column", justifyContent: "space-between",
               overflow: "hidden",
@@ -854,7 +854,7 @@ export default function Home() {
       </section>
 
       {/* ── SOBRE ── */}
-      <section id="sobre" style={{ padding: "100px 40px", position: "relative" }}>
+      <section id="sobre" style={{ padding: "100px 40px", position: "relative", background: "hsl(var(--muted)/0.25)" }}>
         <div style={{ maxWidth: 1000, margin: "0 auto" }}>
           <div style={{ marginBottom: 48 }}>
             <h2 className="section-heading" style={{ fontFamily: "'Libre Baskerville', serif", fontSize: "clamp(2rem,5vw,3.5rem)", fontStyle: "italic" }}>[Sobre mim]</h2>
