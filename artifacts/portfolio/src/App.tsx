@@ -5,6 +5,7 @@ import Projects from "@/pages/Projects";
 import MaisSobre from "@/pages/MaisSobre";
 import DarkModeSwitch from "@/components/DarkModeSwitch";
 import CustomCursor from "@/components/CustomCursor";
+import { ProjectCursorLabel } from "@/components/ProjectCursorLabel";
 
 export default function App() {
   const [dark, setDark] = useState(() => {
@@ -27,6 +28,7 @@ export default function App() {
   return (
     <>
       <CustomCursor />
+      <ProjectCursorLabel />
       <Switch>
         <Route path="/" component={Home} />
         <Route path="/projetos" component={Projects} />

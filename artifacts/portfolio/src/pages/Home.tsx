@@ -199,12 +199,13 @@ function ProjectCard({ project, featured }: {
   return (
     <div
       data-testid={`card-project-${project.title}`}
+      data-project-card={project.placeholder ? undefined : "true"}
       style={{
         borderRadius: 16,
         overflow: "hidden",
         background: "hsl(var(--card))",
         boxShadow: "0 4px 24px rgba(61,74,30,0.10)",
-        cursor: "pointer",
+        cursor: project.placeholder ? "default" : "none",
         userSelect: "none",
         transform: undefined,
         border: project.placeholder ? "2px dashed hsl(var(--border))" : "1px solid hsl(var(--border))",

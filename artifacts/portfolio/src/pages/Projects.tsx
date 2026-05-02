@@ -29,6 +29,7 @@ function ProjectCard({ project }: { project: (typeof ALL_PROJECTS)[0] }) {
 
   return (
     <div
+      data-project-card="true"
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
       style={{
@@ -37,7 +38,7 @@ function ProjectCard({ project }: { project: (typeof ALL_PROJECTS)[0] }) {
         boxShadow: hovered ? "0 8px 32px rgba(61,74,30,0.18)" : "0 4px 24px rgba(61,74,30,0.10)",
         border: "1px solid hsl(var(--border))",
         flex: "1 1 300px", minWidth: 280, maxWidth: "100%",
-        cursor: "pointer",
+        cursor: "none",
         userSelect: "none",
         transition: "box-shadow 0.3s ease, transform 0.3s ease",
         transform: hovered ? "translateY(-4px)" : "translateY(0)",
