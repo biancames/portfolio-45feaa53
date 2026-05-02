@@ -8,7 +8,7 @@ import pcIllustra from "@assets/ilustraPC_1777742604142.png";
 import affinityIcon from "@assets/affinity_1777749697475.png";
 import lovableIcon from "@assets/lovable_1777749697475.png";
 import claudeIcon from "@assets/claude_1777749697475.png";
-import beachIllus from "@assets/Out_of_office_1777750379836.jpeg";
+import beachIllus from "@assets/Prancheta1_1777750622927.png";
 
 function useDragBack(
   ref: React.RefObject<HTMLElement | null>,
