@@ -6,7 +6,7 @@ import affinityIcon from "@assets/affinity_1777749697475.png";
 import lovableIcon from "@assets/lovable_1777749697475.png";
 import claudeIcon from "@assets/claude_1777749697475.png";
 
-export function PostcardSection({ hideCta }: { hideCta?: boolean }) {
+export function PostcardSection({ hideCta, noFlip }: { hideCta?: boolean; noFlip?: boolean }) {
   const [flipped, setFlipped] = useState(false);
   const [btnHover, setBtnHover] = useState(false);
 
@@ -30,14 +30,14 @@ export function PostcardSection({ hideCta }: { hideCta?: boolean }) {
         willChange: "transform",
       }}>
       <div
-        onClick={() => setFlipped((f) => !f)}
+        onClick={() => !noFlip && setFlipped((f) => !f)}
         style={{
           position: "relative",
           height: 460,
           transformStyle: "preserve-3d",
           transform: flipped ? "rotateY(180deg)" : "rotateY(0deg)",
           transition: "transform 0.75s cubic-bezier(0.4, 0, 0.2, 1)",
-          cursor: "pointer",
+          cursor: noFlip ? "default" : "pointer",
           borderRadius: 20,
         }}
       >
@@ -197,18 +197,6 @@ export function PostcardSection({ hideCta }: { hideCta?: boolean }) {
             style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }}
             draggable={false}
           />
-          <button
-            onClick={(e) => { e.stopPropagation(); setFlipped(false); }}
-            style={{
-              position: "absolute", bottom: 20, left: "50%", transform: "translateX(-50%)",
-              background: "rgba(245,240,232,0.92)", border: "none", borderRadius: 999,
-              padding: "8px 24px", fontFamily: "Caveat, cursive", fontSize: 16,
-              color: "#2C2A1E", cursor: "pointer", backdropFilter: "blur(4px)",
-              boxShadow: "0 2px 12px rgba(0,0,0,0.15)",
-            }}
-          >
-            ✦ voltar
-          </button>
         </div>
       </div>
       </div>

@@ -119,7 +119,7 @@ export default function MaisSobre() {
         {/* ── POSTCARD ── */}
         <section style={{ padding: "0 40px 100px", background: "hsl(var(--muted)/0.25)" }}>
           <div style={{ maxWidth: 1000, margin: "0 auto", paddingTop: 64 }}>
-            <PostcardSection hideCta />
+            <PostcardSection hideCta noFlip />
           </div>
         </section>
 
