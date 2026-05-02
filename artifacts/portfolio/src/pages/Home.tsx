@@ -520,7 +520,7 @@ export default function Home() {
             <span style={{ display: "block", fontSize: "clamp(1.25rem, 2.5vw, 1.5rem)", fontStyle: "italic", fontWeight: 400, color: "hsl(var(--foreground))", marginBottom: 4 }}>
               Oi, eu sou a <span style={{ fontWeight: 700 }}>Bia,</span>
             </span>
-            <span style={{ display: "block", fontSize: "clamp(2.5rem, 6.5vw, 5.5rem)", fontStyle: "normal", fontWeight: 700, color: "#A8CC2C", fontFamily: "'DM Mono', monospace", letterSpacing: "-0.03em", lineHeight: 1.05, minHeight: "1.1em" }}>
+            <span style={{ display: "block", fontSize: "clamp(2.5rem, 6.5vw, 5.5rem)", fontStyle: "normal", fontWeight: 700, color: "#A8CC2C", fontFamily: "'DM Mono', monospace", letterSpacing: "-0.03em", lineHeight: 1.05, minHeight: "1.1em", whiteSpace: "nowrap" }}>
               {typedText}<span style={{ opacity: 1, animation: "cursorBlink 0.75s step-end infinite", color: "#A8CC2C" }}>|</span>
             </span>
           </h1>
@@ -663,7 +663,7 @@ export default function Home() {
               <span style={{
                 fontFamily: "'Caveat', cursive",
                 fontSize: 20,
-                color: "#7B5235",
+                color: "#A35C1C",
                 transform: "rotate(-10deg)",
                 display: "block",
                 whiteSpace: "nowrap",
@@ -672,8 +672,8 @@ export default function Home() {
                 click to flip
               </span>
               <svg width="48" height="64" viewBox="0 0 48 64" fill="none" style={{ marginTop: 4 }}>
-                <path d="M38 4 C46 22, 34 48, 8 58" stroke="#7B5235" strokeWidth="2" strokeLinecap="round" fill="none"/>
-                <path d="M8 58 L4 46 M8 58 L20 54" stroke="#7B5235" strokeWidth="2" strokeLinecap="round"/>
+                <path d="M38 4 C46 22, 34 48, 8 58" stroke="#A35C1C" strokeWidth="2" strokeLinecap="round" fill="none"/>
+                <path d="M8 58 L4 46 M8 58 L20 54" stroke="#A35C1C" strokeWidth="2" strokeLinecap="round"/>
               </svg>
             </div>
           </div>
