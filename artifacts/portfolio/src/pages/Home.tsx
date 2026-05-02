@@ -583,13 +583,21 @@ function FooterName() {
 }
 
 /* ─── Main Home Page ─── */
+const ROLES = ["product_designer", "ux/ui_designer", "graphic_designer"];
+
 export default function Home() {
   const [scrolled, setScrolled] = useState(false);
+  const [roleIdx, setRoleIdx] = useState(0);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 40);
     window.addEventListener("scroll", onScroll);
     return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
+  useEffect(() => {
+    const t = setInterval(() => setRoleIdx(i => (i + 1) % ROLES.length), 2800);
+    return () => clearInterval(t);
   }, []);
 
   const projects = [
@@ -676,10 +684,11 @@ export default function Home() {
             <span style={{ width: 8, height: 8, borderRadius: "50%", background: "#A8CC2C", display: "inline-block", animation: "pulse 2s infinite" }} />
             Disponível para trabalho
           </div>
-          <h1 style={{ fontFamily: "'Libre Baskerville', serif", lineHeight: 1.05, margin: 0 }}>
-            <span style={{ display: "block", fontSize: "clamp(1.4rem, 3vw, 2rem)", fontStyle: "italic", fontWeight: 400, color: "hsl(var(--foreground))" }}>Oi, eu sou a</span>
-            <span style={{ display: "block", fontSize: "clamp(5rem, 11vw, 9rem)", fontStyle: "italic", fontWeight: 700, color: "#3D4A1E", lineHeight: 0.9 }}>Bia,</span>
-            <span style={{ display: "block", fontSize: "clamp(1.5rem, 4vw, 3rem)", fontStyle: "normal", fontWeight: 700, color: "#A8CC2C", fontFamily: "'DM Mono', monospace", letterSpacing: "-0.02em" }}>product_designer</span>
+          <h1 style={{ fontFamily: "'Libre Baskerville', serif", lineHeight: 1.1, margin: 0 }}>
+            <span style={{ display: "block", fontSize: "clamp(1.4rem, 3vw, 2rem)", fontStyle: "italic", fontWeight: 400, color: "hsl(var(--foreground))" }}>
+              Oi, eu sou a <span style={{ fontWeight: 700 }}>Bia,</span>
+            </span>
+            <span key={roleIdx} style={{ display: "block", fontSize: "clamp(2.6rem, 6.5vw, 5.5rem)", fontStyle: "normal", fontWeight: 700, color: "#A8CC2C", fontFamily: "'DM Mono', monospace", letterSpacing: "-0.03em", lineHeight: 1.05, animation: "roleFadeIn 0.45s ease" }}>{ROLES[roleIdx]}</span>
           </h1>
           <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 17, lineHeight: 1.65, marginTop: 20, opacity: 0.75, maxWidth: 440 }}>
             que transforma necessidades dos usuários em experiências digitais claras e funcionais.
@@ -694,12 +703,11 @@ export default function Home() {
                 padding: "12px 28px", borderRadius: 999,
                 fontFamily: "'DM Sans', sans-serif", fontWeight: 600, fontSize: 14,
                 textDecoration: "none", cursor: "pointer",
-                transform: "rotate(-1.5deg)",
                 boxShadow: "0 4px 20px rgba(168,204,44,0.3)",
                 transition: "transform 0.2s, box-shadow 0.2s",
               }}
-              onMouseEnter={(e) => { e.currentTarget.style.transform = "rotate(-1.5deg) scale(1.05)"; }}
-              onMouseLeave={(e) => { e.currentTarget.style.transform = "rotate(-1.5deg)"; }}
+              onMouseEnter={(e) => { e.currentTarget.style.transform = "scale(1.05)"; }}
+              onMouseLeave={(e) => { e.currentTarget.style.transform = "scale(1)"; }}
             >
               Ver projetos ✦
             </a>
@@ -729,29 +737,26 @@ export default function Home() {
             <img src={figmaIllustra} alt="Figma" style={{ display: "block", height: 88, width: "auto", transform: "rotate(6deg)" }} draggable={false} />
           </DraggableIllustration>
           <DraggableIllustration style={{ top: "44%", right: "14%", pointerEvents: "all" }}>
-            <img src={cafeIllustra} alt="Cafeteira" style={{ display: "block", height: 88, width: "auto", transform: "rotate(-8deg)" }} draggable={false} />
+            <img src={cafeIllustra} alt="Cafeteira" style={{ display: "block", height: 108, width: "auto", transform: "rotate(-8deg)" }} draggable={false} />
           </DraggableIllustration>
           <DraggableIllustration style={{ top: "56%", right: "36%", pointerEvents: "all" }}>
             <img src={pcIllustra} alt="Laptop" style={{ display: "block", height: 88, width: "auto", transform: "rotate(3deg)" }} draggable={false} />
           </DraggableIllustration>
-          {/* Non-draggable floating sparkles scattered among illustrations */}
-          <div style={{ position: "absolute", top: "6%", right: "22%", animation: "floatA 3.2s ease-in-out infinite", pointerEvents: "none" }}>
+          {/* Non-draggable floating sparkles — kept in lower half */}
+          <div style={{ position: "absolute", top: "32%", right: "22%", animation: "floatA 3.2s ease-in-out infinite", pointerEvents: "none" }}>
             <span style={{ fontSize: 22, color: "#A8CC2C", fontFamily: "serif" }}>✦</span>
           </div>
-          <div style={{ position: "absolute", top: "18%", right: "48%", animation: "floatB 2.8s ease-in-out infinite", pointerEvents: "none" }}>
+          <div style={{ position: "absolute", top: "40%", right: "48%", animation: "floatB 2.8s ease-in-out infinite", pointerEvents: "none" }}>
             <span style={{ fontSize: 14, color: "#3D4A1E", fontFamily: "serif" }}>✧</span>
           </div>
-          <div style={{ position: "absolute", top: "36%", right: "26%", animation: "floatA 3.6s ease-in-out infinite 0.4s", pointerEvents: "none" }}>
-            <span style={{ fontSize: 28, color: "#A8CC2C", fontFamily: "serif" }}>✦</span>
-          </div>
-          <div style={{ position: "absolute", top: "55%", right: "6%", animation: "floatB 2.5s ease-in-out infinite 0.8s", pointerEvents: "none" }}>
+          <div style={{ position: "absolute", top: "50%", right: "8%", animation: "floatB 2.5s ease-in-out infinite 0.8s", pointerEvents: "none" }}>
             <span style={{ fontSize: 12, color: "#3D4A1E", fontFamily: "serif" }}>✦</span>
           </div>
-          <div style={{ position: "absolute", top: "72%", right: "50%", animation: "floatA 3s ease-in-out infinite 1.2s", pointerEvents: "none" }}>
-            <span style={{ fontSize: 18, color: "#A8CC2C", fontFamily: "serif" }}>✧</span>
+          <div style={{ position: "absolute", top: "65%", right: "34%", animation: "floatA 3.6s ease-in-out infinite 0.4s", pointerEvents: "none" }}>
+            <span style={{ fontSize: 20, color: "#A8CC2C", fontFamily: "serif" }}>✦</span>
           </div>
-          <div style={{ position: "absolute", top: "82%", right: "10%", animation: "floatB 3.4s ease-in-out infinite 0.2s", pointerEvents: "none" }}>
-            <span style={{ fontSize: 10, color: "#3D4A1E", fontFamily: "serif" }}>✦</span>
+          <div style={{ position: "absolute", top: "75%", right: "50%", animation: "floatA 3s ease-in-out infinite 1.2s", pointerEvents: "none" }}>
+            <span style={{ fontSize: 18, color: "#A8CC2C", fontFamily: "serif" }}>✧</span>
           </div>
         </div>
 
@@ -975,6 +980,10 @@ export default function Home() {
         @keyframes pulse {
           0%, 100% { opacity: 1; }
           50% { opacity: 0.4; }
+        }
+        @keyframes roleFadeIn {
+          from { opacity: 0; transform: translateY(10px); }
+          to   { opacity: 1; transform: translateY(0); }
         }
         @keyframes scrollDot {
           0% { transform: translateY(0); opacity: 1; }
