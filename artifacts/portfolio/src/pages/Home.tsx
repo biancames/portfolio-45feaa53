@@ -801,55 +801,29 @@ export default function Home() {
             <h2 style={{ fontFamily: "'Libre Baskerville', serif", fontSize: "clamp(2rem,5vw,3.5rem)", fontStyle: "italic" }}>[Skills]</h2>
             <div style={{ width: 48, height: 3, background: "#A8CC2C", marginTop: 8, borderRadius: 2 }} />
           </div>
-          <div style={{ display: "flex", gap: 60, flexWrap: "wrap" }}>
-            {/* Left: skill tags */}
-            <div style={{ flex: 1, minWidth: 280, display: "flex", flexWrap: "wrap", gap: 12, alignContent: "flex-start" }}>
-              {skills.map((s, i) => (
-                <span
-                  key={s}
-                  style={{
-                    fontFamily: "'DM Sans', sans-serif",
-                    fontSize: 15,
-                    padding: "10px 22px",
-                    borderRadius: 999,
-                    border: "1.5px dashed #3D4A1E",
-                    color: "#3D4A1E",
-                    background: "transparent",
-                    transform: `rotate(${(i % 3 - 1) * 1.5}deg)`,
-                    display: "inline-block",
-                    transition: "background 0.2s",
-                    cursor: "none",
-                  }}
-                  onMouseEnter={(e) => { e.currentTarget.style.background = "rgba(168,204,44,0.15)"; }}
-                  onMouseLeave={(e) => { e.currentTarget.style.background = "transparent"; }}
-                >
-                  {s}
-                </span>
-              ))}
-            </div>
-            {/* Right: tools grid */}
-            <div style={{ flex: 1, minWidth: 280, display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: 12 }}>
-              {tools.map((t) => (
-                <div
-                  key={t.name}
-                  data-testid={`card-tool-${t.name}`}
-                  style={{
-                    background: "hsl(var(--card))",
-                    border: "1px solid hsl(var(--border))",
-                    borderRadius: 12,
-                    padding: "16px 8px",
-                    display: "flex", flexDirection: "column", alignItems: "center", gap: 8,
-                    cursor: "none",
-                    transition: "transform 0.2s, box-shadow 0.2s",
-                  }}
-                  onMouseEnter={(e) => { e.currentTarget.style.transform = "translateY(-2px)"; e.currentTarget.style.boxShadow = "0 8px 24px rgba(61,74,30,0.12)"; }}
-                  onMouseLeave={(e) => { e.currentTarget.style.transform = ""; e.currentTarget.style.boxShadow = ""; }}
-                >
-                  <span style={{ fontSize: 22, color: "#3D4A1E" }}>{t.icon}</span>
-                  <span style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 11, fontWeight: 600, textAlign: "center", opacity: 0.7 }}>{t.name}</span>
-                </div>
-              ))}
-            </div>
+          <div style={{ display: "flex", flexWrap: "wrap", gap: 12 }}>
+            {skills.map((s, i) => (
+              <span
+                key={s}
+                style={{
+                  fontFamily: "'DM Sans', sans-serif",
+                  fontSize: 15,
+                  padding: "10px 22px",
+                  borderRadius: 999,
+                  border: "1.5px dashed #3D4A1E",
+                  color: "#3D4A1E",
+                  background: "transparent",
+                  transform: `rotate(${(i % 3 - 1) * 1.5}deg)`,
+                  display: "inline-block",
+                  transition: "background 0.2s",
+                  cursor: "default",
+                }}
+                onMouseEnter={(e) => { e.currentTarget.style.background = "rgba(168,204,44,0.15)"; }}
+                onMouseLeave={(e) => { e.currentTarget.style.background = "transparent"; }}
+              >
+                {s}
+              </span>
+            ))}
           </div>
         </div>
       </section>
@@ -870,7 +844,6 @@ export default function Home() {
               color: "#A8CC2C",
               textDecoration: "underline",
               textDecorationColor: "transparent",
-              cursor: "none",
               transition: "text-decoration-color 0.3s",
             }}
             onMouseEnter={(e) => { e.currentTarget.style.textDecorationColor = "#A8CC2C"; }}
@@ -894,7 +867,6 @@ export default function Home() {
                   fontSize: 15, fontWeight: 600,
                   color: "hsl(var(--foreground))",
                   textDecoration: "none",
-                  cursor: "none",
                   opacity: 0.7,
                   transition: "opacity 0.2s",
                 }}
