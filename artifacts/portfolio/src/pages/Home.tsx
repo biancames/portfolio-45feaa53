@@ -234,9 +234,9 @@ function PostcardSection() {
                 justifyContent: "space-between",
                 padding: "11px 14px 11px 22px",
                 borderRadius: 999,
-                background: btnHover ? "#BFD962" : "#C8E870",
+                background: btnHover ? "#3D4A1E" : "#C8E870",
                 cursor: "pointer",
-                transition: "background 0.25s ease",
+                transition: "background 0.3s ease",
                 userSelect: "none",
               }}
             >
@@ -244,23 +244,24 @@ function PostcardSection() {
                 fontFamily: "'DM Sans', sans-serif",
                 fontWeight: 500,
                 fontSize: 15,
-                color: "#2C2A1E",
+                color: btnHover ? "#C8E870" : "#2C2A1E",
+                transition: "color 0.3s ease",
               }}>
                 Mais sobre mim
               </span>
               <span style={{
                 width: 38, height: 38,
                 borderRadius: "50%",
-                background: "#3D4A1E",
+                background: btnHover ? "#C8E870" : "#3D4A1E",
                 display: "inline-flex",
                 alignItems: "center",
                 justifyContent: "center",
                 flexShrink: 0,
-                transition: "transform 0.35s ease",
+                transition: "transform 0.35s ease, background 0.3s ease",
                 transform: btnHover ? "rotate(0deg)" : "rotate(-45deg)",
               }}>
                 <svg width="16" height="16" viewBox="0 0 18 18" fill="none">
-                  <path d="M3.5 9H14.5M14.5 9L9.5 4M14.5 9L9.5 14" stroke="#C8E870" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/>
+                  <path d="M3.5 9H14.5M14.5 9L9.5 4M14.5 9L9.5 14" stroke={btnHover ? "#3D4A1E" : "#C8E870"} strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/>
                 </svg>
               </span>
             </div>
@@ -489,9 +490,9 @@ function VerTodosButton() {
         justifyContent: "space-between",
         padding: "14px 18px 14px 28px",
         borderRadius: 999,
-        background: hovered ? "#BFD962" : "#C8E870",
+        background: hovered ? "#3D4A1E" : "#C8E870",
         cursor: "pointer",
-        transition: "background 0.25s ease",
+        transition: "background 0.3s ease",
         userSelect: "none",
       }}
     >
@@ -499,7 +500,8 @@ function VerTodosButton() {
         fontFamily: "'DM Sans', sans-serif",
         fontWeight: 500,
         fontSize: 16,
-        color: "#2C2A1E",
+        color: hovered ? "#C8E870" : "#2C2A1E",
+        transition: "color 0.3s ease",
       }}>
         Ver todos
       </span>
@@ -507,16 +509,16 @@ function VerTodosButton() {
         width: 40,
         height: 40,
         borderRadius: "50%",
-        background: "#3D4A1E",
+        background: hovered ? "#C8E870" : "#3D4A1E",
         display: "inline-flex",
         alignItems: "center",
         justifyContent: "center",
         flexShrink: 0,
-        transition: "transform 0.35s ease",
+        transition: "transform 0.35s ease, background 0.3s ease",
         transform: hovered ? "rotate(0deg)" : "rotate(-45deg)",
       }}>
         <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
-          <path d="M3.5 9H14.5M14.5 9L9.5 4M14.5 9L9.5 14" stroke="#C8E870" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/>
+          <path d="M3.5 9H14.5M14.5 9L9.5 4M14.5 9L9.5 14" stroke={hovered ? "#3D4A1E" : "#C8E870"} strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/>
         </svg>
       </span>
     </div>
