@@ -239,8 +239,8 @@ export default function MaisSobre() {
               {[
                 {
                   label: "livro favorito",
-                  content: "Título do livro",
-                  sub: "Autor",
+                  content: "Um Estudo em Vermelho",
+                  sub: "Arthur Conan Doyle",
                   img: "https://images.unsplash.com/photo-1512820790803-83ca734da794?w=400&h=520&fit=crop",
                   tape: "#A8CC2C",
                   tapeRot: -5,
@@ -250,8 +250,8 @@ export default function MaisSobre() {
                 },
                 {
                   label: "música do momento",
-                  content: "Nome da música",
-                  sub: "Artista",
+                  content: "Vienna",
+                  sub: "Billy Joel",
                   img: "https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?w=400&h=400&fit=crop",
                   tape: "#A35C1C",
                   tapeRot: 4,
@@ -272,7 +272,7 @@ export default function MaisSobre() {
                 },
                 {
                   label: "drink favorito",
-                  content: "Nome do drink",
+                  content: "Moscow Mule",
                   sub: "",
                   img: "https://images.unsplash.com/photo-1551538827-9c037cb4f32a?w=400&h=440&fit=crop",
                   tape: "#C8E870",
