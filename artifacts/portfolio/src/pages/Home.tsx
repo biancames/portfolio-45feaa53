@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState, useCallback } from "react";
 import { SiBehance, SiDribbble, SiFigma, SiNotion, SiFramer, SiHotjar } from "react-icons/si";
+import postcardImg from "@assets/postc_1777742914935.png";
 import figmaIllustra from "@assets/Figma_1777742554578.png";
 import caipirinhaIllustra from "@assets/ilustras_1777742559195.png";
 import cafeIllustra from "@assets/IlustraCafe_1777742604142.png";
@@ -106,16 +107,15 @@ function DraggableIllustration({
   );
 }
 
-/* ─── Postcard Back (draggable upward) ─── */
-function PostcardBack() {
-  const ref = useRef<HTMLDivElement>(null);
+/* ─── Postcard (draggable downward to reveal back image) ─── */
+function PostcardSection() {
   const [dragY, setDragY] = useState(0);
   const [snapped, setSnapped] = useState(false);
   const startY = useRef(0);
   const startDragY = useRef(0);
   const isDragging = useRef(false);
 
-  const CARD_HEIGHT = 360;
+  const CARD_HEIGHT = 380;
 
   const onDown = useCallback((e: React.MouseEvent) => {
     if (snapped) return;
@@ -129,7 +129,7 @@ function PostcardBack() {
   useEffect(() => {
     const onMove = (e: MouseEvent) => {
       if (!isDragging.current) return;
-      const delta = startY.current - e.clientY;
+      const delta = e.clientY - startY.current;
       const newY = Math.max(0, Math.min(CARD_HEIGHT, startDragY.current + delta));
       setDragY(newY);
     };
@@ -138,7 +138,7 @@ function PostcardBack() {
       isDragging.current = false;
       setCursor("default");
       setDragY((y) => {
-        if (y > CARD_HEIGHT * 0.5) {
+        if (y > CARD_HEIGHT * 0.45) {
           setSnapped(true);
           return CARD_HEIGHT;
         }
@@ -154,63 +154,112 @@ function PostcardBack() {
   }, []);
 
   const handleReset = () => {
-    if (snapped) {
-      setSnapped(false);
-      setDragY(0);
-    }
+    if (snapped) { setSnapped(false); setDragY(0); }
   };
 
-  const translateY = snapped ? -CARD_HEIGHT : -dragY;
+  const translateY = snapped ? CARD_HEIGHT : dragY;
+  const dragging = isDragging.current;
 
   return (
-    <div
-      ref={ref}
-      onMouseDown={onDown}
-      onClick={handleReset}
-      onMouseEnter={() => setCursor("postcard")}
-      onMouseLeave={() => setCursor("default")}
-      style={{
-        position: "absolute",
-        bottom: -30,
-        left: 0,
-        right: 0,
-        height: CARD_HEIGHT,
-        transform: `translateY(${translateY}px)`,
-        transition: isDragging.current ? "none" : "transform 0.5s cubic-bezier(0.34,1.56,0.64,1)",
-        cursor: "none",
-        borderRadius: "16px 16px 0 0",
-        overflow: "hidden",
-        zIndex: 0,
-      }}
-    >
-      <div style={{
-        height: "100%",
-        background: "repeating-linear-gradient(135deg, #3D4A1E 0px, #3D4A1E 10px, #F5F0E8 10px, #F5F0E8 20px)",
-        position: "relative",
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-        gap: 32,
-      }}>
-        <svg width="40" height="56" viewBox="0 0 40 56" fill="none">
-          <ellipse cx="20" cy="48" rx="14" ry="6" stroke="#FBF7EE" strokeWidth="1.5"/>
-          <path d="M6 48 L10 24 Q12 16 20 16 Q28 16 30 24 L34 48" stroke="#FBF7EE" strokeWidth="1.5" fill="none"/>
-          <ellipse cx="20" cy="16" rx="10" ry="4" stroke="#FBF7EE" strokeWidth="1.5"/>
-          <rect x="15" y="4" width="10" height="14" rx="5" stroke="#FBF7EE" strokeWidth="1.5"/>
-        </svg>
-        <svg width="36" height="48" viewBox="0 0 36 48" fill="none">
-          <rect x="2" y="2" width="32" height="44" rx="4" stroke="#FBF7EE" strokeWidth="1.5"/>
-          <rect x="6" y="6" width="24" height="36" rx="2" stroke="#A8CC2C" strokeWidth="1"/>
-          <line x1="10" y1="14" x2="26" y2="14" stroke="#FBF7EE" strokeWidth="1" opacity="0.5"/>
-          <line x1="10" y1="20" x2="22" y2="20" stroke="#FBF7EE" strokeWidth="1" opacity="0.5"/>
-        </svg>
-        <svg width="44" height="44" viewBox="0 0 44 44" fill="none">
-          <rect x="4" y="12" width="36" height="28" rx="3" stroke="#FBF7EE" strokeWidth="1.5"/>
-          <path d="M4 20 L22 30 L40 20" stroke="#A8CC2C" strokeWidth="1.5"/>
-          <line x1="14" y1="6" x2="14" y2="12" stroke="#FBF7EE" strokeWidth="1.5"/>
-          <line x1="30" y1="6" x2="30" y2="12" stroke="#FBF7EE" strokeWidth="1.5"/>
-        </svg>
-        <span style={{ fontFamily: "Caveat, cursive", fontSize: 18, color: "#FBF7EE", opacity: 0.8 }}>✦ clique para fechar</span>
+    <div style={{ position: "relative", height: CARD_HEIGHT, borderRadius: 16, overflow: "hidden", boxShadow: "0 20px 60px rgba(61,74,30,0.18)" }}>
+
+      {/* Back layer — always visible behind */}
+      <div style={{ position: "absolute", inset: 0 }}>
+        <img
+          src={postcardImg}
+          alt="postcard back"
+          style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }}
+          draggable={false}
+        />
+        {snapped && (
+          <button
+            onClick={handleReset}
+            style={{
+              position: "absolute", bottom: 20, left: "50%", transform: "translateX(-50%)",
+              background: "rgba(245,240,232,0.85)", border: "none", borderRadius: 999,
+              padding: "8px 22px", fontFamily: "Caveat, cursive", fontSize: 16,
+              color: "#2C2A1E", cursor: "pointer", backdropFilter: "blur(4px)",
+            }}
+          >
+            ✦ fechar
+          </button>
+        )}
+      </div>
+
+      {/* Front card — draggable downward */}
+      <div
+        onMouseDown={onDown}
+        onMouseEnter={() => !snapped && setCursor("postcard")}
+        onMouseLeave={() => setCursor("default")}
+        style={{
+          position: "absolute", inset: 0,
+          transform: `translateY(${translateY}px)`,
+          transition: dragging ? "none" : "transform 0.55s cubic-bezier(0.34,1.4,0.64,1)",
+          cursor: "none",
+          background: "hsl(var(--card))",
+          display: "flex",
+          overflow: "hidden",
+          borderRadius: 16,
+        } as React.CSSProperties}
+      >
+        {/* Stamp */}
+        <div style={{
+          position: "absolute", top: 16, right: 16,
+          width: 48, height: 60,
+          border: "2px solid #D4713A", borderRadius: 3,
+          display: "flex", alignItems: "center", justifyContent: "center", flexDirection: "column",
+          opacity: 0.6,
+        }}>
+          <span style={{ fontFamily: "Caveat, cursive", fontSize: 8, color: "#D4713A" }}>BRASIL</span>
+          <span style={{ fontSize: 18 }}>🌿</span>
+          <span style={{ fontFamily: "Caveat, cursive", fontSize: 7, color: "#D4713A" }}>DESIGN</span>
+        </div>
+
+        {/* Drag hint */}
+        <div style={{
+          position: "absolute", bottom: 12, left: "50%", transform: "translateX(-50%)",
+          fontFamily: "Caveat, cursive", fontSize: 13, opacity: 0.45, whiteSpace: "nowrap",
+          animation: "floatB 2.5s ease-in-out infinite",
+        }}>
+          arraste ↓
+        </div>
+
+        {/* Left: avatar */}
+        <div style={{
+          flex: "0 0 40%", background: "hsl(var(--muted))",
+          display: "flex", alignItems: "center", justifyContent: "center", minHeight: CARD_HEIGHT,
+        }}>
+          <div style={{
+            width: 140, height: 140, borderRadius: "50%", background: "#3D4A1E",
+            display: "flex", alignItems: "center", justifyContent: "center",
+            boxShadow: "0 8px 32px rgba(61,74,30,0.3)",
+          }}>
+            <span style={{ fontFamily: "'Libre Baskerville', serif", fontSize: 48, color: "#F5F0E8", fontStyle: "italic", fontWeight: 700 }}>BM</span>
+          </div>
+        </div>
+
+        {/* Right: info */}
+        <div style={{
+          flex: 1, background: "#3D4A1E", color: "#F5F0E8",
+          padding: "40px 36px", display: "flex", flexDirection: "column", justifyContent: "center", gap: 12,
+        }}>
+          <div style={{ fontFamily: "'Libre Baskerville', serif", fontSize: 26, fontWeight: 700 }}>Bianca Mesquita</div>
+          <div style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 13, opacity: 0.8 }}>Product Designer ✦ UX/UI Designer</div>
+          <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 13, lineHeight: 1.65, opacity: 0.85, margin: "8px 0" }}>
+            Tenho 25 anos, sou caiçara nascida e criada no litoral de SP e, fora das telas, você vai me encontrar entre a praia, cafés, corridas, livros, viagens e bons drinks.
+          </p>
+          <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 13, lineHeight: 1.65, opacity: 0.85, margin: 0 }}>
+            Com base em UX e experiência em sistemas digitais complexos, atuo de ponta a ponta — da pesquisa à entrega.
+          </p>
+          <div style={{ fontFamily: "'Caveat', cursive", fontSize: 22, color: "#A8CC2C", marginTop: 8 }}>Bianca Mesquita</div>
+          <div style={{ display: "flex", gap: 12, marginTop: 8, flexWrap: "wrap" }}>
+            {[<SiFigma key="figma"/>, <SiFramer key="framer"/>, <SiNotion key="notion"/>, <SiHotjar key="hotjar"/>].map((Icon, i) => (
+              <div key={i} style={{ width: 32, height: 32, borderRadius: 6, background: "rgba(245,240,232,0.12)", display: "flex", alignItems: "center", justifyContent: "center", color: "#F5F0E8", fontSize: 16 }}>
+                {Icon}
+              </div>
+            ))}
+          </div>
+        </div>
       </div>
     </div>
   );
@@ -623,82 +672,7 @@ export default function Home() {
             <h2 style={{ fontFamily: "'Libre Baskerville', serif", fontSize: "clamp(2rem,5vw,3.5rem)", fontStyle: "italic" }}>[Sobre mim]</h2>
             <div style={{ width: 48, height: 3, background: "#A8CC2C", marginTop: 8, borderRadius: 2 }} />
           </div>
-          <div style={{ position: "relative", paddingBottom: 60 }}>
-            {/* Back cover */}
-            <PostcardBack />
-            {/* Front postcard */}
-            <div style={{
-              position: "relative", zIndex: 1,
-              background: "hsl(var(--card))",
-              borderRadius: 16,
-              boxShadow: "0 20px 60px rgba(61,74,30,0.15)",
-              transform: "rotate(-2deg)",
-              display: "flex",
-              overflow: "hidden",
-              minHeight: 360,
-            }}>
-              {/* Stamp */}
-              <div style={{
-                position: "absolute", top: 16, right: 16,
-                width: 48, height: 60,
-                border: "2px solid #D4713A",
-                borderRadius: 3,
-                display: "flex", alignItems: "center", justifyContent: "center",
-                flexDirection: "column",
-                opacity: 0.6,
-              }}>
-                <span style={{ fontFamily: "Caveat, cursive", fontSize: 8, color: "#D4713A" }}>BRASIL</span>
-                <span style={{ fontSize: 18 }}>🌿</span>
-                <span style={{ fontFamily: "Caveat, cursive", fontSize: 7, color: "#D4713A" }}>DESIGN</span>
-              </div>
-
-              {/* Left: avatar */}
-              <div style={{
-                flex: "0 0 40%",
-                background: "hsl(var(--muted))",
-                display: "flex", alignItems: "center", justifyContent: "center",
-                minHeight: 360,
-              }}>
-                <div style={{
-                  width: 140, height: 140, borderRadius: "50%",
-                  background: "#3D4A1E",
-                  display: "flex", alignItems: "center", justifyContent: "center",
-                  boxShadow: "0 8px 32px rgba(61,74,30,0.3)",
-                }}>
-                  <span style={{ fontFamily: "'Libre Baskerville', serif", fontSize: 48, color: "#F5F0E8", fontStyle: "italic", fontWeight: 700 }}>BM</span>
-                </div>
-              </div>
-
-              {/* Right: info */}
-              <div style={{
-                flex: 1,
-                background: "#3D4A1E",
-                color: "#F5F0E8",
-                padding: "40px 36px",
-                display: "flex", flexDirection: "column", justifyContent: "center", gap: 12,
-              }}>
-                <div style={{ fontFamily: "'Libre Baskerville', serif", fontSize: 26, fontWeight: 700 }}>Bianca Mesquita</div>
-                <div style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 13, opacity: 0.8 }}>Product Designer ✦ UX/UI Designer</div>
-                <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 13, lineHeight: 1.65, opacity: 0.85, margin: "8px 0" }}>
-                  Tenho 25 anos, sou caiçara nascida e criada no litoral de SP e, fora das telas, você vai me encontrar entre a praia, cafés, corridas, livros, viagens e bons drinks.
-                </p>
-                <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 13, lineHeight: 1.65, opacity: 0.85, margin: 0 }}>
-                  Com base em UX e experiência em sistemas digitais complexos, atuo de ponta a ponta — da pesquisa à entrega.
-                </p>
-                <div style={{ fontFamily: "'Caveat', cursive", fontSize: 22, color: "#A8CC2C", marginTop: 8 }}>Bianca Mesquita</div>
-                <div style={{ display: "flex", gap: 12, marginTop: 8, flexWrap: "wrap" }}>
-                  {[<SiFigma key="figma"/>, <SiFramer key="framer"/>, <SiNotion key="notion"/>, <SiHotjar key="hotjar"/>].map((Icon, i) => (
-                    <div key={i} style={{ width: 32, height: 32, borderRadius: 6, background: "rgba(245,240,232,0.12)", display: "flex", alignItems: "center", justifyContent: "center", color: "#F5F0E8", fontSize: 16 }}>
-                      {Icon}
-                    </div>
-                  ))}
-                </div>
-              </div>
-            </div>
-            <div style={{ textAlign: "center", marginTop: 20, fontFamily: "'Caveat', cursive", fontSize: 14, opacity: 0.5 }}>
-              ↑ arraste para cima para ver mais
-            </div>
-          </div>
+          <PostcardSection />
         </div>
       </section>
 
