@@ -169,55 +169,91 @@ export default function MaisSobre() {
               <div style={{ width: 48, height: 4, background: "#A8CC2C", marginTop: 8, borderRadius: 4 }} />
             </div>
 
-            <div style={{ position: "relative", paddingLeft: 32 }}>
-              {/* vertical line */}
-              <div style={{ position: "absolute", left: 7, top: 8, bottom: 8, width: 2, background: "hsl(var(--border))", borderRadius: 2 }} />
-
+            <div style={{ borderTop: "1.5px solid hsl(var(--border))" }}>
               {[
-                { role: "Product Designer", company: "Empresa atual", period: "2024 — presente", desc: "Descrição breve do trabalho, impactos e contexto." },
-                { role: "UX/UI Designer", company: "Empresa anterior", period: "2022 — 2024", desc: "Descrição breve do trabalho, impactos e contexto." },
-                { role: "Designer Jr.", company: "Primeira empresa", period: "2021 — 2022", desc: "Descrição breve do trabalho, impactos e contexto." },
+                { role: "Product Designer", company: "Empresa atual", period: "2024 — presente", desc: "Descrição breve do trabalho, impactos e contexto.", current: true },
+                { role: "UX/UI Designer", company: "Empresa anterior", period: "2022 — 2024", desc: "Descrição breve do trabalho, impactos e contexto.", current: false },
+                { role: "Designer Jr.", company: "Primeira empresa", period: "2021 — 2022", desc: "Descrição breve do trabalho, impactos e contexto.", current: false },
               ].map((exp, i) => (
-                <div key={i} style={{ position: "relative", marginBottom: i < 2 ? 48 : 0, paddingLeft: 28 }}>
-                  {/* dot */}
-                  <div style={{
-                    position: "absolute",
-                    left: -32,
-                    top: 6,
-                    width: 16,
-                    height: 16,
-                    borderRadius: "50%",
-                    background: i === 0 ? "#A8CC2C" : "hsl(var(--background))",
-                    border: `2px solid ${i === 0 ? "#A8CC2C" : "hsl(var(--border))"}`,
-                    zIndex: 1,
-                  }} />
-
-                  <div style={{ display: "flex", alignItems: "flex-start", justifyContent: "space-between", flexWrap: "wrap", gap: 8, marginBottom: 8 }}>
-                    <div>
-                      <div style={{ fontFamily: "'Libre Baskerville', serif", fontStyle: "italic", fontSize: 20, fontWeight: 700, color: "hsl(var(--foreground))", marginBottom: 2 }}>
-                        {exp.role}
-                      </div>
-                      <div style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 15, color: "hsl(var(--muted-foreground))", fontWeight: 500 }}>
-                        {exp.company}
-                      </div>
-                    </div>
+                <div
+                  key={i}
+                  className="exp-row"
+                  style={{
+                    display: "grid",
+                    gridTemplateColumns: "160px 1fr",
+                    gap: "0 48px",
+                    padding: "32px 0",
+                    borderBottom: "1px solid hsl(var(--border))",
+                    transition: "background 0.25s ease",
+                    borderLeft: `4px solid ${exp.current ? "#A8CC2C" : "transparent"}`,
+                    paddingLeft: exp.current ? 20 : 4,
+                  }}
+                  onMouseEnter={(e) => { (e.currentTarget as HTMLDivElement).style.background = "rgba(168,204,44,0.04)"; }}
+                  onMouseLeave={(e) => { (e.currentTarget as HTMLDivElement).style.background = "transparent"; }}
+                >
+                  {/* left: period */}
+                  <div style={{ paddingTop: 4 }}>
                     <div style={{
                       fontFamily: "'DM Mono', monospace",
-                      fontSize: 12,
-                      letterSpacing: "0.08em",
-                      color: i === 0 ? "#A8CC2C" : "hsl(var(--muted-foreground))",
-                      background: i === 0 ? "rgba(168,204,44,0.12)" : "hsl(var(--muted)/0.5)",
-                      padding: "4px 12px",
-                      borderRadius: 999,
-                      whiteSpace: "nowrap",
-                      alignSelf: "flex-start",
+                      fontSize: 11,
+                      letterSpacing: "0.1em",
+                      color: exp.current ? "#A8CC2C" : "hsl(var(--muted-foreground))",
+                      lineHeight: 1.5,
+                      whiteSpace: "pre-line",
                     }}>
-                      {exp.period}
+                      {exp.period.replace(" — ", "\n—\n")}
                     </div>
+                    {exp.current && (
+                      <div style={{
+                        display: "inline-block",
+                        marginTop: 10,
+                        fontFamily: "'DM Mono', monospace",
+                        fontSize: 9,
+                        letterSpacing: "0.16em",
+                        textTransform: "uppercase",
+                        color: "#A8CC2C",
+                        background: "rgba(168,204,44,0.14)",
+                        padding: "3px 8px",
+                        borderRadius: 2,
+                      }}>agora</div>
+                    )}
                   </div>
-                  <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 15, lineHeight: 1.7, color: "hsl(var(--foreground))", opacity: 0.65, margin: 0 }}>
-                    {exp.desc}
-                  </p>
+
+                  {/* right: content */}
+                  <div>
+                    <div style={{ display: "flex", alignItems: "baseline", gap: 12, flexWrap: "wrap", marginBottom: 8 }}>
+                      <div style={{
+                        fontFamily: "'Libre Baskerville', serif",
+                        fontStyle: "italic",
+                        fontSize: "clamp(1.1rem,2.5vw,1.4rem)",
+                        fontWeight: 700,
+                        color: "hsl(var(--foreground))",
+                        lineHeight: 1.2,
+                      }}>
+                        {exp.role}
+                      </div>
+                      <div style={{
+                        fontFamily: "'DM Sans', sans-serif",
+                        fontSize: 13,
+                        fontWeight: 500,
+                        color: "hsl(var(--muted-foreground))",
+                        letterSpacing: "0.02em",
+                      }}>
+                        @ {exp.company}
+                      </div>
+                    </div>
+                    <p style={{
+                      fontFamily: "'DM Sans', sans-serif",
+                      fontSize: 14,
+                      lineHeight: 1.75,
+                      color: "hsl(var(--foreground))",
+                      opacity: 0.6,
+                      margin: 0,
+                      maxWidth: 520,
+                    }}>
+                      {exp.desc}
+                    </p>
+                  </div>
                 </div>
               ))}
             </div>
