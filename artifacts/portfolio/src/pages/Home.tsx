@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { SiBehance, SiDribbble, SiFigma, SiNotion, SiFramer, SiHotjar } from "react-icons/si";
+import { SiBehance, SiDribbble, SiFigma, SiNotion, SiFramer, SiHotjar, SiMiro } from "react-icons/si";
 import postcardImg from "@assets/postc_1777742914935.png";
 import bioPhoto from "@assets/Perfil_1777746393399.jpeg";
 import figmaIllustra from "@assets/Figma_1777742554578.png";
@@ -111,14 +111,18 @@ function DraggableIllustration({
 /* ─── Postcard: flip card — front = info card, back = postcard cover ─── */
 function PostcardSection() {
   const [flipped, setFlipped] = useState(false);
+  const [btnHover, setBtnHover] = useState(false);
 
   const tools = [
-    { name: "Notion", icon: <SiNotion /> },
-    { name: "Framer", icon: <SiFramer /> },
-    { name: "Maze", icon: <span style={{ fontSize: 14, fontWeight: 700 }}>◎</span> },
-    { name: "Figma", icon: <SiFigma /> },
-    { name: "Ps", icon: <span style={{ fontSize: 13, fontWeight: 700 }}>Ps</span> },
+    { name: "Figma",      icon: <SiFigma size={18} /> },
+    { name: "Framer",     icon: <SiFramer size={18} /> },
+    { name: "Photoshop",  icon: <span style={{ fontFamily: "'DM Mono',monospace", fontSize: 12, fontWeight: 700, letterSpacing: "-0.5px" }}>Ps</span> },
+    { name: "Affinity",   icon: <span style={{ fontFamily: "'DM Mono',monospace", fontSize: 12, fontWeight: 700 }}>Ad</span> },
+    { name: "Notion",     icon: <SiNotion size={18} /> },
+    { name: "Maze",       icon: <span style={{ fontSize: 17, lineHeight: 1 }}>◎</span> },
+    { name: "Miro",       icon: <SiMiro size={18} /> },
   ];
+  const loopTools = [...tools, ...tools];
 
   return (
     <div
@@ -153,69 +157,114 @@ function PostcardSection() {
           display: "flex",
           boxShadow: "0 8px 40px rgba(61,74,30,0.08)",
         }}>
-          {/* Left: placeholder + tool icons */}
-          <div style={{ flex: "0 0 44%", display: "flex", flexDirection: "column" }}>
+
+          {/* ── Left: photo + marquee strip ── */}
+          <div style={{ flex: "0 0 44%", display: "flex", flexDirection: "column", overflow: "hidden" }}>
             <img
               src={bioPhoto}
               alt="Bianca Mesquita"
               style={{ flex: 1, width: "100%", objectFit: "cover", objectPosition: "center top", display: "block", minHeight: 0 }}
               draggable={false}
             />
+            {/* Infinite marquee tool strip */}
             <div style={{
-              display: "flex", alignItems: "center", gap: 10, padding: "10px 16px",
-              background: "hsl(var(--background))", borderTop: "1px solid hsl(var(--border))",
+              overflow: "hidden",
+              background: "hsl(var(--background))",
+              borderTop: "1px solid hsl(var(--border))",
+              padding: "10px 0",
             }}>
-              {tools.map((t) => (
-                <div key={t.name} style={{
-                  width: 34, height: 34, borderRadius: 8,
-                  border: "1px solid hsl(var(--border))",
-                  background: "hsl(var(--card))",
-                  display: "flex", alignItems: "center", justifyContent: "center",
-                  color: "#3D4A1E", fontSize: 16,
-                }}>
-                  {t.icon}
-                </div>
-              ))}
+              <div style={{
+                display: "flex",
+                gap: 10,
+                width: "max-content",
+                animation: "toolsScroll 20s linear infinite",
+              }}>
+                {loopTools.map((t, i) => (
+                  <div key={i} style={{
+                    width: 36, height: 36, borderRadius: 9,
+                    border: "1px solid hsl(var(--border))",
+                    background: "hsl(var(--card))",
+                    display: "flex", alignItems: "center", justifyContent: "center",
+                    color: "#3D4A1E", flexShrink: 0,
+                  }}>
+                    {t.icon}
+                  </div>
+                ))}
+              </div>
             </div>
           </div>
 
-          {/* Right: name + bio + button */}
+          {/* ── Right: name block + bio block + CTA button ── */}
           <div style={{ flex: 1, display: "flex", flexDirection: "column", gap: 12, padding: "20px 20px 16px" }}>
-            <div style={{ background: "#4A5E28", borderRadius: 12, padding: "18px 20px", color: "#F5F0E8" }}>
-              <div style={{ fontFamily: "'Libre Baskerville', serif", fontSize: 20, fontWeight: 700, marginBottom: 4 }}>Bianca Mesquita</div>
-              <div style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 13, opacity: 0.85 }}>Product Designer ✦ UX/UI Designer</div>
+
+            {/* Name block — dark olive */}
+            <div style={{
+              background: "#4A5E28", borderRadius: 14,
+              padding: "18px 20px", color: "#F5F0E8",
+            }}>
+              <div style={{ fontFamily: "'Libre Baskerville', serif", fontSize: 21, fontWeight: 700, marginBottom: 6 }}>
+                Bianca Mesquita
+              </div>
+              <div style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 13, color: "#C8E870" }}>
+                Product Designer ✦ UX/UI Designer
+              </div>
             </div>
 
+            {/* Bio block — light card */}
             <div style={{
-              flex: 1, background: "hsl(var(--card))", borderRadius: 12,
+              flex: 1,
+              background: "hsl(var(--card))", borderRadius: 14,
               border: "1px solid hsl(var(--border))", padding: "18px 20px",
               display: "flex", flexDirection: "column", justifyContent: "space-between",
+              overflow: "hidden",
             }}>
               <div>
-                <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 13, lineHeight: 1.7, color: "hsl(var(--foreground))", margin: "0 0 12px" }}>
+                <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 13, lineHeight: 1.75, color: "hsl(var(--foreground))", margin: "0 0 10px" }}>
                   Tenho 25 anos, sou caiçara nascida e criada no litoral de SP e, fora das telas, você vai me encontrar entre a praia, cafés, corridas, livros, viagens e bons drinks.
                 </p>
-                <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 13, lineHeight: 1.7, color: "hsl(var(--foreground))", margin: 0 }}>
-                  Com base em UX e experiência em sistemas digitais complexos, especialmente nas áreas de logística, transporte e setor público, atuo de ponta a ponta — da pesquisa à entrega.<br />
+                <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 13, lineHeight: 1.75, color: "hsl(var(--foreground))", margin: 0 }}>
+                  Com base em UX e experiência em sistemas digitais complexos, especialmente nas áreas de logística, transporte e setor público, atuo de ponta a ponta — da pesquisa à entrega.
                   Acredito que bons produtos nascem do entendimento real de quem usa.
                 </p>
               </div>
-              <div style={{ fontFamily: "'Caveat', cursive", fontSize: 20, color: "#D4713A", marginTop: 12, textAlign: "right" }}>
+              <div style={{ fontFamily: "'Caveat', cursive", fontSize: 22, color: "#D4713A", marginTop: 10, textAlign: "right", fontStyle: "italic" }}>
                 Bianca Mesquita
               </div>
             </div>
 
-            <div style={{
-              background: "#C8E870", borderRadius: 12, padding: "14px 20px",
-              display: "flex", alignItems: "center", justifyContent: "space-between",
-            }}>
-              <span style={{ fontFamily: "'DM Sans', sans-serif", fontWeight: 600, fontSize: 14, color: "#2C2A1E" }}>Mais sobre mim</span>
+            {/* CTA button — hover swaps colors, arrow rotates */}
+            <div
+              onMouseEnter={() => setBtnHover(true)}
+              onMouseLeave={() => setBtnHover(false)}
+              onClick={(e) => e.stopPropagation()}
+              style={{
+                background: btnHover ? "#3D4A1E" : "#C8E870",
+                borderRadius: 14,
+                padding: "13px 18px",
+                display: "flex", alignItems: "center", justifyContent: "space-between",
+                transition: "background 0.25s ease",
+                cursor: "none",
+              }}
+            >
               <span style={{
-                width: 32, height: 32, borderRadius: "50%",
-                background: "#3D4A1E",
-                display: "flex", alignItems: "center", justifyContent: "center",
-                color: "#F5F0E8", fontSize: 14,
-              }}>↓</span>
+                fontFamily: "'DM Sans', sans-serif", fontWeight: 600, fontSize: 14,
+                color: btnHover ? "#C8E870" : "#2C2A1E",
+                transition: "color 0.25s ease",
+              }}>
+                Mais sobre mim
+              </span>
+              <span style={{
+                width: 34, height: 34, borderRadius: "50%",
+                background: btnHover ? "#C8E870" : "#3D4A1E",
+                display: "inline-flex", alignItems: "center", justifyContent: "center",
+                color: btnHover ? "#2C2A1E" : "#F5F0E8",
+                fontSize: 17,
+                transition: "background 0.25s ease, color 0.25s ease, transform 0.35s ease",
+                transform: btnHover ? "rotate(-45deg)" : "rotate(0deg)",
+                flexShrink: 0,
+              }}>
+                ↓
+              </span>
             </div>
           </div>
 
@@ -260,6 +309,13 @@ function PostcardSection() {
           </button>
         </div>
       </div>
+
+      <style>{`
+        @keyframes toolsScroll {
+          0%   { transform: translateX(0); }
+          100% { transform: translateX(-50%); }
+        }
+      `}</style>
     </div>
   );
 }
