@@ -123,6 +123,11 @@ function PostcardSection() {
 
   return (
     <div style={{ perspective: "1400px" }}>
+      {/* ── Hint wrapper (animates once to reveal flip affordance) ── */}
+      <div style={{
+        transformStyle: "preserve-3d",
+        animation: "hintFlip 1.4s ease-in-out 1.8s 1 both",
+      }}>
       {/* ── Flip wrapper ── */}
       <div
         onClick={() => setFlipped((f) => !f)}
@@ -303,11 +308,19 @@ function PostcardSection() {
           </button>
         </div>
       </div>
+      </div>
 
       <style>{`
         @keyframes toolsScroll {
           0%   { transform: translateX(0); }
           100% { transform: translateX(-50%); }
+        }
+        @keyframes hintFlip {
+          0%   { transform: rotateY(0deg); }
+          30%  { transform: rotateY(-18deg); }
+          58%  { transform: rotateY(0deg); }
+          76%  { transform: rotateY(-8deg); }
+          100% { transform: rotateY(0deg); }
         }
       `}</style>
     </div>
@@ -885,9 +898,9 @@ export default function Home() {
               }}>
                 click to flip
               </span>
-              <svg width="64" height="58" viewBox="0 0 64 58" fill="none" style={{ marginTop: 2, transform: "rotate(-4deg)" }}>
-                <path d="M52 6 C58 20, 52 40, 12 52" stroke="#D4713A" strokeWidth="2.2" strokeLinecap="round" fill="none"/>
-                <path d="M12 52 L6 42 M12 52 L22 46" stroke="#D4713A" strokeWidth="2.2" strokeLinecap="round"/>
+              <svg width="48" height="64" viewBox="0 0 48 64" fill="none" style={{ marginTop: 4 }}>
+                <path d="M38 4 C46 22, 34 48, 8 58" stroke="#D4713A" strokeWidth="2" strokeLinecap="round" fill="none"/>
+                <path d="M8 58 L4 46 M8 58 L20 54" stroke="#D4713A" strokeWidth="2" strokeLinecap="round"/>
               </svg>
             </div>
           </div>
