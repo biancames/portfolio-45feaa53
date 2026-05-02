@@ -107,7 +107,7 @@ function DraggableIllustration({
   );
 }
 
-/* ─── Postcard (draggable downward to reveal back image) ─── */
+/* ─── Postcard (front slides DOWN to reveal back image peeking below) ─── */
 function PostcardSection() {
   const [dragY, setDragY] = useState(0);
   const [snapped, setSnapped] = useState(false);
@@ -115,7 +115,9 @@ function PostcardSection() {
   const startDragY = useRef(0);
   const isDragging = useRef(false);
 
-  const CARD_HEIGHT = 380;
+  const FRONT_H = 360;
+  const PEEK = 52; // back image visible at bottom when front is closed
+  const CONTAINER_H = FRONT_H + PEEK;
 
   const onDown = useCallback((e: React.MouseEvent) => {
     if (snapped) return;
@@ -130,7 +132,7 @@ function PostcardSection() {
     const onMove = (e: MouseEvent) => {
       if (!isDragging.current) return;
       const delta = e.clientY - startY.current;
-      const newY = Math.max(0, Math.min(CARD_HEIGHT, startDragY.current + delta));
+      const newY = Math.max(0, Math.min(FRONT_H, startDragY.current + delta));
       setDragY(newY);
     };
     const onUp = () => {
@@ -138,9 +140,9 @@ function PostcardSection() {
       isDragging.current = false;
       setCursor("default");
       setDragY((y) => {
-        if (y > CARD_HEIGHT * 0.45) {
+        if (y > FRONT_H * 0.4) {
           setSnapped(true);
-          return CARD_HEIGHT;
+          return FRONT_H;
         }
         return 0;
       });
@@ -157,14 +159,26 @@ function PostcardSection() {
     if (snapped) { setSnapped(false); setDragY(0); }
   };
 
-  const translateY = snapped ? CARD_HEIGHT : dragY;
+  const translateY = snapped ? FRONT_H : dragY;
   const dragging = isDragging.current;
 
   return (
-    <div style={{ position: "relative", height: CARD_HEIGHT, borderRadius: 16, overflow: "hidden", boxShadow: "0 20px 60px rgba(61,74,30,0.18)" }}>
+    <div style={{
+      position: "relative",
+      height: CONTAINER_H,
+      borderRadius: 16,
+      overflow: "hidden",
+      boxShadow: "0 20px 60px rgba(61,74,30,0.18)",
+    }}>
 
-      {/* Back layer — always visible behind */}
-      <div style={{ position: "absolute", inset: 0 }}>
+      {/* ── Back layer: image sits at the bottom, peeking PEEK px ── */}
+      <div style={{
+        position: "absolute",
+        bottom: 0, left: 0, right: 0,
+        height: FRONT_H,
+        borderRadius: "0 0 16px 16px",
+        overflow: "hidden",
+      }}>
         <img
           src={postcardImg}
           alt="postcard back"
@@ -175,10 +189,11 @@ function PostcardSection() {
           <button
             onClick={handleReset}
             style={{
-              position: "absolute", bottom: 20, left: "50%", transform: "translateX(-50%)",
-              background: "rgba(245,240,232,0.85)", border: "none", borderRadius: 999,
+              position: "absolute", top: 16, left: "50%", transform: "translateX(-50%)",
+              background: "rgba(245,240,232,0.88)", border: "none", borderRadius: 999,
               padding: "8px 22px", fontFamily: "Caveat, cursive", fontSize: 16,
               color: "#2C2A1E", cursor: "pointer", backdropFilter: "blur(4px)",
+              boxShadow: "0 2px 12px rgba(0,0,0,0.15)",
             }}
           >
             ✦ fechar
@@ -186,13 +201,15 @@ function PostcardSection() {
         )}
       </div>
 
-      {/* Front card — draggable downward */}
+      {/* ── Front card: absolutely positioned at top, draggable DOWN ── */}
       <div
         onMouseDown={onDown}
         onMouseEnter={() => !snapped && setCursor("postcard")}
         onMouseLeave={() => setCursor("default")}
         style={{
-          position: "absolute", inset: 0,
+          position: "absolute",
+          top: 0, left: 0, right: 0,
+          height: FRONT_H,
           transform: `translateY(${translateY}px)`,
           transition: dragging ? "none" : "transform 0.55s cubic-bezier(0.34,1.4,0.64,1)",
           cursor: "none",
@@ -200,7 +217,9 @@ function PostcardSection() {
           display: "flex",
           overflow: "hidden",
           borderRadius: 16,
-        } as React.CSSProperties}
+          boxShadow: "0 8px 32px rgba(61,74,30,0.18)",
+          zIndex: 1,
+        }}
       >
         {/* Stamp */}
         <div style={{
@@ -215,11 +234,16 @@ function PostcardSection() {
           <span style={{ fontFamily: "Caveat, cursive", fontSize: 7, color: "#D4713A" }}>DESIGN</span>
         </div>
 
-        {/* Drag hint */}
+        {/* Drag handle hint — bottom right tab */}
         <div style={{
-          position: "absolute", bottom: 12, left: "50%", transform: "translateX(-50%)",
-          fontFamily: "Caveat, cursive", fontSize: 13, opacity: 0.45, whiteSpace: "nowrap",
-          animation: "floatB 2.5s ease-in-out infinite",
+          position: "absolute", bottom: 0, right: 24,
+          background: "#A8CC2C",
+          borderRadius: "8px 8px 0 0",
+          padding: "4px 14px 2px",
+          fontFamily: "Caveat, cursive", fontSize: 13,
+          color: "#2C2A1E",
+          letterSpacing: "0.02em",
+          pointerEvents: "none",
         }}>
           arraste ↓
         </div>
@@ -227,7 +251,7 @@ function PostcardSection() {
         {/* Left: avatar */}
         <div style={{
           flex: "0 0 40%", background: "hsl(var(--muted))",
-          display: "flex", alignItems: "center", justifyContent: "center", minHeight: CARD_HEIGHT,
+          display: "flex", alignItems: "center", justifyContent: "center",
         }}>
           <div style={{
             width: 140, height: 140, borderRadius: "50%", background: "#3D4A1E",
