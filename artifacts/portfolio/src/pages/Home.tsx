@@ -193,13 +193,18 @@ function ProcessStep({ num, title, desc, delay, total }: { num: string; title: s
 
 /* ─── Project Card ─── */
 function ProjectCard({ project, featured }: {
-  project: { title: string; subtitle?: string; desc: string; tags: string[]; img?: string; placeholder?: boolean };
+  project: { title: string; subtitle?: string; desc: string; tags: string[]; img?: string; placeholder?: boolean; slug?: string; href?: string };
   featured?: boolean;
 }) {
+  const destination = project.slug ? `/${project.slug}` : (project.href ?? "#");
   return (
     <div
       data-testid={`card-project-${project.title}`}
       data-project-card={project.placeholder ? undefined : "true"}
+      onClick={() => {
+        if (project.placeholder || destination === "#") return;
+        window.location.href = destination;
+      }}
       style={{
         borderRadius: 16,
         overflow: "hidden",
@@ -581,6 +586,8 @@ export default function Home() {
             desc: featuredProjects[0].description,
             tags: featuredProjects[0].tags,
             img: featuredProjects[0].imageUrl ?? undefined,
+            slug: featuredProjects[0].slug || undefined,
+            href: featuredProjects[0].href,
           }} featured />}
         </div>
         <div style={{ display: "flex", gap: 20, flexWrap: "wrap" }}>
@@ -590,6 +597,8 @@ export default function Home() {
               desc: p.description,
               tags: p.tags,
               img: p.imageUrl ?? undefined,
+              slug: p.slug || undefined,
+              href: p.href,
             }} />
           ))}
         </div>

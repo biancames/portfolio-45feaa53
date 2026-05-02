@@ -1,4 +1,4 @@
-import { pgTable, text, serial, boolean, integer, timestamp } from "drizzle-orm/pg-core";
+import { pgTable, text, serial, boolean, integer, timestamp, jsonb } from "drizzle-orm/pg-core";
 
 export const siteSettings = pgTable("site_settings", {
   id: serial("id").primaryKey(),
@@ -22,10 +22,12 @@ export const projects = pgTable("projects", {
   tags: text("tags").array().notNull().default([]),
   imageUrl: text("image_url"),
   href: text("href").notNull().default("#"),
+  slug: text("slug").notNull().default(""),
   filterCategories: text("filter_categories").array().notNull().default([]),
   featured: boolean("featured").notNull().default(false),
   sortOrder: integer("sort_order").notNull().default(0),
   comingSoon: boolean("coming_soon").notNull().default(false),
+  caseStudy: jsonb("case_study"),
 });
 
 export type Project = typeof projects.$inferSelect;

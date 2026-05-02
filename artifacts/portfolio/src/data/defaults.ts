@@ -10,6 +10,45 @@ export type SiteSettings = {
   bioSecondary: string;
 };
 
+export type CaseStudyProcess = {
+  number: string;
+  title: string;
+  content: string;
+  imageUrl?: string;
+  imagePosition?: "left" | "right";
+};
+
+export type CaseStudyOutcome = {
+  icon?: string;
+  value: string;
+  label: string;
+};
+
+export type CaseStudyLearning = {
+  color?: string;
+  text: string;
+};
+
+export type CaseStudy = {
+  caseNumber?: string;
+  headline?: string;
+  overview?: string;
+  problemStatement?: string;
+  metadata?: {
+    setor?: string;
+    papel?: string;
+    plataforma?: string;
+    tipo?: string;
+    timeline?: string;
+    prototypeUrl?: string;
+  };
+  process?: CaseStudyProcess[];
+  outcomes?: CaseStudyOutcome[];
+  learnings?: CaseStudyLearning[];
+  nextProjectSlug?: string;
+  nextProjectLabel?: string;
+};
+
 export type Project = {
   id: number;
   title: string;
@@ -17,10 +56,12 @@ export type Project = {
   tags: string[];
   imageUrl: string | null;
   href: string;
+  slug: string;
   filterCategories: string[];
   featured: boolean;
   sortOrder: number;
   comingSoon: boolean;
+  caseStudy?: CaseStudy | null;
 };
 
 export type FilterCategory = { id: number; label: string; sortOrder: number };
@@ -52,12 +93,12 @@ export const DEFAULT_SETTINGS: SiteSettings = {
 };
 
 export const DEFAULT_PROJECTS: Project[] = [
-  { id: 1, title: "SisPat", description: "Sistema público de patrimônio imobiliário. Redesign completo com foco em acessibilidade e eficiência para servidores públicos.", tags: ["Redesign", "UX Research", "UX Design"], imageUrl: "https://picsum.photos/seed/sispatbig/1200/700", href: "#", filterCategories: ["Product Design", "UX/UI Design"], featured: true, sortOrder: 0, comingSoon: false },
-  { id: 2, title: "SGTran", description: "Sistema de gestão de transporte. Fluxos complexos simplificados com foco no operador logístico.", tags: ["Logística", "UX Design", "Sistema"], imageUrl: "https://picsum.photos/seed/sgtran/800/500", href: "#", filterCategories: ["Product Design", "UX/UI Design"], featured: true, sortOrder: 1, comingSoon: false },
-  { id: 3, title: "MundoLingo App", description: "App mobile de eventos e idiomas para comunidades de aprendizado ao redor do mundo.", tags: ["Mobile App", "Product Design", "Eventos"], imageUrl: "https://picsum.photos/seed/mundolingo/800/500", href: "#", filterCategories: ["Product Design", "UX/UI Design"], featured: true, sortOrder: 2, comingSoon: false },
-  { id: 4, title: "SisPat Visual Identity", description: "Identidade visual do sistema SisPat: logotipo, paleta de cores e guia de estilo.", tags: ["Branding", "Visual Identity", "Identidade"], imageUrl: "https://picsum.photos/seed/sispatbrand/800/500", href: "#", filterCategories: ["Graphic Design"], featured: false, sortOrder: 3, comingSoon: false },
-  { id: 5, title: "Cartazes Culturais", description: "Série de cartazes para eventos culturais do litoral paulista.", tags: ["Poster Design", "Tipografia", "Editorial"], imageUrl: "https://picsum.photos/seed/posters/800/500", href: "#", filterCategories: ["Graphic Design"], featured: false, sortOrder: 4, comingSoon: false },
-  { id: 6, title: "Em breve", description: "", tags: [], imageUrl: null, href: "#", filterCategories: ["Product Design", "UX/UI Design", "Graphic Design"], featured: false, sortOrder: 5, comingSoon: true },
+  { id: 1, title: "SisPat", description: "Sistema público de patrimônio imobiliário. Redesign completo com foco em acessibilidade e eficiência para servidores públicos.", tags: ["Redesign", "UX Research", "UX Design"], imageUrl: "https://picsum.photos/seed/sispatbig/1200/700", href: "#", slug: "sispat", filterCategories: ["Product Design", "UX/UI Design"], featured: true, sortOrder: 0, comingSoon: false, caseStudy: null },
+  { id: 2, title: "SGTran", description: "Sistema de gestão de transporte. Fluxos complexos simplificados com foco no operador logístico.", tags: ["Logística", "UX Design", "Sistema"], imageUrl: "https://picsum.photos/seed/sgtran/800/500", href: "#", slug: "sgtran", filterCategories: ["Product Design", "UX/UI Design"], featured: true, sortOrder: 1, comingSoon: false, caseStudy: null },
+  { id: 3, title: "MundoLingo App", description: "App mobile de eventos e idiomas para comunidades de aprendizado ao redor do mundo.", tags: ["Mobile App", "Product Design", "Eventos"], imageUrl: "https://picsum.photos/seed/mundolingo/800/500", href: "#", slug: "mundolingo", filterCategories: ["Product Design", "UX/UI Design"], featured: true, sortOrder: 2, comingSoon: false, caseStudy: null },
+  { id: 4, title: "SisPat Visual Identity", description: "Identidade visual do sistema SisPat: logotipo, paleta de cores e guia de estilo.", tags: ["Branding", "Visual Identity", "Identidade"], imageUrl: "https://picsum.photos/seed/sispatbrand/800/500", href: "#", slug: "sispat-identity", filterCategories: ["Graphic Design"], featured: false, sortOrder: 3, comingSoon: false, caseStudy: null },
+  { id: 5, title: "Cartazes Culturais", description: "Série de cartazes para eventos culturais do litoral paulista.", tags: ["Poster Design", "Tipografia", "Editorial"], imageUrl: "https://picsum.photos/seed/posters/800/500", href: "#", slug: "cartazes", filterCategories: ["Graphic Design"], featured: false, sortOrder: 4, comingSoon: false, caseStudy: null },
+  { id: 6, title: "Em breve", description: "", tags: [], imageUrl: null, href: "#", slug: "", filterCategories: ["Product Design", "UX/UI Design", "Graphic Design"], featured: false, sortOrder: 5, comingSoon: true, caseStudy: null },
 ];
 
 export const DEFAULT_FILTER_CATEGORIES: FilterCategory[] = [

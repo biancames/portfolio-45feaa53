@@ -4,6 +4,7 @@ import Home from "@/pages/Home";
 import Projects from "@/pages/Projects";
 import MaisSobre from "@/pages/MaisSobre";
 import Admin from "@/pages/Admin";
+import ProjectDetail from "@/pages/ProjectDetail";
 import DarkModeSwitch from "@/components/DarkModeSwitch";
 import CustomCursor from "@/components/CustomCursor";
 import { ProjectCursorLabel } from "@/components/ProjectCursorLabel";
@@ -35,6 +36,7 @@ export default function App() {
         <Route path="/projetos" component={Projects} />
         <Route path="/maissobre" component={MaisSobre} />
         <Route path="/admin" component={Admin} />
+        <Route path="/:slug" component={ProjectDetail} />
       </Switch>
       <DarkModeSwitch dark={dark} onToggle={() => setDark((d) => !d)} />
     </>

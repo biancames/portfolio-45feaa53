@@ -158,15 +158,19 @@ function ProjectsTab({ projects, filterCategories }: { projects: Project[]; filt
 
   const blank: Omit<Project, "id" | "sortOrder"> = {
     title: "", description: "", tags: [], imageUrl: null, href: "#",
-    filterCategories: [], featured: false, comingSoon: false,
+    slug: "", filterCategories: [], featured: false, comingSoon: false, caseStudy: null,
   };
 
   const [form, setForm] = useState<Omit<Project, "id" | "sortOrder">>(blank);
+  const [caseStudyJson, setCaseStudyJson] = useState("{}");
+  const [jsonError, setJsonError] = useState(false);
   const set = (k: string) => (v: unknown) => setForm((f: typeof form) => ({ ...f, [k]: v }));
 
   function openEdit(p: Project) {
     setEditing(p);
-    setForm({ title: p.title, description: p.description, tags: p.tags, imageUrl: p.imageUrl, href: p.href, filterCategories: p.filterCategories, featured: p.featured, comingSoon: p.comingSoon });
+    setForm({ title: p.title, description: p.description, tags: p.tags, imageUrl: p.imageUrl, href: p.href, slug: p.slug ?? "", filterCategories: p.filterCategories, featured: p.featured, comingSoon: p.comingSoon, caseStudy: p.caseStudy });
+    setCaseStudyJson(p.caseStudy ? JSON.stringify(p.caseStudy, null, 2) : "{}");
+    setJsonError(false);
     setAdding(false);
   }
 
@@ -178,7 +182,18 @@ function ProjectsTab({ projects, filterCategories }: { projects: Project[]; filt
 
   async function save() {
     try {
-      const body = { ...form, tags: typeof form.tags === "string" ? (form.tags as string).split(",").map((s: string) => s.trim()) : form.tags };
+      let parsedCaseStudy = null;
+      try {
+        const trimmed = caseStudyJson.trim();
+        parsedCaseStudy = trimmed && trimmed !== "{}" ? JSON.parse(trimmed) : null;
+        setJsonError(false);
+      } catch {
+        setJsonError(true);
+        setToast({ msg: "JSON inválido no Case Study", ok: false });
+        setTimeout(() => setToast(null), 3000);
+        return;
+      }
+      const body = { ...form, tags: typeof form.tags === "string" ? (form.tags as string).split(",").map((s: string) => s.trim()) : form.tags, caseStudy: parsedCaseStudy };
       if (editing) {
         const updated = await api(`/projects/${editing.id}`, "PUT", body);
         setList(l => l.map(p => p.id === editing.id ? updated : p));
@@ -226,10 +241,29 @@ function ProjectsTab({ projects, filterCategories }: { projects: Project[]; filt
           </div>
           <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 12 }}>
             <div><Label>Título</Label><Inp value={form.title} onChange={set("title")} /></div>
-            <div><Label>URL do projeto (href)</Label><Inp value={form.href} onChange={set("href")} placeholder="#" /></div>
+            <div><Label>Slug (ex: sispat → /sispat)</Label><Inp value={form.slug ?? ""} onChange={set("slug")} placeholder="sispat" /></div>
             <div style={{ gridColumn: "1/-1" }}><Label>Descrição</Label><Inp value={form.description} onChange={set("description")} multiline /></div>
             <div><Label>Tags (separadas por vírgula)</Label><Inp value={Array.isArray(form.tags) ? form.tags.join(", ") : form.tags} onChange={v => set("tags")(v.split(",").map((s: string) => s.trim()))} /></div>
             <div><Label>URL da imagem</Label><Inp value={form.imageUrl ?? ""} onChange={v => set("imageUrl")(v || null)} /></div>
+          </div>
+          <div style={{ marginTop: 12 }}>
+            <Label>Case Study (JSON)</Label>
+            <div style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 11, color: C.muted, marginBottom: 6 }}>
+              Campos: caseNumber, headline, overview, problemStatement, metadata (setor, papel, plataforma, tipo, timeline, prototypeUrl), process [{"{"}number, title, content, imageUrl, imagePosition{"}"}], outcomes [{"{"}icon, value, label{"}"}], learnings [{"{"}color, text{"}"}], nextProjectSlug, nextProjectLabel
+            </div>
+            <textarea
+              value={caseStudyJson}
+              onChange={e => { setCaseStudyJson(e.target.value); setJsonError(false); }}
+              rows={14}
+              style={{
+                width: "100%", boxSizing: "border-box",
+                background: jsonError ? "rgba(200,50,50,0.1)" : "rgba(0,0,0,0.25)",
+                border: `1px solid ${jsonError ? "#e05" : C.border}`,
+                borderRadius: 8, padding: "10px 12px",
+                color: C.parch, fontFamily: "'DM Mono', monospace", fontSize: 12,
+                lineHeight: 1.6, resize: "vertical", outline: "none",
+              }}
+            />
           </div>
           <div style={{ marginTop: 12 }}>
             <Label>Categorias de filtro</Label>

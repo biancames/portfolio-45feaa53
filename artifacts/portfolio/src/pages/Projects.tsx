@@ -26,18 +26,26 @@ function ProjectCard({ project }: { project: Project }) {
     );
   }
 
+  const destination = project.slug ? `/${project.slug}` : project.href;
+  const isExternal = !project.slug && project.href !== "#";
+
   return (
     <div
       data-project-card="true"
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
+      onClick={() => {
+        if (destination === "#") return;
+        if (isExternal) window.open(destination, "_blank");
+        else window.location.href = destination;
+      }}
       style={{
         borderRadius: 16, overflow: "hidden",
         background: "hsl(var(--card))",
         boxShadow: hovered ? "0 8px 32px rgba(61,74,30,0.18)" : "0 4px 24px rgba(61,74,30,0.10)",
         border: "1px solid hsl(var(--border))",
         flex: "1 1 300px", minWidth: 280, maxWidth: "100%",
-        cursor: "none",
+        cursor: destination === "#" ? "default" : "none",
         userSelect: "none",
         transition: "box-shadow 0.3s ease, transform 0.3s ease",
         transform: hovered ? "translateY(-4px)" : "translateY(0)",

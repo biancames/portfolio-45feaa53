@@ -212,6 +212,18 @@ router.delete("/content/projects/:id", async (req, res) => {
   }
 });
 
+// ── PROJECT BY SLUG ───────────────────────────────────────────────────────────
+router.get("/content/projects/slug/:slug", async (req, res) => {
+  try {
+    const rows = await db.select().from(projects).where(eq(projects.slug, req.params.slug)).limit(1);
+    if (rows.length === 0) { res.status(404).json({ error: "Not found" }); return; }
+    res.json(rows[0]);
+  } catch (err) {
+    req.log.error(err);
+    res.status(500).json({ error: "Failed" });
+  }
+});
+
 // ── FILTER CATEGORIES ─────────────────────────────────────────────────────────
 router.get("/content/filter-categories", async (req, res) => {
   try {
