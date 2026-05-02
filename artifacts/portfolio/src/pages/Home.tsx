@@ -571,7 +571,7 @@ export default function Home() {
             <img src={cafeIllustra} alt="Cafeteira" style={{ display: "block", height: 108, width: "auto", transform: "rotate(-8deg)" }} draggable={false} />
           </DraggableIllustration>
           <DraggableIllustration style={{ top: "44%", right: "14%", pointerEvents: "all" }}>
-            <img src={figmaIllustra} alt="Figma" style={{ display: "block", height: 88, width: "auto", transform: "rotate(6deg)" }} draggable={false} />
+            <img src={figmaIllustra} alt="Figma" style={{ display: "block", height: 88, width: "auto", transform: "rotate(6deg)", filter: "sepia(0.4) saturate(0.65) brightness(0.75) hue-rotate(10deg)" }} draggable={false} />
           </DraggableIllustration>
           <DraggableIllustration style={{ top: "56%", right: "36%", pointerEvents: "all" }}>
             <img src={pcIllustra} alt="Laptop" style={{ display: "block", height: 88, width: "auto", transform: "rotate(3deg)" }} draggable={false} />
@@ -663,7 +663,7 @@ export default function Home() {
               <span style={{
                 fontFamily: "'Caveat', cursive",
                 fontSize: 20,
-                color: "#D4713A",
+                color: "#7B5235",
                 transform: "rotate(-10deg)",
                 display: "block",
                 whiteSpace: "nowrap",
@@ -672,8 +672,8 @@ export default function Home() {
                 click to flip
               </span>
               <svg width="48" height="64" viewBox="0 0 48 64" fill="none" style={{ marginTop: 4 }}>
-                <path d="M38 4 C46 22, 34 48, 8 58" stroke="#D4713A" strokeWidth="2" strokeLinecap="round" fill="none"/>
-                <path d="M8 58 L4 46 M8 58 L20 54" stroke="#D4713A" strokeWidth="2" strokeLinecap="round"/>
+                <path d="M38 4 C46 22, 34 48, 8 58" stroke="#7B5235" strokeWidth="2" strokeLinecap="round" fill="none"/>
+                <path d="M8 58 L4 46 M8 58 L20 54" stroke="#7B5235" strokeWidth="2" strokeLinecap="round"/>
               </svg>
             </div>
           </div>

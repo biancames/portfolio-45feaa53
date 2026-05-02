@@ -125,7 +125,7 @@ export function PostcardSection({ hideCta }: { hideCta?: boolean }) {
                   Acredito que bons produtos nascem do entendimento real de quem usa.
                 </p>
               </div>
-              <div style={{ fontFamily: "'Caveat', cursive", fontSize: 24, color: "#D4713A", marginTop: 8, textAlign: "right", fontStyle: "italic" }}>
+              <div style={{ fontFamily: "'Caveat', cursive", fontSize: 24, color: "#7B5235", marginTop: 8, textAlign: "right", fontStyle: "italic" }}>
                 Bianca Mesquita
               </div>
             </div>
