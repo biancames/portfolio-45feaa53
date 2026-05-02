@@ -149,6 +149,23 @@ export default function Projects() {
 
         {/* Heading */}
         <div style={{ marginBottom: 48 }}>
+          <a
+            href="/"
+            style={{
+              display: "inline-flex", alignItems: "center", gap: 8,
+              fontFamily: "'DM Sans', sans-serif", fontSize: 14,
+              color: "hsl(var(--foreground))", opacity: 0.55,
+              textDecoration: "none", marginBottom: 24,
+              transition: "opacity 0.2s",
+            }}
+            onMouseEnter={(e) => (e.currentTarget.style.opacity = "1")}
+            onMouseLeave={(e) => (e.currentTarget.style.opacity = "0.55")}
+          >
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+              <path d="M10 3L5 8L10 13" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/>
+            </svg>
+            Início
+          </a>
           <h1 className="section-heading" style={{ fontFamily: "'Libre Baskerville', serif", fontSize: "clamp(2rem,5vw,3.5rem)", fontStyle: "italic", margin: 0 }}>
             [Projetos]
           </h1>
@@ -208,24 +225,6 @@ export default function Projects() {
           ))}
         </div>
 
-        {/* Back link */}
-        <div style={{ marginTop: 80, textAlign: "center" }}>
-          <a
-            href="/"
-            style={{
-              fontFamily: "'Caveat', cursive",
-              fontSize: 20,
-              color: "#D4713A",
-              textDecoration: "none",
-              opacity: 0.8,
-              transition: "opacity 0.2s",
-            }}
-            onMouseEnter={(e) => (e.currentTarget.style.opacity = "1")}
-            onMouseLeave={(e) => (e.currentTarget.style.opacity = "0.8")}
-          >
-            ← voltar ao início
-          </a>
-        </div>
       </main>
 
       <style>{`
