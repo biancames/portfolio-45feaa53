@@ -164,7 +164,7 @@ export default function Projects() {
             </svg>
             Início
           </a>
-          <h1 className="section-heading" style={{ fontFamily: "'Libre Baskerville', serif", fontSize: "clamp(2rem,5vw,3.5rem)", fontStyle: "italic", margin: 0 }}>
+          <h1 className="section-heading" style={{ fontFamily: "'Libre Baskerville', serif", fontSize: "clamp(1.5rem,4vw,2.5rem)", fontStyle: "italic", margin: 0 }}>
             [Projetos]
           </h1>
           <div style={{ width: 48, height: 3, background: "#A8CC2C", marginTop: 8, borderRadius: 2 }} />
