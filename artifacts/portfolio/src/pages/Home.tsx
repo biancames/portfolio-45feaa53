@@ -712,8 +712,8 @@ export default function Home() {
             );
           })}
           <div style={{ display: "flex", gap: 16, alignItems: "center", marginLeft: 8 }}>
-            <a data-testid="link-linkedin" href="https://linkedin.com/in/biancamesquita" target="_blank" rel="noreferrer" style={{ color: "hsl(var(--foreground))", opacity: 0.6, cursor: "pointer", transition: "opacity 0.2s" }} onMouseEnter={(e)=>(e.currentTarget.style.opacity="1")} onMouseLeave={(e)=>(e.currentTarget.style.opacity="0.6")}><Linkedin size={16}/></a>
-            <a data-testid="link-behance" href="https://behance.net/biancamesquita" target="_blank" rel="noreferrer" style={{ color: "hsl(var(--foreground))", opacity: 0.6, cursor: "pointer", transition: "opacity 0.2s" }} onMouseEnter={(e)=>(e.currentTarget.style.opacity="1")} onMouseLeave={(e)=>(e.currentTarget.style.opacity="0.6")}><SiBehance size={16}/></a>
+            <a data-testid="link-linkedin" href="https://linkedin.com/in/biancames" target="_blank" rel="noreferrer" style={{ color: "hsl(var(--foreground))", opacity: 0.6, cursor: "pointer", transition: "opacity 0.2s" }} onMouseEnter={(e)=>(e.currentTarget.style.opacity="1")} onMouseLeave={(e)=>(e.currentTarget.style.opacity="0.6")}><Linkedin size={16}/></a>
+            <a data-testid="link-behance" href="https://behance.net/biadesigns" target="_blank" rel="noreferrer" style={{ color: "hsl(var(--foreground))", opacity: 0.6, cursor: "pointer", transition: "opacity 0.2s" }} onMouseEnter={(e)=>(e.currentTarget.style.opacity="1")} onMouseLeave={(e)=>(e.currentTarget.style.opacity="0.6")}><SiBehance size={16}/></a>
             <a data-testid="link-dribbble" href="#" style={{ color: "hsl(var(--foreground))", opacity: 0.6, cursor: "pointer", transition: "opacity 0.2s" }} onMouseEnter={(e)=>(e.currentTarget.style.opacity="1")} onMouseLeave={(e)=>(e.currentTarget.style.opacity="0.6")}><SiDribbble size={16}/></a>
           </div>
         </div>
@@ -988,8 +988,8 @@ export default function Home() {
           </a>
           <div style={{ display: "flex", gap: 32, justifyContent: "center", marginTop: 40, flexWrap: "wrap" }}>
             {[
-              { label: "LinkedIn", href: "https://linkedin.com/in/biancamesquita", testId: "link-footer-linkedin" },
-              { label: "Behance", href: "https://behance.net/biancamesquita", testId: "link-footer-behance" },
+              { label: "LinkedIn", href: "https://linkedin.com/in/biancames", testId: "link-footer-linkedin" },
+              { label: "Behance", href: "https://behance.net/biadesigns", testId: "link-footer-behance" },
               { label: "Currículo ↓", href: "#", testId: "link-footer-cv" },
               { label: "Email", href: "mailto:biadesign.contate@gmail.com", testId: "link-footer-email" },
             ].map((l) => (
