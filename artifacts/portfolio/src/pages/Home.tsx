@@ -112,9 +112,9 @@ function PostcardSection() {
     { name: "Photoshop",  icon: <span style={{ fontFamily: "'DM Mono',monospace", fontSize: 12, fontWeight: 700, letterSpacing: "-0.5px" }}>Ps</span> },
     { name: "Notion",     icon: <SiNotion size={18} /> },
     { name: "Framer",     icon: <SiFramer size={18} /> },
-    { name: "Affinity",   icon: <img src={affinityIcon} alt="Affinity" style={{ width: 18, height: 18, objectFit: "contain" }} /> },
-    { name: "Lovable",    icon: <img src={lovableIcon}  alt="Lovable"  style={{ width: 18, height: 18, objectFit: "contain" }} /> },
-    { name: "Claude",     icon: <img src={claudeIcon}   alt="Claude"   style={{ width: 18, height: 18, objectFit: "contain" }} /> },
+    { name: "Affinity",   icon: <img src={affinityIcon} alt="Affinity" style={{ width: 18, height: 18, objectFit: "contain", filter: "brightness(0) saturate(100%) invert(22%) sepia(19%) saturate(700%) hue-rotate(55deg)" }} /> },
+    { name: "Lovable",    icon: <img src={lovableIcon}  alt="Lovable"  style={{ width: 18, height: 18, objectFit: "contain", filter: "brightness(0) saturate(100%) invert(22%) sepia(19%) saturate(700%) hue-rotate(55deg)" }} /> },
+    { name: "Claude",     icon: <img src={claudeIcon}   alt="Claude"   style={{ width: 18, height: 18, objectFit: "contain", filter: "brightness(0) saturate(100%) invert(22%) sepia(19%) saturate(700%) hue-rotate(55deg)" }} /> },
   ];
   const loopTools = [...tools, ...tools];
 
