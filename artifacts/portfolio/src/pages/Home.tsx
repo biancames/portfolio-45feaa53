@@ -207,7 +207,7 @@ function PostcardSection() {
             {/* Bio block — light card */}
             <div style={{
               flex: 1,
-              background: "hsl(var(--card))", borderRadius: 16,
+              background: "hsl(var(--muted))", borderRadius: 16,
               border: "1px solid hsl(var(--border))", padding: "16px 20px",
               display: "flex", flexDirection: "column", justifyContent: "space-between",
               overflow: "hidden",
