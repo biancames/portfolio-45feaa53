@@ -186,7 +186,7 @@ export default function Projects() {
                 style={{
                   fontFamily: "'DM Sans', sans-serif",
                   fontSize: 14,
-                  fontWeight: isActive ? 600 : 400,
+                  fontWeight: 400,
                   padding: "10px 24px",
                   borderRadius: 999,
                   border: isActive ? "none" : "1.5px dashed #5A8A20",
