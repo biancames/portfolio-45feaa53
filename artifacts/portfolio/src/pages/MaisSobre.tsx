@@ -134,6 +134,125 @@ export default function MaisSobre() {
           </div>
         </section>
 
+        {/* ── POR ONDE ESTIVE ── */}
+        <section style={{ padding: "100px 40px", background: "hsl(var(--muted)/0.25)" }}>
+          <div style={{ maxWidth: 1000, margin: "0 auto" }}>
+            <div style={{ marginBottom: 56 }}>
+              <h2 className="section-heading" style={{ fontFamily: "'Libre Baskerville', serif", fontSize: "clamp(1.5rem,4vw,2.5rem)", fontStyle: "italic", margin: 0 }}>
+                [Por onde estive]
+              </h2>
+              <div style={{ width: 48, height: 4, background: "#A8CC2C", marginTop: 8, borderRadius: 4 }} />
+            </div>
+
+            <div style={{ position: "relative", paddingLeft: 32 }}>
+              {/* vertical line */}
+              <div style={{ position: "absolute", left: 7, top: 8, bottom: 8, width: 2, background: "hsl(var(--border))", borderRadius: 2 }} />
+
+              {[
+                { role: "Product Designer", company: "Empresa atual", period: "2024 — presente", desc: "Descrição breve do trabalho, impactos e contexto." },
+                { role: "UX/UI Designer", company: "Empresa anterior", period: "2022 — 2024", desc: "Descrição breve do trabalho, impactos e contexto." },
+                { role: "Designer Jr.", company: "Primeira empresa", period: "2021 — 2022", desc: "Descrição breve do trabalho, impactos e contexto." },
+              ].map((exp, i) => (
+                <div key={i} style={{ position: "relative", marginBottom: i < 2 ? 48 : 0, paddingLeft: 28 }}>
+                  {/* dot */}
+                  <div style={{
+                    position: "absolute",
+                    left: -32,
+                    top: 6,
+                    width: 16,
+                    height: 16,
+                    borderRadius: "50%",
+                    background: i === 0 ? "#A8CC2C" : "hsl(var(--background))",
+                    border: `2px solid ${i === 0 ? "#A8CC2C" : "hsl(var(--border))"}`,
+                    zIndex: 1,
+                  }} />
+
+                  <div style={{ display: "flex", alignItems: "flex-start", justifyContent: "space-between", flexWrap: "wrap", gap: 8, marginBottom: 8 }}>
+                    <div>
+                      <div style={{ fontFamily: "'Libre Baskerville', serif", fontStyle: "italic", fontSize: 20, fontWeight: 700, color: "hsl(var(--foreground))", marginBottom: 2 }}>
+                        {exp.role}
+                      </div>
+                      <div style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 15, color: "hsl(var(--muted-foreground))", fontWeight: 500 }}>
+                        {exp.company}
+                      </div>
+                    </div>
+                    <div style={{
+                      fontFamily: "'DM Mono', monospace",
+                      fontSize: 12,
+                      letterSpacing: "0.08em",
+                      color: i === 0 ? "#A8CC2C" : "hsl(var(--muted-foreground))",
+                      background: i === 0 ? "rgba(168,204,44,0.12)" : "hsl(var(--muted)/0.5)",
+                      padding: "4px 12px",
+                      borderRadius: 999,
+                      whiteSpace: "nowrap",
+                      alignSelf: "flex-start",
+                    }}>
+                      {exp.period}
+                    </div>
+                  </div>
+                  <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 15, lineHeight: 1.7, color: "hsl(var(--foreground))", opacity: 0.65, margin: 0 }}>
+                    {exp.desc}
+                  </p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* ── PESSOAL ── */}
+        <section style={{ padding: "100px 40px" }}>
+          <div style={{ maxWidth: 1000, margin: "0 auto" }}>
+            <div style={{ marginBottom: 56 }}>
+              <h2 className="section-heading" style={{ fontFamily: "'Libre Baskerville', serif", fontSize: "clamp(1.5rem,4vw,2.5rem)", fontStyle: "italic", margin: 0 }}>
+                [Além do trabalho]
+              </h2>
+              <div style={{ width: 48, height: 4, background: "#A8CC2C", marginTop: 8, borderRadius: 4 }} />
+            </div>
+
+            <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(200px, 1fr))", gap: 24 }}>
+              {[
+                { label: "livro favorito", emoji: "📖", content: "Título do livro favorito aqui", sub: "Autor" },
+                { label: "música do momento", emoji: "🎵", content: "Nome da música", sub: "Artista" },
+                { label: "viagem favorita", emoji: "✈️", content: "Destino", sub: "foto em breve" },
+                { label: "meu pet", emoji: "🐾", content: "Nome do pet", sub: "foto em breve" },
+              ].map((card, i) => (
+                <div
+                  key={i}
+                  style={{
+                    background: "hsl(var(--card))",
+                    border: "1.5px dashed hsl(var(--border))",
+                    borderRadius: 16,
+                    padding: "24px 20px",
+                    transform: `rotate(${[1.2, -0.8, 1.5, -1.2][i]}deg)`,
+                    boxShadow: "0 4px 20px rgba(61,74,30,0.08)",
+                    transition: "transform 0.25s ease, box-shadow 0.25s ease",
+                    cursor: "default",
+                  }}
+                  onMouseEnter={(e) => {
+                    (e.currentTarget as HTMLDivElement).style.transform = "rotate(0deg) translateY(-4px)";
+                    (e.currentTarget as HTMLDivElement).style.boxShadow = "0 12px 32px rgba(61,74,30,0.14)";
+                  }}
+                  onMouseLeave={(e) => {
+                    (e.currentTarget as HTMLDivElement).style.transform = `rotate(${[1.2, -0.8, 1.5, -1.2][i]}deg)`;
+                    (e.currentTarget as HTMLDivElement).style.boxShadow = "0 4px 20px rgba(61,74,30,0.08)";
+                  }}
+                >
+                  <div style={{ fontSize: 32, marginBottom: 12 }}>{card.emoji}</div>
+                  <div style={{ fontFamily: "'DM Mono', monospace", fontSize: 11, letterSpacing: "0.1em", textTransform: "uppercase", color: "#A8CC2C", marginBottom: 8 }}>
+                    {card.label}
+                  </div>
+                  <div style={{ fontFamily: "'Libre Baskerville', serif", fontStyle: "italic", fontSize: 16, color: "hsl(var(--foreground))", marginBottom: 4, lineHeight: 1.4 }}>
+                    {card.content}
+                  </div>
+                  <div style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 13, color: "hsl(var(--muted-foreground))", opacity: 0.7 }}>
+                    {card.sub}
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
       </main>
 
       <style>{`
