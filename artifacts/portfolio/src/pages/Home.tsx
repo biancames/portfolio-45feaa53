@@ -748,7 +748,7 @@ export default function Home() {
                 display: "inline-flex", alignItems: "center", gap: 8,
                 background: "#A8CC2C", color: "#2C2A1E",
                 padding: "12px 28px", borderRadius: 999,
-                fontFamily: "'DM Sans', sans-serif", fontWeight: 600, fontSize: 14,
+                fontFamily: "'DM Sans', sans-serif", fontWeight: 400, fontSize: 14,
                 textDecoration: "none", cursor: "pointer",
                 boxShadow: "0 4px 20px rgba(168,204,44,0.3)",
                 transition: "transform 0.2s, box-shadow 0.2s",
