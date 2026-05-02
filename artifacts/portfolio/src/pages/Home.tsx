@@ -143,10 +143,10 @@ function PostcardSection() {
           WebkitBackfaceVisibility: "hidden" as React.CSSProperties["WebkitBackfaceVisibility"],
           border: "1.5px dashed hsl(var(--border))",
           borderRadius: 20,
-          background: "hsl(var(--background))",
+          background: "hsl(var(--card))",
           overflow: "hidden",
           display: "flex",
-          boxShadow: "0 8px 40px rgba(61,74,30,0.08)",
+          boxShadow: "0 12px 48px rgba(61,74,30,0.18)",
         }}>
 
           {/* ── Left: photo + scrolling tools strip below ── */}
