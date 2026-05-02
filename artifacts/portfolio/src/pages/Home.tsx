@@ -1,5 +1,9 @@
 import { useEffect, useRef, useState, useCallback } from "react";
 import { SiBehance, SiDribbble, SiFigma, SiNotion, SiFramer, SiHotjar } from "react-icons/si";
+import figmaIllustra from "@assets/Figma_1777742554578.png";
+import caipirinhaIllustra from "@assets/ilustras_1777742559195.png";
+import cafeIllustra from "@assets/IlustraCafe_1777742604142.png";
+import pcIllustra from "@assets/ilustraPC_1777742604142.png";
 
 /* ─── helpers ─── */
 function setCursor(mode: "default" | "project" | "postcard" | "grab") {
@@ -60,47 +64,7 @@ function useDragBack(
   }, [ref, origX, origY]);
 }
 
-/* ─── SVG Illustrations ─── */
-function FigmaSVG() {
-  return (
-    <svg width="56" height="72" viewBox="0 0 56 72" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <rect x="8" y="2" width="20" height="20" rx="10" stroke="#3D4A1E" strokeWidth="2"/>
-      <rect x="28" y="2" width="20" height="20" rx="10" stroke="#3D4A1E" strokeWidth="2"/>
-      <rect x="8" y="22" width="20" height="20" rx="4" stroke="#3D4A1E" strokeWidth="2"/>
-      <rect x="28" y="22" width="20" height="20" rx="10" stroke="#A8CC2C" strokeWidth="2"/>
-      <rect x="8" y="42" width="20" height="20" rx="10" stroke="#3D4A1E" strokeWidth="2"/>
-    </svg>
-  );
-}
-
-function MokaPotSVG() {
-  return (
-    <svg width="52" height="72" viewBox="0 0 52 72" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <ellipse cx="26" cy="60" rx="18" ry="8" stroke="#3D4A1E" strokeWidth="2"/>
-      <path d="M8 60 L12 30 Q14 22 26 22 Q38 22 40 30 L44 60" stroke="#3D4A1E" strokeWidth="2" fill="none"/>
-      <ellipse cx="26" cy="22" rx="14" ry="5" stroke="#3D4A1E" strokeWidth="2"/>
-      <rect x="20" y="8" width="12" height="16" rx="6" stroke="#3D4A1E" strokeWidth="2"/>
-      <ellipse cx="26" cy="8" rx="6" ry="4" stroke="#3D4A1E" strokeWidth="2"/>
-      <path d="M44 45 Q52 42 50 38" stroke="#3D4A1E" strokeWidth="1.5" fill="none" strokeLinecap="round"/>
-      <path d="M26 2 Q28 5 26 8" stroke="#3D4A1E" strokeWidth="1.5" fill="none" strokeLinecap="round"/>
-    </svg>
-  );
-}
-
-function LaptopSVG() {
-  return (
-    <svg width="88" height="60" viewBox="0 0 88 60" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <rect x="10" y="4" width="62" height="40" rx="4" stroke="#3D4A1E" strokeWidth="2"/>
-      <rect x="14" y="8" width="54" height="32" rx="2" stroke="#A8CC2C" strokeWidth="1.5"/>
-      <path d="M4 48 L84 48 L78 56 L10 56 Z" stroke="#3D4A1E" strokeWidth="2" fill="none"/>
-      <rect x="32" y="52" width="24" height="2" rx="1" stroke="#3D4A1E" strokeWidth="1.5"/>
-      <line x1="20" y1="16" x2="60" y2="16" stroke="#3D4A1E" strokeWidth="1" opacity="0.4"/>
-      <line x1="20" y1="22" x2="50" y2="22" stroke="#3D4A1E" strokeWidth="1" opacity="0.4"/>
-      <line x1="20" y1="28" x2="56" y2="28" stroke="#3D4A1E" strokeWidth="1" opacity="0.4"/>
-    </svg>
-  );
-}
-
+/* ─── Sparkles (kept as SVG) ─── */
 function SparklesSVG() {
   return (
     <svg width="120" height="120" viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -570,16 +534,19 @@ export default function Home() {
 
         {/* Illustrations */}
         <div style={{ position: "absolute", right: 0, top: 0, bottom: 0, width: "50%", pointerEvents: "none" }}>
-          <DraggableIllustration style={{ top: "18%", right: "28%", pointerEvents: "all" }}>
-            <FigmaSVG />
+          <DraggableIllustration style={{ top: "12%", right: "30%", pointerEvents: "all" }}>
+            <img src={figmaIllustra} alt="Figma" width={100} style={{ display: "block", transform: "rotate(6deg)" }} draggable={false} />
           </DraggableIllustration>
-          <DraggableIllustration style={{ top: "35%", right: "10%", pointerEvents: "all" }}>
-            <MokaPotSVG />
+          <DraggableIllustration style={{ top: "38%", right: "8%", pointerEvents: "all" }}>
+            <img src={cafeIllustra} alt="Cafeteira" width={110} style={{ display: "block", transform: "rotate(-8deg)" }} draggable={false} />
           </DraggableIllustration>
-          <DraggableIllustration style={{ top: "55%", right: "32%", pointerEvents: "all" }}>
-            <LaptopSVG />
+          <DraggableIllustration style={{ top: "58%", right: "30%", pointerEvents: "all" }}>
+            <img src={pcIllustra} alt="Laptop" width={130} style={{ display: "block", transform: "rotate(3deg)" }} draggable={false} />
           </DraggableIllustration>
-          <DraggableIllustration style={{ top: "12%", right: "8%", pointerEvents: "all" }}>
+          <DraggableIllustration style={{ top: "22%", right: "4%", pointerEvents: "all" }}>
+            <img src={caipirinhaIllustra} alt="Caipirinha" width={90} style={{ display: "block", transform: "rotate(-5deg)" }} draggable={false} />
+          </DraggableIllustration>
+          <DraggableIllustration style={{ top: "8%", right: "6%", pointerEvents: "all" }}>
             <SparklesSVG />
           </DraggableIllustration>
         </div>
