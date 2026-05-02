@@ -162,7 +162,7 @@ function PostcardSection() {
               overflow: "hidden",
               background: "hsl(var(--background))",
               borderTop: "1px solid hsl(var(--border))",
-              padding: "10px 0",
+              padding: "8px 0",
               flexShrink: 0,
             }}>
               <div style={{
@@ -173,7 +173,7 @@ function PostcardSection() {
               }}>
                 {loopTools.map((t, i) => (
                   <div key={i} style={{
-                    width: 36, height: 36, borderRadius: 9,
+                    width: 36, height: 36, borderRadius: 8,
                     border: "1px solid rgba(61,74,30,0.15)",
                     background: "hsl(var(--card))",
                     display: "flex", alignItems: "center", justifyContent: "center",
@@ -191,13 +191,13 @@ function PostcardSection() {
 
             {/* Name block — dark olive */}
             <div style={{
-              background: "#4A5E28", borderRadius: 14,
-              padding: "18px 20px", color: "#F5F0E8",
+              background: "#4A5E28", borderRadius: 16,
+              padding: "16px 20px", color: "#F5F0E8",
             }}>
-              <div style={{ fontFamily: "'Libre Baskerville', serif", fontSize: 21, fontWeight: 700, marginBottom: 6 }}>
+              <div style={{ fontFamily: "'Libre Baskerville', serif", fontSize: 20, fontWeight: 700, marginBottom: 8 }}>
                 Bianca Mesquita
               </div>
-              <div style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 13, color: "#C8E870" }}>
+              <div style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 12, color: "#C8E870" }}>
                 Product Designer ✦ UX/UI Designer
               </div>
             </div>
@@ -205,21 +205,21 @@ function PostcardSection() {
             {/* Bio block — light card */}
             <div style={{
               flex: 1,
-              background: "hsl(var(--card))", borderRadius: 14,
-              border: "1px solid hsl(var(--border))", padding: "18px 20px",
+              background: "hsl(var(--card))", borderRadius: 16,
+              border: "1px solid hsl(var(--border))", padding: "16px 20px",
               display: "flex", flexDirection: "column", justifyContent: "space-between",
               overflow: "hidden",
             }}>
               <div>
-                <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 13, lineHeight: 1.75, color: "hsl(var(--foreground))", margin: "0 0 10px" }}>
+                <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 12, lineHeight: 1.75, color: "hsl(var(--foreground))", margin: "0 0 8px" }}>
                   Tenho 25 anos, sou caiçara nascida e criada no litoral de SP e, fora das telas, você vai me encontrar entre a praia, cafés, corridas, livros, viagens e bons drinks.
                 </p>
-                <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 13, lineHeight: 1.75, color: "hsl(var(--foreground))", margin: 0 }}>
+                <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 12, lineHeight: 1.75, color: "hsl(var(--foreground))", margin: 0 }}>
                   Com base em UX e experiência em sistemas digitais complexos, especialmente nas áreas de logística, transporte e setor público, atuo de ponta a ponta — da pesquisa à entrega.
                   Acredito que bons produtos nascem do entendimento real de quem usa.
                 </p>
               </div>
-              <div style={{ fontFamily: "'Caveat', cursive", fontSize: 22, color: "#D4713A", marginTop: 10, textAlign: "right", fontStyle: "italic" }}>
+              <div style={{ fontFamily: "'Caveat', cursive", fontSize: 24, color: "#D4713A", marginTop: 8, textAlign: "right", fontStyle: "italic" }}>
                 Bianca Mesquita
               </div>
             </div>
@@ -233,7 +233,7 @@ function PostcardSection() {
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "space-between",
-                padding: "11px 14px 11px 22px",
+                padding: "12px 16px 12px 24px",
                 borderRadius: 999,
                 background: btnHover ? "#3D4A1E" : "#C8E870",
                 cursor: "pointer",
@@ -244,14 +244,14 @@ function PostcardSection() {
               <span style={{
                 fontFamily: "'DM Sans', sans-serif",
                 fontWeight: 500,
-                fontSize: 15,
+                fontSize: 16,
                 color: btnHover ? "#C8E870" : "#2C2A1E",
                 transition: "color 0.3s ease",
               }}>
                 Mais sobre mim
               </span>
               <span style={{
-                width: 38, height: 38,
+                width: 40, height: 40,
                 borderRadius: "50%",
                 background: btnHover ? "#C8E870" : "#3D4A1E",
                 display: "inline-flex",
@@ -338,7 +338,7 @@ function ProcessStep({ num, title, desc, delay, total }: { num: string; title: s
         alignItems: "center",
         gap: 32,
         padding: "20px 28px",
-        borderRadius: 14,
+        borderRadius: 16,
         borderLeft: `4px solid ${hovered ? "#A8CC2C" : "hsl(var(--border))"}`,
         background: hovered ? "rgba(168,204,44,0.07)" : "transparent",
         cursor: "default",
@@ -390,7 +390,7 @@ function ProcessStep({ num, title, desc, delay, total }: { num: string; title: s
       {/* Counter */}
       <div style={{
         fontFamily: "'DM Mono', monospace",
-        fontSize: 11,
+        fontSize: 12,
         opacity: hovered ? 0.5 : 0.2,
         color: "hsl(var(--foreground))",
         transition: "opacity 0.25s",
@@ -425,8 +425,8 @@ function ProjectCard({ project, featured }: {
       {project.placeholder ? (
         <div style={{ padding: 40, textAlign: "center", minHeight: 200, display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", gap: 12 }}>
           <div style={{ fontSize: 32, opacity: 0.3 }}>✦</div>
-          <div style={{ fontFamily: "'Libre Baskerville', serif", fontSize: 22, opacity: 0.4 }}>Em breve</div>
-          <div style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 13, opacity: 0.3 }}>Próximo projeto chegando...</div>
+          <div style={{ fontFamily: "'Libre Baskerville', serif", fontSize: 24, opacity: 0.4 }}>Em breve</div>
+          <div style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 12, opacity: 0.3 }}>Próximo projeto chegando...</div>
         </div>
       ) : (
         <>
@@ -447,11 +447,11 @@ function ProjectCard({ project, featured }: {
               pointerEvents: "none",
             }} className="card-overlay" />
           </div>
-          <div style={{ padding: featured ? "24px 28px" : "18px 20px" }}>
-            <div style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 11, letterSpacing: "0.12em", textTransform: "uppercase", opacity: 0.5, marginBottom: 6 }}>
+          <div style={{ padding: featured ? "24px 28px" : "16px 20px" }}>
+            <div style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 12, letterSpacing: "0.12em", textTransform: "uppercase", opacity: 0.5, marginBottom: 8 }}>
               {project.tags[0]}
             </div>
-            <div className="section-heading" style={{ fontFamily: "'Libre Baskerville', serif", fontSize: featured ? 28 : 20, fontWeight: 700, marginBottom: 6 }}>
+            <div className="section-heading" style={{ fontFamily: "'Libre Baskerville', serif", fontSize: featured ? 28 : 20, fontWeight: 700, marginBottom: 8 }}>
               {project.title}
             </div>
             {featured && <div style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 14, opacity: 0.7, marginBottom: 12, lineHeight: 1.5 }}>{project.desc}</div>}
@@ -460,7 +460,7 @@ function ProjectCard({ project, featured }: {
                 <span key={t} style={{
                   fontFamily: "'DM Sans', sans-serif",
                   fontSize: 12,
-                  padding: "3px 10px",
+                  padding: "4px 12px",
                   borderRadius: 999,
                   border: "1.5px dashed hsl(var(--border))",
                   color: "hsl(var(--muted-foreground))",
@@ -489,7 +489,7 @@ function VerTodosButton() {
         display: "flex",
         alignItems: "center",
         justifyContent: "space-between",
-        padding: "14px 18px 14px 28px",
+        padding: "16px 16px 16px 28px",
         borderRadius: 999,
         background: hovered ? "#3D4A1E" : "#C8E870",
         cursor: "pointer",
@@ -653,8 +653,8 @@ export default function Home() {
               {item}
             </a>
           ))}
-          <div style={{ display: "flex", gap: 14, alignItems: "center", marginLeft: 8 }}>
-            <a data-testid="link-linkedin" href="https://linkedin.com/in/biancamesquita" target="_blank" rel="noreferrer" style={{ color: "hsl(var(--foreground))", opacity: 0.6, cursor: "pointer", transition: "opacity 0.2s", fontSize: 13, fontWeight: 700, fontFamily: "'DM Sans', sans-serif" }} onMouseEnter={(e)=>(e.currentTarget.style.opacity="1")} onMouseLeave={(e)=>(e.currentTarget.style.opacity="0.6")}>in</a>
+          <div style={{ display: "flex", gap: 16, alignItems: "center", marginLeft: 8 }}>
+            <a data-testid="link-linkedin" href="https://linkedin.com/in/biancamesquita" target="_blank" rel="noreferrer" style={{ color: "hsl(var(--foreground))", opacity: 0.6, cursor: "pointer", transition: "opacity 0.2s", fontSize: 12, fontWeight: 700, fontFamily: "'DM Sans', sans-serif" }} onMouseEnter={(e)=>(e.currentTarget.style.opacity="1")} onMouseLeave={(e)=>(e.currentTarget.style.opacity="0.6")}>in</a>
             <a data-testid="link-behance" href="https://behance.net/biancamesquita" target="_blank" rel="noreferrer" style={{ color: "hsl(var(--foreground))", opacity: 0.6, cursor: "pointer", transition: "opacity 0.2s" }} onMouseEnter={(e)=>(e.currentTarget.style.opacity="1")} onMouseLeave={(e)=>(e.currentTarget.style.opacity="0.6")}><SiBehance size={16}/></a>
             <a data-testid="link-dribbble" href="#" style={{ color: "hsl(var(--foreground))", opacity: 0.6, cursor: "pointer", transition: "opacity 0.2s" }} onMouseEnter={(e)=>(e.currentTarget.style.opacity="1")} onMouseLeave={(e)=>(e.currentTarget.style.opacity="0.6")}><SiDribbble size={16}/></a>
           </div>
@@ -674,11 +674,11 @@ export default function Home() {
         <div style={{ flex: 1, maxWidth: 560, position: "relative", zIndex: 2 }}>
           <div style={{
             display: "inline-flex", alignItems: "center", gap: 8,
-            padding: "6px 16px", borderRadius: 999,
+            padding: "8px 16px", borderRadius: 999,
             border: "1.5px dashed #A8CC2C",
             marginBottom: 24,
             fontFamily: "'DM Sans', sans-serif",
-            fontSize: 13,
+            fontSize: 12,
             color: "#3D4A1E",
           }}>
             <span style={{ width: 8, height: 8, borderRadius: "50%", background: "#A8CC2C", display: "inline-block", animation: "pulse 2s infinite" }} />
@@ -690,10 +690,10 @@ export default function Home() {
             </span>
             <span key={roleIdx} style={{ display: "block", fontSize: "clamp(2.6rem, 6.5vw, 5.5rem)", fontStyle: "normal", fontWeight: 700, color: "#A8CC2C", fontFamily: "'DM Mono', monospace", letterSpacing: "-0.03em", lineHeight: 1.05, animation: "roleFadeIn 0.45s ease" }}>{ROLES[roleIdx]}</span>
           </h1>
-          <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 17, lineHeight: 1.65, marginTop: 20, opacity: 0.75, maxWidth: 440 }}>
+          <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 16, lineHeight: 1.65, marginTop: 20, opacity: 0.75, maxWidth: 440 }}>
             que transforma necessidades dos usuários em experiências digitais claras e funcionais.
           </p>
-          <div style={{ marginTop: 32, display: "flex", gap: 14 }}>
+          <div style={{ marginTop: 32, display: "flex", gap: 16 }}>
             <a
               href="#projetos"
               data-testid="link-ver-projetos"
@@ -771,16 +771,16 @@ export default function Home() {
           <div style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 10, letterSpacing: "0.18em", textTransform: "uppercase", opacity: 0.45 }}>scroll</div>
           {/* Mouse shape */}
           <div style={{
-            width: 22, height: 34, borderRadius: 11,
+            width: 24, height: 32, borderRadius: 12,
             border: "1.5px solid hsl(var(--foreground))",
             opacity: 0.45,
             position: "relative",
             display: "flex", justifyContent: "center",
           }}>
             <div style={{
-              width: 3, height: 7, borderRadius: 2,
+              width: 4, height: 8, borderRadius: 2,
               background: "hsl(var(--foreground))",
-              marginTop: 5,
+              marginTop: 4,
               animation: "scrollDot 1.6s ease-in-out infinite",
             }} />
           </div>
@@ -824,11 +824,11 @@ export default function Home() {
               display: "flex",
               flexDirection: "column",
               alignItems: "center",
-              gap: 2,
+              gap: 4,
             }}>
               <span style={{
                 fontFamily: "'Caveat', cursive",
-                fontSize: 19,
+                fontSize: 20,
                 color: "#D4713A",
                 transform: "rotate(-10deg)",
                 display: "block",
@@ -880,8 +880,8 @@ export default function Home() {
                 key={s}
                 style={{
                   fontFamily: "'DM Sans', sans-serif",
-                  fontSize: 15,
-                  padding: "10px 22px",
+                  fontSize: 16,
+                  padding: "12px 24px",
                   borderRadius: 999,
                   border: "1.5px dashed #3D4A1E",
                   color: "#3D4A1E",
@@ -937,7 +937,7 @@ export default function Home() {
                 data-testid={l.testId}
                 style={{
                   fontFamily: "'DM Sans', sans-serif",
-                  fontSize: 15, fontWeight: 600,
+                  fontSize: 16, fontWeight: 600,
                   color: "hsl(var(--foreground))",
                   textDecoration: "none",
                   opacity: 0.7,
