@@ -5,6 +5,9 @@ import bioPhoto from "@assets/Perfil_1777746393399.jpeg";
 import figmaIllustra from "@assets/Figma_1777742554578.png";
 import cafeIllustra from "@assets/IlustraCafe_1777742604142.png";
 import pcIllustra from "@assets/ilustraPC_1777742604142.png";
+import affinityIcon from "@assets/affinity_1777749697475.png";
+import lovableIcon from "@assets/lovable_1777749697475.png";
+import claudeIcon from "@assets/claude_1777749697475.png";
 
 function useDragBack(
   ref: React.RefObject<HTMLElement | null>,
@@ -109,17 +112,9 @@ function PostcardSection() {
     { name: "Photoshop",  icon: <span style={{ fontFamily: "'DM Mono',monospace", fontSize: 12, fontWeight: 700, letterSpacing: "-0.5px" }}>Ps</span> },
     { name: "Notion",     icon: <SiNotion size={18} /> },
     { name: "Framer",     icon: <SiFramer size={18} /> },
-    { name: "Hotjar",     icon: <SiHotjar size={18} /> },
-    { name: "Lovable",    icon: (
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
-        <path d="M12 21C12 21 3 14.5 3 8.5C3 5.42 5.42 3 8.5 3C10.24 3 11.8 3.86 12 4C12.2 3.86 13.76 3 15.5 3C18.58 3 21 5.42 21 8.5C21 14.5 12 21 12 21Z" fill="#FF4A6E" stroke="none"/>
-      </svg>
-    )},
-    { name: "Claude",     icon: (
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
-        <path d="M12 2L14.5 9H22L16 13.5L18.5 20.5L12 16L5.5 20.5L8 13.5L2 9H9.5L12 2Z" fill="#D4713A" stroke="none"/>
-      </svg>
-    )},
+    { name: "Affinity",   icon: <img src={affinityIcon} alt="Affinity" style={{ width: 18, height: 18, objectFit: "contain" }} /> },
+    { name: "Lovable",    icon: <img src={lovableIcon}  alt="Lovable"  style={{ width: 18, height: 18, objectFit: "contain" }} /> },
+    { name: "Claude",     icon: <img src={claudeIcon}   alt="Claude"   style={{ width: 18, height: 18, objectFit: "contain" }} /> },
   ];
   const loopTools = [...tools, ...tools];
 
