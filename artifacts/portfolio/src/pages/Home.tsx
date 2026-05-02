@@ -626,11 +626,11 @@ export default function Home() {
       setRoleIdx(i => (i + 1) % ROLES.length);
       return;
     } else if (isDeleting) {
-      delay = 38;
+      delay = 60;
       const t = setTimeout(() => setTypedText(s => s.slice(0, -1)), delay);
       return () => clearTimeout(t);
     } else {
-      delay = 72;
+      delay = 110;
       const t = setTimeout(() => setTypedText(current.slice(0, typedText.length + 1)), delay);
       return () => clearTimeout(t);
     }
@@ -721,7 +721,7 @@ export default function Home() {
             marginBottom: 32,
             fontFamily: "'DM Sans', sans-serif",
             fontSize: 12,
-            color: "#3D4A1E",
+            color: "#8A8878",
           }}>
             <span style={{ width: 8, height: 8, borderRadius: "50%", background: "#A8CC2C", display: "inline-block", animation: "pulse 2s infinite" }} />
             Disponível para trabalho
