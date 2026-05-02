@@ -222,4 +222,11 @@
   .font-caveat {
     font-family: 'Caveat', cursive;
   }
+
+  .section-heading {
+    color: #C4752A;
+  }
+  .dark .section-heading {
+    color: #A8CC2C;
+  }
 }
