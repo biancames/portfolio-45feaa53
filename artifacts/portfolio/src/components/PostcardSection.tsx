@@ -117,10 +117,10 @@ export function PostcardSection({ hideCta }: { hideCta?: boolean }) {
               overflow: "hidden",
             }}>
               <div>
-                <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 12, lineHeight: 1.75, color: "hsl(var(--foreground))", margin: "0 0 8px" }}>
+                <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: "clamp(14px, 4vw, 16px)", lineHeight: 1.75, color: "hsl(var(--foreground))", margin: "0 0 8px" }}>
                   Tenho 25 anos, sou caiçara nascida e criada no litoral de SP e, fora das telas, você vai me encontrar entre a praia, cafés, corridas, livros, viagens e bons drinks.
                 </p>
-                <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 12, lineHeight: 1.75, color: "hsl(var(--foreground))", margin: 0 }}>
+                <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: "clamp(14px, 4vw, 16px)", lineHeight: 1.75, color: "hsl(var(--foreground))", margin: 0 }}>
                   Com base em UX e experiência em sistemas digitais complexos, especialmente nas áreas de logística, transporte e setor público, atuo de ponta a ponta — da pesquisa à entrega.
                   Acredito que bons produtos nascem do entendimento real de quem usa.
                 </p>
