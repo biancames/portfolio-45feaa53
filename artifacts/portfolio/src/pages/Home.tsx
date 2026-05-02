@@ -122,11 +122,12 @@ function PostcardSection() {
   const loopTools = [...tools, ...tools];
 
   return (
-    <div style={{ perspective: "1400px" }}>
+    <div style={{ perspective: "1400px", isolation: "isolate", transform: "translateZ(0)" }}>
       {/* ── Hint wrapper (animates once to reveal flip affordance) ── */}
       <div style={{
         transformStyle: "preserve-3d",
         animation: "hintFlip 1.4s ease-in-out 1.8s 1 both",
+        willChange: "transform",
       }}>
       {/* ── Flip wrapper ── */}
       <div
@@ -1033,7 +1034,7 @@ export default function Home() {
               <FooterName />
             </div>
           </div>
-          <div style={{ height: 24, background: "#3D4A1E", marginTop: -2 }} />
+          <div style={{ height: 24, background: "#3D4A1E", marginTop: 0 }} />
         </div>
       </footer>
 
