@@ -1,4 +1,5 @@
 import { useState, useEffect, useCallback } from "react";
+import { useContent } from "@/hooks/useContent";
 import { SiBehance, SiDribbble } from "react-icons/si";
 import { Linkedin } from "lucide-react";
 import { PostcardSection } from "@/components/PostcardSection";
@@ -9,20 +10,12 @@ import caipiriIllustra  from "@assets/caipiri_1777757144289.png";
 import cafeteiraIllustra from "@assets/Group_1777757144289.png";
 import pcIllustra       from "@assets/pcc_1_1777757144289.png";
 
-const skills = ["UX Research", "UX Design", "Product Design", "Interaction Design", "Design System", "Prototipação", "Visual Design"];
+type SlideItem = { label: string; content: string; sub: string; img: string };
 
-const SLIDES = [
-  { label: "livro favorito", content: "Um Estudo em Vermelho", sub: "Arthur Conan Doyle", img: "https://images.unsplash.com/photo-1512820790803-83ca734da794?w=1200&h=700&fit=crop" },
-  { label: "música do momento", content: "Vienna", sub: "Billy Joel", img: "https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?w=1200&h=700&fit=crop" },
-  { label: "viagem favorita", content: "Destino", sub: "troque pela sua foto", img: "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=1200&h=700&fit=crop" },
-  { label: "drink favorito", content: "Moscow Mule", sub: "", img: "https://images.unsplash.com/photo-1551538827-9c037cb4f32a?w=1200&h=700&fit=crop" },
-  { label: "meu pet", content: "Nome do pet", sub: "troque pela sua foto", img: "https://images.unsplash.com/photo-1543466835-00a7907e9de1?w=1200&h=700&fit=crop" },
-];
-
-function ImageCarousel() {
+function ImageCarousel({ slides }: { slides: SlideItem[] }) {
   const [active, setActive] = useState(0);
-  const prev = useCallback(() => setActive((a) => (a - 1 + SLIDES.length) % SLIDES.length), []);
-  const next = useCallback(() => setActive((a) => (a + 1) % SLIDES.length), []);
+  const prev = useCallback(() => setActive((a) => (a - 1 + slides.length) % slides.length), [slides.length]);
+  const next = useCallback(() => setActive((a) => (a + 1) % slides.length), [slides.length]);
 
   return (
     <>
@@ -33,7 +26,7 @@ function ImageCarousel() {
           transform: `translateX(-${active * 100}%)`,
           transition: "transform 0.55s cubic-bezier(0.4, 0, 0.2, 1)",
         }}>
-          {SLIDES.map((s, i) => (
+          {slides.map((s, i) => (
             <div key={i} style={{ minWidth: "100%", height: "100%", position: "relative", flexShrink: 0 }}>
               <img src={s.img} alt={s.label} draggable={false}
                 style={{ width: "100%", height: "100%", objectFit: "cover", display: "block", filter: "sepia(0.1) contrast(1.05) saturate(0.88)" }} />
@@ -90,13 +83,13 @@ function ImageCarousel() {
           fontFamily: "'DM Mono', monospace", fontSize: 11,
           color: "rgba(245,240,232,0.7)", letterSpacing: "0.1em",
         }}>
-          {String(active + 1).padStart(2, "0")} / {String(SLIDES.length).padStart(2, "0")}
+          {String(active + 1).padStart(2, "0")} / {String(slides.length).padStart(2, "0")}
         </div>
       </div>
 
       {/* dots */}
       <div style={{ display: "flex", gap: 8, justifyContent: "center", marginTop: 20 }}>
-        {SLIDES.map((_, i) => (
+        {slides.map((_, i) => (
           <button key={i} onClick={() => setActive(i)} aria-label={`slide ${i + 1}`} style={{
             width: i === active ? 24 : 8, height: 8, borderRadius: 4,
             background: i === active ? "#A8CC2C" : "hsl(var(--border))",
@@ -111,6 +104,14 @@ function ImageCarousel() {
 
 export default function MaisSobre() {
   const [scrolled, setScrolled] = useState(false);
+  const { skills: contentSkills, experience: contentExp, carouselSlides } = useContent();
+
+  const slides: SlideItem[] = carouselSlides.map((s) => ({
+    label: s.category,
+    content: s.title,
+    sub: s.subtitle ?? "",
+    img: s.imageUrl ?? "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=1200&h=700&fit=crop",
+  }));
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 40);
@@ -230,9 +231,9 @@ export default function MaisSobre() {
               <div style={{ width: 48, height: 4, background: "#A8CC2C", marginTop: 8, borderRadius: 4 }} />
             </div>
             <div style={{ display: "flex", flexWrap: "wrap", gap: 12 }}>
-              {skills.map((s, i) => (
+              {contentSkills.map((s, i) => (
                 <span
-                  key={s}
+                  key={s.id}
                   style={{
                     fontFamily: "'DM Sans', sans-serif",
                     fontSize: 16,
@@ -249,7 +250,7 @@ export default function MaisSobre() {
                   onMouseEnter={(e) => { e.currentTarget.style.background = "rgba(168,204,44,0.15)"; }}
                   onMouseLeave={(e) => { e.currentTarget.style.background = "transparent"; }}
                 >
-                  {s}
+                  {s.label}
                 </span>
               ))}
             </div>
@@ -267,11 +268,7 @@ export default function MaisSobre() {
             </div>
 
             <div style={{ display: "flex", flexDirection: "column" }}>
-              {[
-                { role: "Product Designer", company: "Empresa atual", period: "2024 — presente", current: true },
-                { role: "UX/UI Designer", company: "Empresa anterior", period: "2022 — 2024", current: false },
-                { role: "Designer Jr.", company: "Primeira empresa", period: "2021 — 2022", current: false },
-              ].map((exp, i, arr) => (
+              {contentExp.map((exp, i, arr) => (
                 <div key={i} style={{
                   display: "grid",
                   gridTemplateColumns: "160px 1fr",
@@ -340,7 +337,7 @@ export default function MaisSobre() {
               </h2>
               <div style={{ width: 48, height: 4, background: "#A8CC2C", marginTop: 8, borderRadius: 4 }} />
             </div>
-            <ImageCarousel />
+            <ImageCarousel slides={slides} />
           </div>
         </section>
 

@@ -3,6 +3,7 @@ import { Switch, Route } from "wouter";
 import Home from "@/pages/Home";
 import Projects from "@/pages/Projects";
 import MaisSobre from "@/pages/MaisSobre";
+import Admin from "@/pages/Admin";
 import DarkModeSwitch from "@/components/DarkModeSwitch";
 import CustomCursor from "@/components/CustomCursor";
 import { ProjectCursorLabel } from "@/components/ProjectCursorLabel";
@@ -33,6 +34,7 @@ export default function App() {
         <Route path="/" component={Home} />
         <Route path="/projetos" component={Projects} />
         <Route path="/maissobre" component={MaisSobre} />
+        <Route path="/admin" component={Admin} />
       </Switch>
       <DarkModeSwitch dark={dark} onToggle={() => setDark((d) => !d)} />
     </>

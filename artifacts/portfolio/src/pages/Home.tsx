@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { HOME_PROJECTS } from "@/data/projects";
+import { useContent } from "@/hooks/useContent";
 import { SiBehance, SiDribbble, SiFigma, SiFramer, SiHotjar, SiNotion } from "react-icons/si";
 import { Linkedin } from "lucide-react";
 import { PostcardSection } from "@/components/PostcardSection";
@@ -371,7 +371,8 @@ export default function Home() {
     }
   }, [typedText, isDeleting, roleIdx]);
 
-  const projects = HOME_PROJECTS;
+  const { projects: allProjects, processSteps: contentSteps, settings } = useContent();
+  const featuredProjects = allProjects.filter(p => p.featured && !p.comingSoon).slice(0, 3);
 
   const tools = [
     { name: "Figma", icon: <SiFigma /> },
@@ -459,7 +460,7 @@ export default function Home() {
             color: "#8A8878",
           }}>
             <span style={{ width: 8, height: 8, borderRadius: "50%", background: "#A8CC2C", display: "inline-block", animation: "pulse 2s infinite" }} />
-            Disponível para trabalho
+            {settings?.availabilityStatus ?? "Disponível para trabalho"}
           </div>
           <h1 style={{ fontFamily: "'Libre Baskerville', serif", lineHeight: 1.1, margin: 0 }}>
             <span style={{ display: "block", fontSize: "clamp(1.25rem, 2.5vw, 1.5rem)", fontStyle: "italic", fontWeight: 400, color: "hsl(var(--foreground))", marginBottom: 4 }}>
@@ -470,7 +471,7 @@ export default function Home() {
             </span>
           </h1>
           <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 16, lineHeight: 1.65, marginTop: 32, opacity: 0.75, maxWidth: 440 }}>
-            que transforma necessidades dos usuários em experiências digitais claras e funcionais.
+            {settings?.heroText ?? "que transforma necessidades dos usuários em experiências digitais claras e funcionais."}
           </p>
           <div style={{ marginTop: 48, display: "flex", gap: 16 }}>
             <a
@@ -491,7 +492,7 @@ export default function Home() {
               Ver projetos ✦
             </a>
             <a
-              href="mailto:biadesign.contate@gmail.com"
+              href={`mailto:${settings?.email ?? "biadesign.contate@gmail.com"}`}
               data-testid="link-contato-hero"
               style={{
                 display: "inline-flex", alignItems: "center", gap: 8,
@@ -575,11 +576,21 @@ export default function Home() {
           <div style={{ width: 48, height: 4, background: "#A8CC2C", marginTop: 8, borderRadius: 4 }} />
         </div>
         <div style={{ marginBottom: 20 }}>
-          <ProjectCard project={projects[0]} featured />
+          {featuredProjects[0] && <ProjectCard project={{
+            title: featuredProjects[0].title,
+            desc: featuredProjects[0].description,
+            tags: featuredProjects[0].tags,
+            img: featuredProjects[0].imageUrl ?? undefined,
+          }} featured />}
         </div>
         <div style={{ display: "flex", gap: 20, flexWrap: "wrap" }}>
-          {projects.slice(1).map((p) => (
-            <ProjectCard key={p.title} project={p} />
+          {featuredProjects.slice(1).map((p) => (
+            <ProjectCard key={p.title} project={{
+              title: p.title,
+              desc: p.description,
+              tags: p.tags,
+              img: p.imageUrl ?? undefined,
+            }} />
           ))}
         </div>
         <VerTodosButton />
@@ -633,14 +644,8 @@ export default function Home() {
             <div style={{ width: 48, height: 4, background: "#A8CC2C", marginTop: 8, borderRadius: 4 }} />
           </div>
           <div style={{ display: "flex", flexDirection: "column", gap: 4 }}>
-            {[
-              { num: "01", title: "Descoberta", desc: "Entender o problema, os usuários e o contexto antes de qualquer solução." },
-              { num: "02", title: "Definição", desc: "Sintetizar insights e alinhar os objetivos com clareza e intenção." },
-              { num: "03", title: "Ideação", desc: "Explorar soluções diversas com criatividade, método e colaboração." },
-              { num: "04", title: "Prototipação", desc: "Dar forma às melhores ideias com rapidez e fidelidade ao contexto." },
-              { num: "05", title: "Entrega", desc: "Testar, refinar e lançar com impacto real para quem usa." },
-            ].map((s, i, arr) => (
-              <ProcessStep key={s.num} num={s.num} title={s.title} desc={s.desc} delay={i * 100} total={arr.length} />
+            {contentSteps.map((s, i) => (
+              <ProcessStep key={s.id} num={s.number} title={s.title} desc={s.description} delay={i * 100} total={contentSteps.length} />
             ))}
           </div>
         </div>

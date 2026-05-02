@@ -2,15 +2,13 @@ import { useState } from "react";
 import { SiBehance, SiDribbble } from "react-icons/si";
 import { Linkedin } from "lucide-react";
 import { Footer } from "@/components/Footer";
-import { ALL_PROJECTS, type Category } from "@/data/projects";
+import { useContent } from "@/hooks/useContent";
+import type { Project } from "@/data/defaults";
 
-type FilterOption = "Todos" | Category;
-const FILTERS: FilterOption[] = ["Todos", "Product Design", "UX/UI Design", "Graphic Design"];
-
-function ProjectCard({ project }: { project: (typeof ALL_PROJECTS)[0] }) {
+function ProjectCard({ project }: { project: Project }) {
   const [hovered, setHovered] = useState(false);
 
-  if (project.placeholder) {
+  if (project.comingSoon) {
     return (
       <div style={{
         borderRadius: 16, overflow: "hidden",
@@ -47,7 +45,7 @@ function ProjectCard({ project }: { project: (typeof ALL_PROJECTS)[0] }) {
     >
       <div style={{ position: "relative", overflow: "hidden", height: 220 }}>
         <img
-          src={project.img}
+          src={project.imageUrl ?? undefined}
           alt={project.title}
           loading="lazy"
           style={{
@@ -66,13 +64,13 @@ function ProjectCard({ project }: { project: (typeof ALL_PROJECTS)[0] }) {
       </div>
       <div style={{ padding: "20px 24px 24px" }}>
         <div style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 12, letterSpacing: "0.12em", textTransform: "uppercase", opacity: 0.5, marginBottom: 8 }}>
-          {project.categories.join(" · ")}
+          {project.filterCategories.join(" · ")}
         </div>
         <div className="section-heading" style={{ fontFamily: "'Libre Baskerville', serif", fontSize: 20, fontWeight: 700, marginBottom: 8 }}>
           {project.title}
         </div>
         <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 16, lineHeight: 1.6, opacity: 0.7, margin: "0 0 16px" }}>
-          {project.desc}
+          {project.description}
         </p>
         <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
           {project.tags.map((t) => (
@@ -93,11 +91,12 @@ function ProjectCard({ project }: { project: (typeof ALL_PROJECTS)[0] }) {
 }
 
 export default function Projects() {
-  const [active, setActive] = useState<FilterOption>("Todos");
+  const { projects, filterCategories } = useContent();
+  const [active, setActive] = useState("Todos");
 
   const filtered = active === "Todos"
-    ? ALL_PROJECTS
-    : ALL_PROJECTS.filter((p) => p.categories.includes(active as Category));
+    ? projects
+    : projects.filter((p) => p.filterCategories.includes(active));
 
   return (
     <div style={{ fontFamily: "'DM Sans', sans-serif", minHeight: "100vh", background: "hsl(var(--background))", color: "hsl(var(--foreground))", overflowX: "hidden" }}>
@@ -182,7 +181,7 @@ export default function Projects() {
 
         {/* Filters */}
         <div style={{ display: "flex", gap: 12, flexWrap: "wrap", marginBottom: 48 }}>
-          {FILTERS.map((f) => {
+          {filterCategories.map(fc => fc.label).map((f) => {
             const isActive = active === f;
             return (
               <button
