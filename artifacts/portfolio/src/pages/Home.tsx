@@ -68,12 +68,12 @@ function useDragBack(
 function SparklesSVG() {
   return (
     <svg width="120" height="120" viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <text x="10" y="25" fontSize="22" fill="#A8CC2C" fontFamily="serif">✦</text>
-      <text x="70" y="18" fontSize="14" fill="#3D4A1E" fontFamily="serif">✧</text>
+      <text x="10" y="25" fontSize="24" fill="#A8CC2C" fontFamily="serif">✦</text>
+      <text x="70" y="18" fontSize="16" fill="#3D4A1E" fontFamily="serif">✧</text>
       <text x="90" y="65" fontSize="28" fill="#A8CC2C" fontFamily="serif">✦</text>
       <text x="20" y="90" fontSize="12" fill="#3D4A1E" fontFamily="serif">✦</text>
-      <text x="55" y="110" fontSize="18" fill="#A8CC2C" fontFamily="serif">✧</text>
-      <text x="100" y="100" fontSize="10" fill="#3D4A1E" fontFamily="serif">✦</text>
+      <text x="55" y="110" fontSize="20" fill="#A8CC2C" fontFamily="serif">✧</text>
+      <text x="100" y="100" fontSize="12" fill="#3D4A1E" fontFamily="serif">✦</text>
     </svg>
   );
 }
@@ -110,14 +110,14 @@ function PostcardSection() {
   const [btnHover, setBtnHover] = useState(false);
 
   const tools = [
-    { name: "Miro",       icon: <SiMiro size={18} /> },
-    { name: "Figma",      icon: <SiFigma size={18} /> },
+    { name: "Miro",       icon: <SiMiro size={16} /> },
+    { name: "Figma",      icon: <SiFigma size={16} /> },
     { name: "Photoshop",  icon: <span style={{ fontFamily: "'DM Mono',monospace", fontSize: 12, fontWeight: 700, letterSpacing: "-0.5px" }}>Ps</span> },
-    { name: "Notion",     icon: <SiNotion size={18} /> },
-    { name: "Framer",     icon: <SiFramer size={18} /> },
-    { name: "Affinity",   icon: <img src={affinityIcon} alt="Affinity" style={{ width: 18, height: 18, objectFit: "contain", filter: "brightness(0) saturate(100%) invert(22%) sepia(19%) saturate(700%) hue-rotate(55deg)" }} /> },
-    { name: "Lovable",    icon: <img src={lovableIcon}  alt="Lovable"  style={{ width: 18, height: 18, objectFit: "contain", filter: "brightness(0) saturate(100%) invert(22%) sepia(19%) saturate(700%) hue-rotate(55deg)" }} /> },
-    { name: "Claude",     icon: <img src={claudeIcon}   alt="Claude"   style={{ width: 18, height: 18, objectFit: "contain", filter: "brightness(0) saturate(100%) invert(22%) sepia(19%) saturate(700%) hue-rotate(55deg)" }} /> },
+    { name: "Notion",     icon: <SiNotion size={16} /> },
+    { name: "Framer",     icon: <SiFramer size={16} /> },
+    { name: "Affinity",   icon: <img src={affinityIcon} alt="Affinity" style={{ width: 16, height: 16, objectFit: "contain", filter: "brightness(0) saturate(100%) invert(22%) sepia(19%) saturate(700%) hue-rotate(55deg)" }} /> },
+    { name: "Lovable",    icon: <img src={lovableIcon}  alt="Lovable"  style={{ width: 16, height: 16, objectFit: "contain", filter: "brightness(0) saturate(100%) invert(22%) sepia(19%) saturate(700%) hue-rotate(55deg)" }} /> },
+    { name: "Claude",     icon: <img src={claudeIcon}   alt="Claude"   style={{ width: 16, height: 16, objectFit: "contain", filter: "brightness(0) saturate(100%) invert(22%) sepia(19%) saturate(700%) hue-rotate(55deg)" }} /> },
   ];
   const loopTools = [...tools, ...tools];
 
@@ -350,7 +350,7 @@ function ProcessStep({ num, title, desc, delay, total }: { num: string; title: s
       {/* Large italic number */}
       <div style={{
         fontFamily: "'Libre Baskerville', serif",
-        fontSize: "clamp(2.4rem, 4vw, 3.4rem)",
+        fontSize: "clamp(2.5rem, 4vw, 3.5rem)",
         fontStyle: "italic",
         fontWeight: 700,
         color: hovered ? "#A8CC2C" : "#3D4A1E",
@@ -377,7 +377,7 @@ function ProcessStep({ num, title, desc, delay, total }: { num: string; title: s
         </div>
         <div style={{
           fontFamily: "'DM Sans', sans-serif",
-          fontSize: 14,
+          fontSize: 16,
           color: "hsl(var(--foreground))",
           opacity: hovered ? 0.75 : 0,
           maxHeight: hovered ? 48 : 0,
@@ -456,7 +456,7 @@ function ProjectCard({ project, featured }: {
             <div className="section-heading" style={{ fontFamily: "'Libre Baskerville', serif", fontSize: featured ? 28 : 20, fontWeight: 700, marginBottom: 8 }}>
               {project.title}
             </div>
-            {featured && <div style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 14, opacity: 0.7, marginBottom: 12, lineHeight: 1.5 }}>{project.desc}</div>}
+            {featured && <div style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 16, opacity: 0.7, marginBottom: 12, lineHeight: 1.5 }}>{project.desc}</div>}
             <div style={{ display: "flex", gap: 8, flexWrap: "wrap", marginTop: 8 }}>
               {project.tags.map((t) => (
                 <span key={t} style={{
@@ -561,15 +561,15 @@ function FooterName() {
       <style>{`
         @keyframes float {
           0%, 100% { transform: translateY(0px); }
-          50% { transform: translateY(-6px); }
+          50% { transform: translateY(-8px); }
         }
         @keyframes floatA {
           0%, 100% { transform: translateY(0px); }
-          50% { transform: translateY(-7px); }
+          50% { transform: translateY(-8px); }
         }
         @keyframes floatB {
           0%, 100% { transform: translateY(0px); }
-          50% { transform: translateY(6px); }
+          50% { transform: translateY(8px); }
         }
         .project-card:hover .card-overlay { opacity: 1 !important; }
         .footer-name { color: #3D4A1E; }
@@ -681,7 +681,7 @@ export default function Home() {
                 className="nav-link"
                 style={{
                   fontFamily: "'DM Sans', sans-serif",
-                  fontSize: 14,
+                  fontSize: 16,
                   color: isActive ? "#A8CC2C" : "hsl(var(--foreground))",
                   textDecoration: "none",
                   cursor: "pointer",
@@ -721,7 +721,7 @@ export default function Home() {
             border: "1.5px dashed #A8CC2C",
             marginBottom: 32,
             fontFamily: "'DM Sans', sans-serif",
-            fontSize: 11,
+            fontSize: 12,
             letterSpacing: "0.1em",
             textTransform: "uppercase",
             color: "#8A8878",
@@ -730,10 +730,10 @@ export default function Home() {
             Disponível para trabalho
           </div>
           <h1 style={{ fontFamily: "'Libre Baskerville', serif", lineHeight: 1.1, margin: 0 }}>
-            <span style={{ display: "block", fontSize: "clamp(1.2rem, 2.5vw, 1.6rem)", fontStyle: "italic", fontWeight: 400, color: "hsl(var(--foreground))", marginBottom: 4 }}>
+            <span style={{ display: "block", fontSize: "clamp(1.25rem, 2.5vw, 1.5rem)", fontStyle: "italic", fontWeight: 400, color: "hsl(var(--foreground))", marginBottom: 4 }}>
               Oi, eu sou a <span style={{ fontWeight: 700 }}>Bia,</span>
             </span>
-            <span style={{ display: "block", fontSize: "clamp(2.6rem, 6.5vw, 5.5rem)", fontStyle: "normal", fontWeight: 700, color: "#A8CC2C", fontFamily: "'DM Mono', monospace", letterSpacing: "-0.03em", lineHeight: 1.05, minHeight: "1.1em" }}>
+            <span style={{ display: "block", fontSize: "clamp(2.5rem, 6.5vw, 5.5rem)", fontStyle: "normal", fontWeight: 700, color: "#A8CC2C", fontFamily: "'DM Mono', monospace", letterSpacing: "-0.03em", lineHeight: 1.05, minHeight: "1.1em" }}>
               {typedText}<span style={{ opacity: 1, animation: "cursorBlink 0.75s step-end infinite", color: "#A8CC2C" }}>|</span>
             </span>
           </h1>
@@ -748,7 +748,7 @@ export default function Home() {
                 display: "inline-flex", alignItems: "center", gap: 8,
                 background: "#A8CC2C", color: "#2C2A1E",
                 padding: "12px 28px", borderRadius: 999,
-                fontFamily: "'DM Sans', sans-serif", fontWeight: 500, fontSize: 14,
+                fontFamily: "'DM Sans', sans-serif", fontWeight: 500, fontSize: 16,
                 textDecoration: "none", cursor: "pointer",
                 boxShadow: "0 4px 20px rgba(168,204,44,0.3)",
                 transition: "transform 0.2s, box-shadow 0.2s",
@@ -765,7 +765,7 @@ export default function Home() {
                 display: "inline-flex", alignItems: "center", gap: 8,
                 border: "1.5px solid hsl(var(--border))", color: "hsl(var(--foreground))",
                 padding: "12px 28px", borderRadius: 999,
-                fontFamily: "'DM Sans', sans-serif", fontWeight: 500, fontSize: 14,
+                fontFamily: "'DM Sans', sans-serif", fontWeight: 500, fontSize: 16,
                 textDecoration: "none", cursor: "pointer",
                 transition: "background 0.2s",
               }}
@@ -791,10 +791,10 @@ export default function Home() {
           </DraggableIllustration>
           {/* Non-draggable floating sparkles — kept in lower half */}
           <div style={{ position: "absolute", top: "32%", right: "22%", animation: "floatA 3.2s ease-in-out infinite", pointerEvents: "none" }}>
-            <span style={{ fontSize: 22, color: "#A8CC2C", fontFamily: "serif" }}>✦</span>
+            <span style={{ fontSize: 24, color: "#A8CC2C", fontFamily: "serif" }}>✦</span>
           </div>
           <div style={{ position: "absolute", top: "40%", right: "48%", animation: "floatB 2.8s ease-in-out infinite", pointerEvents: "none" }}>
-            <span style={{ fontSize: 14, color: "#3D4A1E", fontFamily: "serif" }}>✧</span>
+            <span style={{ fontSize: 16, color: "#3D4A1E", fontFamily: "serif" }}>✧</span>
           </div>
           <div style={{ position: "absolute", top: "50%", right: "8%", animation: "floatB 2.5s ease-in-out infinite 0.8s", pointerEvents: "none" }}>
             <span style={{ fontSize: 12, color: "#3D4A1E", fontFamily: "serif" }}>✦</span>
@@ -803,7 +803,7 @@ export default function Home() {
             <span style={{ fontSize: 20, color: "#A8CC2C", fontFamily: "serif" }}>✦</span>
           </div>
           <div style={{ position: "absolute", top: "75%", right: "50%", animation: "floatA 3s ease-in-out infinite 1.2s", pointerEvents: "none" }}>
-            <span style={{ fontSize: 18, color: "#A8CC2C", fontFamily: "serif" }}>✧</span>
+            <span style={{ fontSize: 20, color: "#A8CC2C", fontFamily: "serif" }}>✧</span>
           </div>
         </div>
 
@@ -815,7 +815,7 @@ export default function Home() {
           pointerEvents: "none",
           transition: "opacity 0.5s ease",
         }}>
-          <div style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 10, letterSpacing: "0.18em", textTransform: "uppercase", opacity: 0.45 }}>scroll</div>
+          <div style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 12, letterSpacing: "0.16em", textTransform: "uppercase", opacity: 0.45 }}>scroll</div>
           {/* Mouse shape */}
           <div style={{
             width: 24, height: 32, borderRadius: 12,
@@ -825,7 +825,7 @@ export default function Home() {
             display: "flex", justifyContent: "center",
           }}>
             <div style={{
-              width: 4, height: 8, borderRadius: 2,
+              width: 4, height: 8, borderRadius: 4,
               background: "hsl(var(--foreground))",
               marginTop: 4,
               animation: "scrollDot 1.6s ease-in-out infinite",
@@ -840,7 +840,7 @@ export default function Home() {
           <h2 className="section-heading" style={{ fontFamily: "'Libre Baskerville', serif", fontSize: "clamp(1.5rem,4vw,2.5rem)", fontStyle: "italic" }}>
             [Projetos]
           </h2>
-          <div style={{ width: 48, height: 3, background: "#A8CC2C", marginTop: 8, borderRadius: 2 }} />
+          <div style={{ width: 48, height: 4, background: "#A8CC2C", marginTop: 8, borderRadius: 4 }} />
         </div>
         <div style={{ marginBottom: 20 }}>
           <ProjectCard project={projects[0]} featured />
@@ -858,14 +858,14 @@ export default function Home() {
         <div style={{ maxWidth: 1000, margin: "0 auto" }}>
           <div style={{ marginBottom: 48 }}>
             <h2 className="section-heading" style={{ fontFamily: "'Libre Baskerville', serif", fontSize: "clamp(1.5rem,4vw,2.5rem)", fontStyle: "italic" }}>[Sobre mim]</h2>
-            <div style={{ width: 48, height: 3, background: "#A8CC2C", marginTop: 8, borderRadius: 2 }} />
+            <div style={{ width: 48, height: 4, background: "#A8CC2C", marginTop: 8, borderRadius: 4 }} />
           </div>
           <div style={{ position: "relative" }}>
             <PostcardSection />
             {/* ── Doodle annotation ── */}
             <div style={{
               position: "absolute",
-              left: "calc(100% + 22px)",
+              left: "calc(100% + 24px)",
               top: "28%",
               pointerEvents: "none",
               display: "flex",
@@ -898,7 +898,7 @@ export default function Home() {
         <div style={{ maxWidth: 860, margin: "0 auto" }}>
           <div style={{ marginBottom: 52 }}>
             <h2 className="section-heading" style={{ fontFamily: "'Libre Baskerville', serif", fontSize: "clamp(1.5rem,4vw,2.5rem)", fontStyle: "italic" }}>[Processo]</h2>
-            <div style={{ width: 48, height: 3, background: "#A8CC2C", marginTop: 8, borderRadius: 2 }} />
+            <div style={{ width: 48, height: 4, background: "#A8CC2C", marginTop: 8, borderRadius: 4 }} />
           </div>
           <div style={{ display: "flex", flexDirection: "column", gap: 4 }}>
             {[
@@ -919,7 +919,7 @@ export default function Home() {
         <div style={{ maxWidth: 1100, margin: "0 auto" }}>
           <div style={{ marginBottom: 48 }}>
             <h2 className="section-heading" style={{ fontFamily: "'Libre Baskerville', serif", fontSize: "clamp(1.5rem,4vw,2.5rem)", fontStyle: "italic" }}>[Skills]</h2>
-            <div style={{ width: 48, height: 3, background: "#A8CC2C", marginTop: 8, borderRadius: 2 }} />
+            <div style={{ width: 48, height: 4, background: "#A8CC2C", marginTop: 8, borderRadius: 4 }} />
           </div>
           <div style={{ display: "flex", flexWrap: "wrap", gap: 12 }}>
             {skills.map((s, i) => (
@@ -951,7 +951,7 @@ export default function Home() {
       {/* ── FOOTER ── */}
       <footer id="contato" style={{ background: "hsl(var(--card))", borderTop: "1px solid hsl(var(--border))", padding: "80px 40px 0" }}>
         <div style={{ maxWidth: 900, margin: "0 auto", textAlign: "center" }}>
-          <div style={{ fontFamily: "'Caveat', cursive", fontSize: "clamp(1.6rem, 4vw, 2.6rem)", marginBottom: 20, color: "#3D4A1E" }}>
+          <div style={{ fontFamily: "'Caveat', cursive", fontSize: "clamp(1.5rem, 4vw, 2.5rem)", marginBottom: 20, color: "#3D4A1E" }}>
             Chegou até aqui e quer deixar um oi?
           </div>
           <a
@@ -960,7 +960,7 @@ export default function Home() {
             style={{
               fontFamily: "'Libre Baskerville', serif",
               fontStyle: "italic",
-              fontSize: "clamp(1.1rem, 3vw, 1.6rem)",
+              fontSize: "clamp(1rem, 3vw, 1.5rem)",
               color: "#A8CC2C",
               textDecoration: "underline",
               textDecorationColor: "transparent",

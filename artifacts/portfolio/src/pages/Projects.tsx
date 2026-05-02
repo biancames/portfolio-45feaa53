@@ -68,7 +68,7 @@ function ProjectCard({ project }: { project: (typeof ALL_PROJECTS)[0] }) {
         <div className="section-heading" style={{ fontFamily: "'Libre Baskerville', serif", fontSize: 20, fontWeight: 700, marginBottom: 8 }}>
           {project.title}
         </div>
-        <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 14, lineHeight: 1.6, opacity: 0.7, margin: "0 0 16px" }}>
+        <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 16, lineHeight: 1.6, opacity: 0.7, margin: "0 0 16px" }}>
           {project.desc}
         </p>
         <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
@@ -121,7 +121,7 @@ export default function Projects() {
               href={href}
               style={{
                 fontFamily: "'DM Sans', sans-serif",
-                fontSize: 14,
+                fontSize: 16,
                 color: label === "Projetos" ? "#A8CC2C" : "hsl(var(--foreground))",
                 textDecoration: "none",
                 opacity: label === "Projetos" ? 1 : 0.8,
@@ -151,7 +151,7 @@ export default function Projects() {
             href="/"
             style={{
               display: "inline-flex", alignItems: "center", gap: 8,
-              fontFamily: "'DM Sans', sans-serif", fontSize: 14,
+              fontFamily: "'DM Sans', sans-serif", fontSize: 16,
               color: "hsl(var(--foreground))", opacity: 0.55,
               textDecoration: "none", marginBottom: 24,
               transition: "opacity 0.2s",
@@ -167,7 +167,7 @@ export default function Projects() {
           <h1 className="section-heading" style={{ fontFamily: "'Libre Baskerville', serif", fontSize: "clamp(1.5rem,4vw,2.5rem)", fontStyle: "italic", margin: 0 }}>
             [Projetos]
           </h1>
-          <div style={{ width: 48, height: 3, background: "#A8CC2C", marginTop: 8, borderRadius: 2 }} />
+          <div style={{ width: 48, height: 4, background: "#A8CC2C", marginTop: 8, borderRadius: 4 }} />
           <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 16, lineHeight: 1.65, marginTop: 16, opacity: 0.65, maxWidth: 560 }}>
             Uma seleção de trabalhos em product design, UX/UI e design gráfico.
           </p>
@@ -183,9 +183,9 @@ export default function Projects() {
                 onClick={() => setActive(f)}
                 style={{
                   fontFamily: "'DM Sans', sans-serif",
-                  fontSize: 14,
+                  fontSize: 16,
                   fontWeight: 400,
-                  padding: "10px 24px",
+                  padding: "12px 24px",
                   borderRadius: 999,
                   border: isActive ? "none" : "1.5px dashed #5A8A20",
                   background: isActive ? "#A8CC2C" : "transparent",
