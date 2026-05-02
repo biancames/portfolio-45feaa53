@@ -755,10 +755,10 @@ export default function Home() {
         <div style={{ position: "absolute", right: 0, top: 0, bottom: 0, width: "50%", pointerEvents: "none" }}>
           {/* Draggable illustrations — all 88px tall, clustered */}
           <DraggableIllustration style={{ top: "22%", right: "32%", pointerEvents: "all" }}>
-            <img src={figmaIllustra} alt="Figma" style={{ display: "block", height: 88, width: "auto", transform: "rotate(6deg)" }} draggable={false} />
+            <img src={cafeIllustra} alt="Cafeteira" style={{ display: "block", height: 108, width: "auto", transform: "rotate(-8deg)" }} draggable={false} />
           </DraggableIllustration>
           <DraggableIllustration style={{ top: "44%", right: "14%", pointerEvents: "all" }}>
-            <img src={cafeIllustra} alt="Cafeteira" style={{ display: "block", height: 108, width: "auto", transform: "rotate(-8deg)" }} draggable={false} />
+            <img src={figmaIllustra} alt="Figma" style={{ display: "block", height: 88, width: "auto", transform: "rotate(6deg)" }} draggable={false} />
           </DraggableIllustration>
           <DraggableIllustration style={{ top: "56%", right: "36%", pointerEvents: "all" }}>
             <img src={pcIllustra} alt="Laptop" style={{ display: "block", height: 88, width: "auto", transform: "rotate(3deg)" }} draggable={false} />
