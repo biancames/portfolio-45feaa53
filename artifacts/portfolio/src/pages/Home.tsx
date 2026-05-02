@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { SiBehance, SiDribbble, SiFigma, SiNotion, SiFramer, SiHotjar, SiMiro } from "react-icons/si";
+import { SiBehance, SiDribbble, SiFigma, SiLinkedin, SiNotion, SiFramer, SiHotjar, SiMiro } from "react-icons/si";
 import postcardImg from "@assets/postc_1777742914935.png";
 import bioPhoto from "@assets/Perfil_1777746393399.jpeg";
 import figmaIllustra from "@assets/Figma_1777742554578.png";
@@ -673,7 +673,7 @@ export default function Home() {
             </a>
           ))}
           <div style={{ display: "flex", gap: 16, alignItems: "center", marginLeft: 8 }}>
-            <a data-testid="link-linkedin" href="https://linkedin.com/in/biancamesquita" target="_blank" rel="noreferrer" style={{ color: "hsl(var(--foreground))", opacity: 0.6, cursor: "pointer", transition: "opacity 0.2s", fontSize: 12, fontWeight: 700, fontFamily: "'DM Sans', sans-serif" }} onMouseEnter={(e)=>(e.currentTarget.style.opacity="1")} onMouseLeave={(e)=>(e.currentTarget.style.opacity="0.6")}>in</a>
+            <a data-testid="link-linkedin" href="https://linkedin.com/in/biancamesquita" target="_blank" rel="noreferrer" style={{ color: "hsl(var(--foreground))", opacity: 0.6, cursor: "pointer", transition: "opacity 0.2s" }} onMouseEnter={(e)=>(e.currentTarget.style.opacity="1")} onMouseLeave={(e)=>(e.currentTarget.style.opacity="0.6")}><SiLinkedin size={16}/></a>
             <a data-testid="link-behance" href="https://behance.net/biancamesquita" target="_blank" rel="noreferrer" style={{ color: "hsl(var(--foreground))", opacity: 0.6, cursor: "pointer", transition: "opacity 0.2s" }} onMouseEnter={(e)=>(e.currentTarget.style.opacity="1")} onMouseLeave={(e)=>(e.currentTarget.style.opacity="0.6")}><SiBehance size={16}/></a>
             <a data-testid="link-dribbble" href="#" style={{ color: "hsl(var(--foreground))", opacity: 0.6, cursor: "pointer", transition: "opacity 0.2s" }} onMouseEnter={(e)=>(e.currentTarget.style.opacity="1")} onMouseLeave={(e)=>(e.currentTarget.style.opacity="0.6")}><SiDribbble size={16}/></a>
           </div>
