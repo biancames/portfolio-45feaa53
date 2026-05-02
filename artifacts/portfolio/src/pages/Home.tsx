@@ -539,17 +539,20 @@ function FooterName() {
     return () => obs.disconnect();
   }, []);
 
-  const base: React.CSSProperties = {
+  const lineStyle = (delay: string): React.CSSProperties => ({
     fontFamily: "'Libre Baskerville', serif",
     fontSize: "clamp(4rem,11vw,10rem)",
     fontWeight: 700,
     color: "#3D4A1E",
-    opacity: visible ? 0.45 : 0,
     lineHeight: 0.95,
     display: "block",
-    transition: "opacity 0.8s ease, transform 0.8s ease",
     whiteSpace: "nowrap",
-  };
+    clipPath: visible
+      ? "inset(-15% -2% -15% -2%)"
+      : "inset(-15% 102% -15% -2%)",
+    transition: `clip-path 1.5s cubic-bezier(0.22, 1, 0.36, 1) ${delay}`,
+    opacity: 0.45,
+  });
 
   return (
     <div ref={ref} style={{ paddingBottom: 8 }}>
@@ -569,11 +572,11 @@ function FooterName() {
         .project-card:hover .card-overlay { opacity: 1 !important; }
       `}</style>
       {/* Line 1: Bia (normal) + nca (italic) */}
-      <span style={{ ...base, transform: visible ? "translateY(0)" : "translateY(32px)", transitionDelay: "0s" }}>
+      <span style={lineStyle("0s")}>
         <span style={{ fontStyle: "normal" }}>Bia</span><span style={{ fontStyle: "italic" }}>nca</span>
       </span>
       {/* Line 2: Mes (normal) + quita (italic) */}
-      <span style={{ ...base, transform: visible ? "translateY(0)" : "translateY(40px)", transitionDelay: "0.12s" }}>
+      <span style={lineStyle("0.25s")}>
         <span style={{ fontStyle: "normal" }}>Mes</span><span style={{ fontStyle: "italic" }}>quita</span>
       </span>
     </div>
