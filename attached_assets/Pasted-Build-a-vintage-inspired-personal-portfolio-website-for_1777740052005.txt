@@ -1,0 +1,197 @@
+Build a vintage-inspired personal portfolio website for Bianca Mesquita, a Product & UX/UI Designer from Brazil. 
+
+The attached images are style references: image 1 = beach illustration style reference, image 2 = fineline illustration style reference for SVGs”
+
+---
+
+### 🎨 VISUAL IDENTITY & PALETTE
+
+Vintage editorial meets tropical Brazilian summer.
+
+Color palette:
+
+- Background (light mode): #F5F0E8 (aged parchment)
+- Background (dark mode): #1A1A14
+- Text (light): #2C2A1E
+- Text (dark): #EDE8DC
+- Accent / lime green: #A8CC2C
+- Warm orange: #D4713A
+- Deep olive: #3D4A1E
+- Off-white card: #FBF7EE
+
+Typography:
+
+- Display/headings: "Playfair Display" (Google Fonts) — italic weight for hero
+- Body: "DM Sans" (Google Fonts)
+- Handwritten accent: "Caveat" (Google Fonts) — for signature and small labels
+
+Aesthetic: Aged paper textures (CSS noise overlay), fine-line SVG illustrations, editorial layout with asymmetric grid, ink-stamp tags, slightly imperfect/rotated cards.
+
+---
+
+### 🌗 DARK MODE TOGGLE
+
+Fixed to bottom-left corner. Style it as an illustrated light switch SVG — a wall switch that flips up/down. On toggle, it animates the switch lever and transitions the entire page between light/dark mode smoothly (CSS variables transition 0.4s ease). The switch should look hand-drawn/illustrated, not a standard UI component.
+
+---
+
+### 📐 SECTION 1 — HERO
+
+Layout: Full viewport height. Left-aligned headline, right side has floating fineline SVG illustrations.
+
+Content:
+
+- Small badge top-left: green dot + "Disponível para trabalho" in DM Sans italic, pill shape with dashed border
+- Main headline (Playfair Display italic):
+Line 1: "Oi, eu sou a"
+Line 2: "Bia," (large, in olive green)
+Line 3: "product_designer" (in lime accent, monospace feel)
+- Subtext below: "que transforma necessidades dos usuários em experiências digitais claras e funcionais."
+- Nav: minimal top bar with "Início · Projetos · Sobre · Contato" and social icons (LinkedIn, Behance, Dribbble, CV)
+
+Fineline SVG Illustrations (draw them inline as SVG — simple white-line or olive-line style on parchment):
+
+1. Figma logo (simplified fineline version)
+2. Moka pot / Italian coffee maker (fineline, slightly tilted)
+3. Open laptop (fineline, angled)
+4. Small sparkle/star shapes scattered (✦ ✧) — 4 to 6 of them, different sizes
+
+Illustration behavior:
+
+- Each illustration is absolutely positioned in the hero right half
+- On hover: cursor changes to "grab", illustration becomes draggable (mousedown → mousemove → mouseup)
+- Add a subtle drop shadow on drag
+- On release: smooth spring-back animation to original position using CSS transition
+
+---
+
+### 📐 SECTION 2 — PROJETOS SELECIONADOS
+
+Title: "[Projetos]" — bracketed label style like editorial footnotes
+
+Layout:
+
+- 1 large featured card (full width or 60%) at top
+- 2–3 smaller cards in a row below
+
+Each project card:
+
+- Rounded corners (16px), soft shadow
+- Image area with hover effect: on hover, image slightly zooms (scale 1.05) and a color overlay (lime accent at 15% opacity) fades in
+- Project category label (small, uppercase, letter-spaced)
+- Project title (Playfair Display)
+- Short subtitle (featured card only)
+- Tags: pill-shaped, ink-stamp style with dashed border
+
+Custom cursor behavior:
+
+- When hovering any project card, replace the default cursor with a custom pill cursor showing: "ver projeto ✦" — white text on lime green (#A8CC2C) background, pill shape, slight rotation (-3deg), follows mouse position smoothly using JS (mousemove event, lerp interpolation for smooth lag)
+
+Projects to include (use placeholder images via [https://picsum.photos](https://picsum.photos/)):
+
+1. "SisPat" — Sistema público de patrimônio imobiliário. Tags: Redesign, UX Research, UX Design
+2. "SGTran" — Sistema de gestão de transporte. Tags: Logística, UX Design
+3. "MundoLingo App" — App mobile de eventos e idiomas. Tags: Eventos, Product Design, Mobile App
+4. (optional 4th slot: "Em breve" placeholder card with dashed border)
+
+"Ver todos →" button below: lime green background, rotated slightly, bounces on hover.
+
+---
+
+### 📐 SECTION 3 — SOBRE (POSTCARD)
+
+Title: "[Sobre mim]"
+
+Postcard interaction:
+
+- The main visible element is a postcard — white/cream card, slightly rotated (-2deg), with a subtle stamp in the corner
+- FRONT of postcard (visible by default):
+    - Left half: photo of Bianca (use a placeholder circle with initials "BM" styled nicely, or accept an image URL)
+    - Right half: olive green background panel with:
+        - Name: "Bianca Mesquita" (bold)
+        - Role: "Product Designer ✦ UX/UI Designer"
+        - Bio text (2 short paragraphs)
+        - Handwritten signature in "Caveat" font: "Bianca Mesquita"
+        - Tool icons row at bottom (Figma, Photoshop, Notion, etc — simple SVG icons)
+- BACK COVER (hidden behind the postcard, peeking out ~30px from the bottom):
+    - Striped pattern (olive + cream diagonal stripes, CSS background)
+    - Small fineline SVG illustrations scattered on it: caipirinha glass, passport, moka pot, open laptop, stack of books, Figma logo
+    - This back cover is draggable upward to reveal it
+    - Custom cursor on hover over the peeking bottom strip: pill cursor saying "puxa aqui ✦" on lime background
+    - When dragged up far enough (>50% revealed), it snaps fully open; click/drag back down to hide
+    - Spring-back animation when released mid-way
+
+---
+
+### 📐 SECTION 4 — PROCESSO DE DESIGN
+
+Title: "[Processo]"
+
+Layout: Horizontal numbered steps with connecting dotted line between them.
+
+Steps (5 total):
+01 · Descoberta — Entender o problema, usuários e contexto
+02 · Definição — Sintetizar insights e alinhar objetivos
+03 · Ideação — Explorar soluções com criatividade e método
+
+04 · Prototipação — Dar forma às ideias com clareza
+05 · Entrega — Testar, refinar e lançar com impacto
+
+Each step: number in large olive, title in Playfair Display, description in DM Sans small. On scroll into view, steps animate in sequentially (staggered fade + slide up).
+
+---
+
+### 📐 SECTION 5 — SKILLS & FERRAMENTAS
+
+Title: "[Skills]"
+
+Two columns:
+Left: Skill tags — UX Research, UX Design, Product Design, Interaction Design, Design System, Prototipação, Visual Design — displayed as large pill tags with dashed borders, scattered/overlapping slightly
+Right: Tools grid — icons + names for: Figma, FigJam, Framer, Notion, Photoshop, Illustrator, Maze, Hotjar — small card per tool with icon and name
+
+---
+
+### 📐 SECTION 6 — FOOTER
+
+Top of footer: "Chegou até aqui e quer deixar um oi?" — Caveat font
+Email link: [biadesign.contate@gmail.com](mailto:biadesign.contate@gmail.com) — with underline animation on hover
+
+4 contact links in a row: LinkedIn · Behance · Currículo (download) · Email
+
+---
+
+### 🌴 FOOTER ANIMATION — "Bianca Mesquita" Banner
+
+At the very bottom of the page, a large display section:
+
+- Big typographic treatment: "Bianca Mesquita" in Playfair Display, very large (clamp 5rem to 12vw)
+- To the left: an inline SVG illustration in fineline style showing a beach scene — striped beach mat/towel, beach umbrella (olive/cream colors), flip flops, sunscreen bottle, small sun — matching the illustration aesthetic from the reference image
+- The illustration colors should use the site palette: olive green lines, cream/parchment fills, warm orange sun
+- The beach illustration should be hand-drawn fineline style, not filled/flat
+- On page scroll to this section: the big text does a slow horizontal marquee loop, and the illustration does a gentle floating/bobbing animation (translateY ±6px, 3s ease-in-out infinite)
+
+---
+
+### ⚙️ TECHNICAL REQUIREMENTS
+
+- Single HTML file with embedded CSS and JS
+- Google Fonts loaded via @import
+- All SVG illustrations inline (drawn in code, not external files)
+- Custom cursor: hide default cursor globally, show custom lime pill cursor only on project cards and postcard trigger zones
+- Smooth scroll behavior
+- Scroll-triggered animations using IntersectionObserver
+- Draggable elements: use mousedown/mousemove/mouseup + touch equivalents
+- CSS custom properties for all colors (easy dark mode swap)
+- No external JS libraries (no jQuery, no GSAP) — pure vanilla JS
+- Mobile responsive: stack layout on screens < 768px, disable drag interactions on touch (or simplify)
+
+---
+
+### 🧪 PLACEHOLDER CONTENT
+
+Use this bio text:
+"Tenho 25 anos, sou caiçara nascida e criada no litoral de SP e, fora das telas, você vai me encontrar entre a praia, cafés, corridas, livros, viagens e bons drinks. Com base em UX e experiência em sistemas digitais complexos, especialmente nas áreas de logística, transporte e setor público, atuo de ponta a ponta — da pesquisa à entrega. Acredito que bons produtos nascem do entendimento real de quem usa."
+
+Contact email: [biadesign.contate@gmail.com](mailto:biadesign.contate@gmail.com)
+LinkedIn: [linkedin.com/in/biancames](http://linkedin.com/in/biancamesquita)
+Behance: [behance.net/bia](http://behance.net/biancamesquita)designs

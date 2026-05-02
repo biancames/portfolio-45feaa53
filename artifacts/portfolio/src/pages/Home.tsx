@@ -1,0 +1,883 @@
+import { useEffect, useRef, useState, useCallback } from "react";
+import { SiBehance, SiDribbble, SiFigma, SiNotion, SiFramer, SiHotjar } from "react-icons/si";
+
+/* ─── helpers ─── */
+function setCursor(mode: "default" | "project" | "postcard" | "grab") {
+  if (typeof window !== "undefined" && window.setCursorMode) {
+    window.setCursorMode(mode);
+  }
+}
+
+function useDragBack(
+  ref: React.RefObject<HTMLElement | null>,
+  origX: number,
+  origY: number
+) {
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    let dragging = false;
+    let startX = 0, startY = 0;
+    let elStartX = origX, elStartY = origY;
+    let curX = origX, curY = origY;
+
+    const onDown = (e: MouseEvent) => {
+      dragging = true;
+      startX = e.clientX;
+      startY = e.clientY;
+      elStartX = curX;
+      elStartY = curY;
+      el.style.transition = "none";
+      el.style.filter = "drop-shadow(0 8px 24px rgba(0,0,0,0.25))";
+      setCursor("grab");
+      e.preventDefault();
+    };
+    const onMove = (e: MouseEvent) => {
+      if (!dragging) return;
+      curX = elStartX + (e.clientX - startX);
+      curY = elStartY + (e.clientY - startY);
+      el.style.transform = `translate(${curX}px, ${curY}px)`;
+    };
+    const onUp = () => {
+      if (!dragging) return;
+      dragging = false;
+      curX = origX;
+      curY = origY;
+      el.style.transition = "transform 0.6s cubic-bezier(0.34,1.56,0.64,1), filter 0.3s";
+      el.style.transform = `translate(${origX}px, ${origY}px)`;
+      el.style.filter = "none";
+      setCursor("default");
+    };
+
+    el.addEventListener("mousedown", onDown);
+    window.addEventListener("mousemove", onMove);
+    window.addEventListener("mouseup", onUp);
+    return () => {
+      el.removeEventListener("mousedown", onDown);
+      window.removeEventListener("mousemove", onMove);
+      window.removeEventListener("mouseup", onUp);
+    };
+  }, [ref, origX, origY]);
+}
+
+/* ─── SVG Illustrations ─── */
+function FigmaSVG() {
+  return (
+    <svg width="56" height="72" viewBox="0 0 56 72" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <rect x="8" y="2" width="20" height="20" rx="10" stroke="#3D4A1E" strokeWidth="2"/>
+      <rect x="28" y="2" width="20" height="20" rx="10" stroke="#3D4A1E" strokeWidth="2"/>
+      <rect x="8" y="22" width="20" height="20" rx="4" stroke="#3D4A1E" strokeWidth="2"/>
+      <rect x="28" y="22" width="20" height="20" rx="10" stroke="#A8CC2C" strokeWidth="2"/>
+      <rect x="8" y="42" width="20" height="20" rx="10" stroke="#3D4A1E" strokeWidth="2"/>
+    </svg>
+  );
+}
+
+function MokaPotSVG() {
+  return (
+    <svg width="52" height="72" viewBox="0 0 52 72" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <ellipse cx="26" cy="60" rx="18" ry="8" stroke="#3D4A1E" strokeWidth="2"/>
+      <path d="M8 60 L12 30 Q14 22 26 22 Q38 22 40 30 L44 60" stroke="#3D4A1E" strokeWidth="2" fill="none"/>
+      <ellipse cx="26" cy="22" rx="14" ry="5" stroke="#3D4A1E" strokeWidth="2"/>
+      <rect x="20" y="8" width="12" height="16" rx="6" stroke="#3D4A1E" strokeWidth="2"/>
+      <ellipse cx="26" cy="8" rx="6" ry="4" stroke="#3D4A1E" strokeWidth="2"/>
+      <path d="M44 45 Q52 42 50 38" stroke="#3D4A1E" strokeWidth="1.5" fill="none" strokeLinecap="round"/>
+      <path d="M26 2 Q28 5 26 8" stroke="#3D4A1E" strokeWidth="1.5" fill="none" strokeLinecap="round"/>
+    </svg>
+  );
+}
+
+function LaptopSVG() {
+  return (
+    <svg width="88" height="60" viewBox="0 0 88 60" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <rect x="10" y="4" width="62" height="40" rx="4" stroke="#3D4A1E" strokeWidth="2"/>
+      <rect x="14" y="8" width="54" height="32" rx="2" stroke="#A8CC2C" strokeWidth="1.5"/>
+      <path d="M4 48 L84 48 L78 56 L10 56 Z" stroke="#3D4A1E" strokeWidth="2" fill="none"/>
+      <rect x="32" y="52" width="24" height="2" rx="1" stroke="#3D4A1E" strokeWidth="1.5"/>
+      <line x1="20" y1="16" x2="60" y2="16" stroke="#3D4A1E" strokeWidth="1" opacity="0.4"/>
+      <line x1="20" y1="22" x2="50" y2="22" stroke="#3D4A1E" strokeWidth="1" opacity="0.4"/>
+      <line x1="20" y1="28" x2="56" y2="28" stroke="#3D4A1E" strokeWidth="1" opacity="0.4"/>
+    </svg>
+  );
+}
+
+function SparklesSVG() {
+  return (
+    <svg width="120" height="120" viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <text x="10" y="25" fontSize="22" fill="#A8CC2C" fontFamily="serif">✦</text>
+      <text x="70" y="18" fontSize="14" fill="#3D4A1E" fontFamily="serif">✧</text>
+      <text x="90" y="65" fontSize="28" fill="#A8CC2C" fontFamily="serif">✦</text>
+      <text x="20" y="90" fontSize="12" fill="#3D4A1E" fontFamily="serif">✦</text>
+      <text x="55" y="110" fontSize="18" fill="#A8CC2C" fontFamily="serif">✧</text>
+      <text x="100" y="100" fontSize="10" fill="#3D4A1E" fontFamily="serif">✦</text>
+    </svg>
+  );
+}
+
+/* ─── Draggable illustration wrapper ─── */
+function DraggableIllustration({
+  children,
+  style,
+}: {
+  children: React.ReactNode;
+  style?: React.CSSProperties;
+}) {
+  const ref = useRef<HTMLDivElement>(null);
+  useDragBack(ref as React.RefObject<HTMLElement | null>, 0, 0);
+
+  return (
+    <div
+      ref={ref}
+      onMouseEnter={() => setCursor("grab")}
+      onMouseLeave={() => setCursor("default")}
+      style={{
+        position: "absolute",
+        cursor: "none",
+        userSelect: "none",
+        ...style,
+      }}
+    >
+      {children}
+    </div>
+  );
+}
+
+/* ─── Postcard Back (draggable upward) ─── */
+function PostcardBack() {
+  const ref = useRef<HTMLDivElement>(null);
+  const [dragY, setDragY] = useState(0);
+  const [snapped, setSnapped] = useState(false);
+  const startY = useRef(0);
+  const startDragY = useRef(0);
+  const isDragging = useRef(false);
+
+  const CARD_HEIGHT = 360;
+
+  const onDown = useCallback((e: React.MouseEvent) => {
+    if (snapped) return;
+    isDragging.current = true;
+    startY.current = e.clientY;
+    startDragY.current = dragY;
+    setCursor("grab");
+    e.preventDefault();
+  }, [dragY, snapped]);
+
+  useEffect(() => {
+    const onMove = (e: MouseEvent) => {
+      if (!isDragging.current) return;
+      const delta = startY.current - e.clientY;
+      const newY = Math.max(0, Math.min(CARD_HEIGHT, startDragY.current + delta));
+      setDragY(newY);
+    };
+    const onUp = () => {
+      if (!isDragging.current) return;
+      isDragging.current = false;
+      setCursor("default");
+      setDragY((y) => {
+        if (y > CARD_HEIGHT * 0.5) {
+          setSnapped(true);
+          return CARD_HEIGHT;
+        }
+        return 0;
+      });
+    };
+    window.addEventListener("mousemove", onMove);
+    window.addEventListener("mouseup", onUp);
+    return () => {
+      window.removeEventListener("mousemove", onMove);
+      window.removeEventListener("mouseup", onUp);
+    };
+  }, []);
+
+  const handleReset = () => {
+    if (snapped) {
+      setSnapped(false);
+      setDragY(0);
+    }
+  };
+
+  const translateY = snapped ? -CARD_HEIGHT : -dragY;
+
+  return (
+    <div
+      ref={ref}
+      onMouseDown={onDown}
+      onClick={handleReset}
+      onMouseEnter={() => setCursor("postcard")}
+      onMouseLeave={() => setCursor("default")}
+      style={{
+        position: "absolute",
+        bottom: -30,
+        left: 0,
+        right: 0,
+        height: CARD_HEIGHT,
+        transform: `translateY(${translateY}px)`,
+        transition: isDragging.current ? "none" : "transform 0.5s cubic-bezier(0.34,1.56,0.64,1)",
+        cursor: "none",
+        borderRadius: "16px 16px 0 0",
+        overflow: "hidden",
+        zIndex: 0,
+      }}
+    >
+      <div style={{
+        height: "100%",
+        background: "repeating-linear-gradient(135deg, #3D4A1E 0px, #3D4A1E 10px, #F5F0E8 10px, #F5F0E8 20px)",
+        position: "relative",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        gap: 32,
+      }}>
+        <svg width="40" height="56" viewBox="0 0 40 56" fill="none">
+          <ellipse cx="20" cy="48" rx="14" ry="6" stroke="#FBF7EE" strokeWidth="1.5"/>
+          <path d="M6 48 L10 24 Q12 16 20 16 Q28 16 30 24 L34 48" stroke="#FBF7EE" strokeWidth="1.5" fill="none"/>
+          <ellipse cx="20" cy="16" rx="10" ry="4" stroke="#FBF7EE" strokeWidth="1.5"/>
+          <rect x="15" y="4" width="10" height="14" rx="5" stroke="#FBF7EE" strokeWidth="1.5"/>
+        </svg>
+        <svg width="36" height="48" viewBox="0 0 36 48" fill="none">
+          <rect x="2" y="2" width="32" height="44" rx="4" stroke="#FBF7EE" strokeWidth="1.5"/>
+          <rect x="6" y="6" width="24" height="36" rx="2" stroke="#A8CC2C" strokeWidth="1"/>
+          <line x1="10" y1="14" x2="26" y2="14" stroke="#FBF7EE" strokeWidth="1" opacity="0.5"/>
+          <line x1="10" y1="20" x2="22" y2="20" stroke="#FBF7EE" strokeWidth="1" opacity="0.5"/>
+        </svg>
+        <svg width="44" height="44" viewBox="0 0 44 44" fill="none">
+          <rect x="4" y="12" width="36" height="28" rx="3" stroke="#FBF7EE" strokeWidth="1.5"/>
+          <path d="M4 20 L22 30 L40 20" stroke="#A8CC2C" strokeWidth="1.5"/>
+          <line x1="14" y1="6" x2="14" y2="12" stroke="#FBF7EE" strokeWidth="1.5"/>
+          <line x1="30" y1="6" x2="30" y2="12" stroke="#FBF7EE" strokeWidth="1.5"/>
+        </svg>
+        <span style={{ fontFamily: "Caveat, cursive", fontSize: 18, color: "#FBF7EE", opacity: 0.8 }}>✦ clique para fechar</span>
+      </div>
+    </div>
+  );
+}
+
+/* ─── Process Step ─── */
+function ProcessStep({ num, title, desc, delay }: { num: string; title: string; desc: string; delay: number }) {
+  const ref = useRef<HTMLDivElement>(null);
+  const [visible, setVisible] = useState(false);
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    const obs = new IntersectionObserver(([e]) => { if (e.isIntersecting) setVisible(true); }, { threshold: 0.3 });
+    obs.observe(el);
+    return () => obs.disconnect();
+  }, []);
+  return (
+    <div
+      ref={ref}
+      style={{
+        opacity: visible ? 1 : 0,
+        transform: visible ? "translateY(0)" : "translateY(32px)",
+        transition: `opacity 0.6s ease ${delay}ms, transform 0.6s ease ${delay}ms`,
+        textAlign: "center",
+        flex: 1,
+        minWidth: 120,
+      }}
+    >
+      <div style={{ fontFamily: "'Playfair Display', serif", fontSize: 42, color: "#3D4A1E", fontWeight: 700, lineHeight: 1 }}>{num}</div>
+      <div style={{ fontFamily: "'Playfair Display', serif", fontSize: 16, fontWeight: 700, margin: "8px 0 6px" }}>{title}</div>
+      <div style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 13, opacity: 0.7, lineHeight: 1.5 }}>{desc}</div>
+    </div>
+  );
+}
+
+/* ─── Project Card ─── */
+function ProjectCard({ project, featured }: {
+  project: { title: string; subtitle?: string; desc: string; tags: string[]; img?: string; placeholder?: boolean };
+  featured?: boolean;
+}) {
+  return (
+    <div
+      data-testid={`card-project-${project.title}`}
+      onMouseEnter={() => setCursor("project")}
+      onMouseLeave={() => setCursor("default")}
+      style={{
+        borderRadius: 16,
+        overflow: "hidden",
+        background: "hsl(var(--card))",
+        boxShadow: "0 4px 24px rgba(61,74,30,0.10)",
+        cursor: "none",
+        transform: featured ? "rotate(-0.5deg)" : undefined,
+        border: project.placeholder ? "2px dashed hsl(var(--border))" : "1px solid hsl(var(--border))",
+        flex: 1,
+        minWidth: 0,
+      }}
+    >
+      {project.placeholder ? (
+        <div style={{ padding: 40, textAlign: "center", minHeight: 200, display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", gap: 12 }}>
+          <div style={{ fontSize: 32, opacity: 0.3 }}>✦</div>
+          <div style={{ fontFamily: "'Playfair Display', serif", fontSize: 22, opacity: 0.4 }}>Em breve</div>
+          <div style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 13, opacity: 0.3 }}>Próximo projeto chegando...</div>
+        </div>
+      ) : (
+        <>
+          <div style={{ position: "relative", overflow: "hidden", height: featured ? 340 : 200 }}>
+            <img
+              src={project.img}
+              alt={project.title}
+              loading="lazy"
+              style={{ width: "100%", height: "100%", objectFit: "cover", transition: "transform 0.4s ease", display: "block" }}
+              onMouseEnter={(e) => { (e.currentTarget as HTMLImageElement).style.transform = "scale(1.05)"; }}
+              onMouseLeave={(e) => { (e.currentTarget as HTMLImageElement).style.transform = "scale(1)"; }}
+            />
+            <div style={{
+              position: "absolute", inset: 0,
+              background: "rgba(168,204,44,0.15)",
+              opacity: 0,
+              transition: "opacity 0.4s ease",
+              pointerEvents: "none",
+            }} className="card-overlay" />
+          </div>
+          <div style={{ padding: featured ? "24px 28px" : "18px 20px" }}>
+            <div style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 11, letterSpacing: "0.12em", textTransform: "uppercase", opacity: 0.5, marginBottom: 6 }}>
+              {project.tags[0]}
+            </div>
+            <div style={{ fontFamily: "'Playfair Display', serif", fontSize: featured ? 28 : 20, fontWeight: 700, marginBottom: 6 }}>
+              {project.title}
+            </div>
+            {featured && <div style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 14, opacity: 0.7, marginBottom: 12, lineHeight: 1.5 }}>{project.desc}</div>}
+            <div style={{ display: "flex", gap: 8, flexWrap: "wrap", marginTop: 8 }}>
+              {project.tags.map((t) => (
+                <span key={t} style={{
+                  fontFamily: "'DM Sans', sans-serif",
+                  fontSize: 12,
+                  padding: "3px 10px",
+                  borderRadius: 999,
+                  border: "1.5px dashed hsl(var(--border))",
+                  color: "hsl(var(--muted-foreground))",
+                }}>
+                  {t}
+                </span>
+              ))}
+            </div>
+          </div>
+        </>
+      )}
+    </div>
+  );
+}
+
+/* ─── Beach SVG illustration ─── */
+function BeachScene() {
+  return (
+    <svg width="280" height="200" viewBox="0 0 280 200" fill="none" xmlns="http://www.w3.org/2000/svg" style={{ flexShrink: 0 }}>
+      <ellipse cx="45" cy="32" rx="28" ry="28" stroke="#D4713A" strokeWidth="2" fill="#D4713A" fillOpacity="0.18"/>
+      <line x1="45" y1="0" x2="45" y2="8" stroke="#D4713A" strokeWidth="1.5"/>
+      <line x1="45" y1="56" x2="45" y2="64" stroke="#D4713A" strokeWidth="1.5"/>
+      <line x1="13" y1="32" x2="5" y2="32" stroke="#D4713A" strokeWidth="1.5"/>
+      <line x1="77" y1="32" x2="85" y2="32" stroke="#D4713A" strokeWidth="1.5"/>
+      <line x1="21" y1="8" x2="15" y2="2" stroke="#D4713A" strokeWidth="1.5"/>
+      <line x1="69" y1="8" x2="75" y2="2" stroke="#D4713A" strokeWidth="1.5"/>
+      <line x1="21" y1="56" x2="15" y2="62" stroke="#D4713A" strokeWidth="1.5"/>
+      <line x1="69" y1="56" x2="75" y2="62" stroke="#D4713A" strokeWidth="1.5"/>
+      <rect x="100" y="130" width="140" height="60" rx="6" stroke="#3D4A1E" strokeWidth="2" fill="none"/>
+      {[0,1,2,3,4,5,6,7].map(i => (
+        <line key={i} x1={100} y1={130 + i*8 + 4} x2={240} y2={130 + i*8 + 4} stroke="#3D4A1E" strokeWidth={i%2===0 ? 3 : 0} strokeOpacity="0.5"/>
+      ))}
+      {[0,1,2,3,4,5,6].map(i => (
+        <rect key={i} x={104 + i*20} y={130} width={16} height={60} fill={i%2===0 ? "#3D4A1E" : "transparent"} fillOpacity="0.12"/>
+      ))}
+      <line x1="170" y1="60" x2="170" y2="130" stroke="#3D4A1E" strokeWidth="2.5" strokeLinecap="round"/>
+      <path d="M170 60 Q120 70 110 100 Q150 90 170 85" stroke="#3D4A1E" strokeWidth="2" fill="#3D4A1E" fillOpacity="0.15"/>
+      <path d="M170 60 Q220 68 230 95 Q190 88 170 85" stroke="#3D4A1E" strokeWidth="2" fill="#3D4A1E" fillOpacity="0.15"/>
+      <path d="M108 100 Q115 108 122 103" stroke="#3D4A1E" strokeWidth="1.5" fill="none"/>
+      <path d="M228 95 Q224 104 218 100" stroke="#3D4A1E" strokeWidth="1.5" fill="none"/>
+      <ellipse cx="65" cy="176" rx="12" ry="5" stroke="#3D4A1E" strokeWidth="1.5" transform="rotate(-20 65 176)"/>
+      <ellipse cx="65" cy="176" rx="5" ry="3" fill="#D4713A" fillOpacity="0.3" stroke="#D4713A" strokeWidth="1" transform="rotate(-20 65 176)"/>
+      <ellipse cx="82" cy="180" rx="12" ry="5" stroke="#3D4A1E" strokeWidth="1.5" transform="rotate(15 82 180)"/>
+      <ellipse cx="82" cy="180" rx="5" ry="3" fill="#D4713A" fillOpacity="0.3" stroke="#D4713A" strokeWidth="1" transform="rotate(15 82 180)"/>
+      <rect x="245" y="155" width="14" height="28" rx="4" stroke="#3D4A1E" strokeWidth="1.5"/>
+      <ellipse cx="252" cy="155" rx="7" ry="4" stroke="#A8CC2C" strokeWidth="1.5"/>
+      <line x1="252" y1="151" x2="252" y2="148" stroke="#3D4A1E" strokeWidth="1.5" strokeLinecap="round"/>
+      <path d="M100 195 Q170 185 280 192" stroke="#3D4A1E" strokeWidth="1.5" strokeLinecap="round" opacity="0.3"/>
+    </svg>
+  );
+}
+
+/* ─── Marquee ─── */
+function Marquee({ text }: { text: string }) {
+  return (
+    <div style={{ overflow: "hidden", position: "relative" }}>
+      <style>{`
+        @keyframes marquee {
+          from { transform: translateX(0); }
+          to { transform: translateX(-50%); }
+        }
+        @keyframes float {
+          0%, 100% { transform: translateY(0px); }
+          50% { transform: translateY(-6px); }
+        }
+        @keyframes bounce-btn {
+          0%, 100% { transform: rotate(-2deg) translateY(0); }
+          50% { transform: rotate(-2deg) translateY(-4px); }
+        }
+        .project-card:hover .card-overlay { opacity: 1 !important; }
+        @keyframes stagger-in {
+          from { opacity: 0; transform: translateY(20px); }
+          to { opacity: 1; transform: translateY(0); }
+        }
+      `}</style>
+      <div style={{ display: "inline-flex", animation: "marquee 18s linear infinite", whiteSpace: "nowrap" }}>
+        <span style={{ fontFamily: "'Playfair Display', serif", fontStyle: "italic", fontSize: "clamp(4rem,11vw,10rem)", fontWeight: 700, color: "hsl(var(--foreground))", opacity: 0.08, paddingRight: "4rem" }}>{text} &nbsp; {text} &nbsp;</span>
+        <span style={{ fontFamily: "'Playfair Display', serif", fontStyle: "italic", fontSize: "clamp(4rem,11vw,10rem)", fontWeight: 700, color: "hsl(var(--foreground))", opacity: 0.08, paddingRight: "4rem" }}>{text} &nbsp; {text} &nbsp;</span>
+      </div>
+    </div>
+  );
+}
+
+/* ─── Main Home Page ─── */
+export default function Home() {
+  const [scrolled, setScrolled] = useState(false);
+
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 40);
+    window.addEventListener("scroll", onScroll);
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
+  const projects = [
+    { title: "SisPat", desc: "Sistema público de patrimônio imobiliário. Redesign completo com foco em acessibilidade e eficiência para servidores públicos.", tags: ["Redesign", "UX Research", "UX Design"], img: "https://picsum.photos/seed/sispatbig/1200/700" },
+    { title: "SGTran", desc: "Sistema de gestão de transporte.", tags: ["Logística", "UX Design"], img: "https://picsum.photos/seed/sgtran/800/500" },
+    { title: "MundoLingo App", desc: "App mobile de eventos e idiomas.", tags: ["Eventos", "Product Design", "Mobile App"], img: "https://picsum.photos/seed/mundolingo/800/500" },
+    { title: "Em breve", desc: "", tags: [], placeholder: true },
+  ];
+
+  const tools = [
+    { name: "Figma", icon: <SiFigma /> },
+    { name: "FigJam", icon: <SiFigma /> },
+    { name: "Framer", icon: <SiFramer /> },
+    { name: "Notion", icon: <SiNotion /> },
+    { name: "Photoshop", icon: <span style={{fontSize:16, fontWeight:700}}>Ps</span> },
+    { name: "Illustrator", icon: <span style={{fontSize:16, fontWeight:700}}>Ai</span> },
+    { name: "Maze", icon: <span style={{fontSize:16}}>◎</span> },
+    { name: "Hotjar", icon: <SiHotjar /> },
+  ];
+
+  const skills = ["UX Research", "UX Design", "Product Design", "Interaction Design", "Design System", "Prototipação", "Visual Design"];
+
+  return (
+    <div style={{ fontFamily: "'DM Sans', sans-serif", overflowX: "hidden" }}>
+      {/* ── NAV ── */}
+      <nav style={{
+        position: "fixed", top: 0, left: 0, right: 0, zIndex: 1000,
+        display: "flex", alignItems: "center", justifyContent: "space-between",
+        padding: "16px 40px",
+        background: scrolled ? "hsla(var(--background)/0.85)" : "transparent",
+        backdropFilter: scrolled ? "blur(12px)" : "none",
+        borderBottom: scrolled ? "1px solid hsl(var(--border))" : "none",
+        transition: "all 0.3s ease",
+      }}>
+        <span style={{ fontFamily: "'Caveat', cursive", fontSize: 22, color: "#A8CC2C", fontWeight: 600 }}>bia.design</span>
+        <div style={{ display: "flex", gap: 28, alignItems: "center" }}>
+          {["Início", "Projetos", "Sobre", "Contato"].map((item) => (
+            <a
+              key={item}
+              href={`#${item.toLowerCase()}`}
+              data-testid={`link-nav-${item.toLowerCase()}`}
+              style={{
+                fontFamily: "'DM Sans', sans-serif",
+                fontSize: 14,
+                color: "hsl(var(--foreground))",
+                textDecoration: "none",
+                cursor: "none",
+                opacity: 0.8,
+                transition: "opacity 0.2s",
+              }}
+              onMouseEnter={(e) => (e.currentTarget.style.opacity = "1")}
+              onMouseLeave={(e) => (e.currentTarget.style.opacity = "0.8")}
+            >
+              {item}
+            </a>
+          ))}
+          <div style={{ display: "flex", gap: 14, alignItems: "center", marginLeft: 8 }}>
+            <a data-testid="link-linkedin" href="https://linkedin.com/in/biancamesquita" target="_blank" rel="noreferrer" style={{ color: "hsl(var(--foreground))", opacity: 0.6, cursor: "none", transition: "opacity 0.2s", fontSize: 13, fontWeight: 700, fontFamily: "'DM Sans', sans-serif" }} onMouseEnter={(e)=>(e.currentTarget.style.opacity="1")} onMouseLeave={(e)=>(e.currentTarget.style.opacity="0.6")}>in</a>
+            <a data-testid="link-behance" href="https://behance.net/biancamesquita" target="_blank" rel="noreferrer" style={{ color: "hsl(var(--foreground))", opacity: 0.6, cursor: "none", transition: "opacity 0.2s" }} onMouseEnter={(e)=>(e.currentTarget.style.opacity="1")} onMouseLeave={(e)=>(e.currentTarget.style.opacity="0.6")}><SiBehance size={16}/></a>
+            <a data-testid="link-dribbble" href="#" style={{ color: "hsl(var(--foreground))", opacity: 0.6, cursor: "none", transition: "opacity 0.2s" }} onMouseEnter={(e)=>(e.currentTarget.style.opacity="1")} onMouseLeave={(e)=>(e.currentTarget.style.opacity="0.6")}><SiDribbble size={16}/></a>
+          </div>
+        </div>
+      </nav>
+
+      {/* ── HERO ── */}
+      <section id="início" style={{
+        minHeight: "100vh",
+        display: "flex",
+        alignItems: "center",
+        position: "relative",
+        overflow: "hidden",
+        padding: "0 40px",
+        paddingTop: 80,
+      }}>
+        <div style={{ flex: 1, maxWidth: 560, position: "relative", zIndex: 2 }}>
+          <div style={{
+            display: "inline-flex", alignItems: "center", gap: 8,
+            padding: "6px 16px", borderRadius: 999,
+            border: "1.5px dashed #A8CC2C",
+            marginBottom: 32,
+            fontFamily: "'DM Sans', sans-serif",
+            fontStyle: "italic",
+            fontSize: 13,
+            color: "#3D4A1E",
+          }}>
+            <span style={{ width: 8, height: 8, borderRadius: "50%", background: "#A8CC2C", display: "inline-block", animation: "pulse 2s infinite" }} />
+            Disponível para trabalho
+          </div>
+          <h1 style={{ fontFamily: "'Playfair Display', serif", lineHeight: 1.05, margin: 0 }}>
+            <span style={{ display: "block", fontSize: "clamp(1.4rem, 3vw, 2rem)", fontStyle: "italic", fontWeight: 400, color: "hsl(var(--foreground))" }}>Oi, eu sou a</span>
+            <span style={{ display: "block", fontSize: "clamp(5rem, 11vw, 9rem)", fontStyle: "italic", fontWeight: 700, color: "#3D4A1E", lineHeight: 0.9 }}>Bia,</span>
+            <span style={{ display: "block", fontSize: "clamp(1.5rem, 4vw, 3rem)", fontStyle: "normal", fontWeight: 700, color: "#A8CC2C", fontFamily: "Menlo, monospace", letterSpacing: "-0.02em" }}>product_designer</span>
+          </h1>
+          <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 17, lineHeight: 1.65, marginTop: 28, opacity: 0.75, maxWidth: 440 }}>
+            que transforma necessidades dos usuários em experiências digitais claras e funcionais.
+          </p>
+          <div style={{ marginTop: 40, display: "flex", gap: 14 }}>
+            <a
+              href="#projetos"
+              data-testid="link-ver-projetos"
+              style={{
+                display: "inline-flex", alignItems: "center", gap: 8,
+                background: "#A8CC2C", color: "#2C2A1E",
+                padding: "12px 28px", borderRadius: 999,
+                fontFamily: "'DM Sans', sans-serif", fontWeight: 600, fontSize: 14,
+                textDecoration: "none", cursor: "none",
+                transform: "rotate(-1.5deg)",
+                boxShadow: "0 4px 20px rgba(168,204,44,0.3)",
+                transition: "transform 0.2s, box-shadow 0.2s",
+              }}
+              onMouseEnter={(e) => { e.currentTarget.style.transform = "rotate(-1.5deg) scale(1.05)"; }}
+              onMouseLeave={(e) => { e.currentTarget.style.transform = "rotate(-1.5deg)"; }}
+            >
+              Ver projetos ✦
+            </a>
+            <a
+              href="mailto:biadesign.contate@gmail.com"
+              data-testid="link-contato-hero"
+              style={{
+                display: "inline-flex", alignItems: "center", gap: 8,
+                border: "1.5px solid hsl(var(--border))", color: "hsl(var(--foreground))",
+                padding: "12px 28px", borderRadius: 999,
+                fontFamily: "'DM Sans', sans-serif", fontWeight: 500, fontSize: 14,
+                textDecoration: "none", cursor: "none",
+                transition: "background 0.2s",
+              }}
+              onMouseEnter={(e) => { e.currentTarget.style.background = "hsl(var(--muted))"; }}
+              onMouseLeave={(e) => { e.currentTarget.style.background = "transparent"; }}
+            >
+              Contato
+            </a>
+          </div>
+        </div>
+
+        {/* Illustrations */}
+        <div style={{ position: "absolute", right: 0, top: 0, bottom: 0, width: "50%", pointerEvents: "none" }}>
+          <DraggableIllustration style={{ top: "18%", right: "28%", pointerEvents: "all" }}>
+            <FigmaSVG />
+          </DraggableIllustration>
+          <DraggableIllustration style={{ top: "35%", right: "10%", pointerEvents: "all" }}>
+            <MokaPotSVG />
+          </DraggableIllustration>
+          <DraggableIllustration style={{ top: "55%", right: "32%", pointerEvents: "all" }}>
+            <LaptopSVG />
+          </DraggableIllustration>
+          <DraggableIllustration style={{ top: "12%", right: "8%", pointerEvents: "all" }}>
+            <SparklesSVG />
+          </DraggableIllustration>
+        </div>
+
+        {/* Scroll indicator */}
+        <div style={{ position: "absolute", bottom: 32, left: "50%", transform: "translateX(-50%)", display: "flex", flexDirection: "column", alignItems: "center", gap: 6, opacity: 0.4 }}>
+          <div style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 11, letterSpacing: "0.12em", textTransform: "uppercase" }}>scroll</div>
+          <div style={{ width: 1, height: 40, background: "hsl(var(--foreground))" }} />
+        </div>
+      </section>
+
+      {/* ── PROJETOS ── */}
+      <section id="projetos" style={{ padding: "100px 40px", maxWidth: 1200, margin: "0 auto" }}>
+        <div style={{ marginBottom: 48 }}>
+          <h2 style={{ fontFamily: "'Playfair Display', serif", fontSize: "clamp(2rem,5vw,3.5rem)", fontStyle: "italic" }}>
+            [Projetos]
+          </h2>
+          <div style={{ width: 48, height: 3, background: "#A8CC2C", marginTop: 8, borderRadius: 2 }} />
+        </div>
+        <div style={{ marginBottom: 20 }}>
+          <ProjectCard project={projects[0]} featured />
+        </div>
+        <div style={{ display: "flex", gap: 20, flexWrap: "wrap" }}>
+          {projects.slice(1).map((p) => (
+            <ProjectCard key={p.title} project={p} />
+          ))}
+        </div>
+        <div style={{ marginTop: 40, textAlign: "center" }}>
+          <button
+            data-testid="button-ver-todos"
+            style={{
+              background: "#A8CC2C", color: "#2C2A1E",
+              border: "none", padding: "14px 36px", borderRadius: 999,
+              fontFamily: "'DM Sans', sans-serif", fontWeight: 700, fontSize: 15,
+              cursor: "none", transform: "rotate(-2deg)",
+              boxShadow: "0 4px 20px rgba(168,204,44,0.3)",
+              animation: "bounce-btn 2s ease-in-out infinite",
+            }}
+          >
+            Ver todos →
+          </button>
+        </div>
+      </section>
+
+      {/* ── SOBRE ── */}
+      <section id="sobre" style={{ padding: "100px 40px", position: "relative" }}>
+        <div style={{ maxWidth: 1000, margin: "0 auto" }}>
+          <div style={{ marginBottom: 48 }}>
+            <h2 style={{ fontFamily: "'Playfair Display', serif", fontSize: "clamp(2rem,5vw,3.5rem)", fontStyle: "italic" }}>[Sobre mim]</h2>
+            <div style={{ width: 48, height: 3, background: "#A8CC2C", marginTop: 8, borderRadius: 2 }} />
+          </div>
+          <div style={{ position: "relative", paddingBottom: 60 }}>
+            {/* Back cover */}
+            <PostcardBack />
+            {/* Front postcard */}
+            <div style={{
+              position: "relative", zIndex: 1,
+              background: "hsl(var(--card))",
+              borderRadius: 16,
+              boxShadow: "0 20px 60px rgba(61,74,30,0.15)",
+              transform: "rotate(-2deg)",
+              display: "flex",
+              overflow: "hidden",
+              minHeight: 360,
+            }}>
+              {/* Stamp */}
+              <div style={{
+                position: "absolute", top: 16, right: 16,
+                width: 48, height: 60,
+                border: "2px solid #D4713A",
+                borderRadius: 3,
+                display: "flex", alignItems: "center", justifyContent: "center",
+                flexDirection: "column",
+                opacity: 0.6,
+              }}>
+                <span style={{ fontFamily: "Caveat, cursive", fontSize: 8, color: "#D4713A" }}>BRASIL</span>
+                <span style={{ fontSize: 18 }}>🌿</span>
+                <span style={{ fontFamily: "Caveat, cursive", fontSize: 7, color: "#D4713A" }}>DESIGN</span>
+              </div>
+
+              {/* Left: avatar */}
+              <div style={{
+                flex: "0 0 40%",
+                background: "hsl(var(--muted))",
+                display: "flex", alignItems: "center", justifyContent: "center",
+                minHeight: 360,
+              }}>
+                <div style={{
+                  width: 140, height: 140, borderRadius: "50%",
+                  background: "#3D4A1E",
+                  display: "flex", alignItems: "center", justifyContent: "center",
+                  boxShadow: "0 8px 32px rgba(61,74,30,0.3)",
+                }}>
+                  <span style={{ fontFamily: "'Playfair Display', serif", fontSize: 48, color: "#F5F0E8", fontStyle: "italic", fontWeight: 700 }}>BM</span>
+                </div>
+              </div>
+
+              {/* Right: info */}
+              <div style={{
+                flex: 1,
+                background: "#3D4A1E",
+                color: "#F5F0E8",
+                padding: "40px 36px",
+                display: "flex", flexDirection: "column", justifyContent: "center", gap: 12,
+              }}>
+                <div style={{ fontFamily: "'Playfair Display', serif", fontSize: 26, fontWeight: 700 }}>Bianca Mesquita</div>
+                <div style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 13, opacity: 0.8 }}>Product Designer ✦ UX/UI Designer</div>
+                <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 13, lineHeight: 1.65, opacity: 0.85, margin: "8px 0" }}>
+                  Tenho 25 anos, sou caiçara nascida e criada no litoral de SP e, fora das telas, você vai me encontrar entre a praia, cafés, corridas, livros, viagens e bons drinks.
+                </p>
+                <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 13, lineHeight: 1.65, opacity: 0.85, margin: 0 }}>
+                  Com base em UX e experiência em sistemas digitais complexos, atuo de ponta a ponta — da pesquisa à entrega.
+                </p>
+                <div style={{ fontFamily: "'Caveat', cursive", fontSize: 22, color: "#A8CC2C", marginTop: 8 }}>Bianca Mesquita</div>
+                <div style={{ display: "flex", gap: 12, marginTop: 8, flexWrap: "wrap" }}>
+                  {[<SiFigma key="figma"/>, <SiFramer key="framer"/>, <SiNotion key="notion"/>, <SiHotjar key="hotjar"/>].map((Icon, i) => (
+                    <div key={i} style={{ width: 32, height: 32, borderRadius: 6, background: "rgba(245,240,232,0.12)", display: "flex", alignItems: "center", justifyContent: "center", color: "#F5F0E8", fontSize: 16 }}>
+                      {Icon}
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+            <div style={{ textAlign: "center", marginTop: 20, fontFamily: "'Caveat', cursive", fontSize: 14, opacity: 0.5 }}>
+              ↑ arraste para cima para ver mais
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ── PROCESSO ── */}
+      <section id="processo" style={{ padding: "100px 40px", background: "hsl(var(--muted)/0.3)" }}>
+        <div style={{ maxWidth: 1100, margin: "0 auto" }}>
+          <div style={{ marginBottom: 60 }}>
+            <h2 style={{ fontFamily: "'Playfair Display', serif", fontSize: "clamp(2rem,5vw,3.5rem)", fontStyle: "italic" }}>[Processo]</h2>
+            <div style={{ width: 48, height: 3, background: "#A8CC2C", marginTop: 8, borderRadius: 2 }} />
+          </div>
+          <div style={{ position: "relative" }}>
+            <div style={{
+              position: "absolute", top: 28, left: "10%", right: "10%",
+              height: 1, borderTop: "2px dashed hsl(var(--border))",
+              zIndex: 0,
+            }} />
+            <div style={{ display: "flex", gap: 16, justifyContent: "space-between", flexWrap: "wrap", position: "relative", zIndex: 1 }}>
+              {[
+                { num: "01", title: "Descoberta", desc: "Entender o problema, usuários e contexto" },
+                { num: "02", title: "Definição", desc: "Sintetizar insights e alinhar objetivos" },
+                { num: "03", title: "Ideação", desc: "Explorar soluções com criatividade e método" },
+                { num: "04", title: "Prototipação", desc: "Dar forma às ideias com clareza" },
+                { num: "05", title: "Entrega", desc: "Testar, refinar e lançar com impacto" },
+              ].map((s, i) => (
+                <ProcessStep key={s.num} num={s.num} title={s.title} desc={s.desc} delay={i * 120} />
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ── SKILLS ── */}
+      <section id="skills" style={{ padding: "100px 40px" }}>
+        <div style={{ maxWidth: 1100, margin: "0 auto" }}>
+          <div style={{ marginBottom: 48 }}>
+            <h2 style={{ fontFamily: "'Playfair Display', serif", fontSize: "clamp(2rem,5vw,3.5rem)", fontStyle: "italic" }}>[Skills]</h2>
+            <div style={{ width: 48, height: 3, background: "#A8CC2C", marginTop: 8, borderRadius: 2 }} />
+          </div>
+          <div style={{ display: "flex", gap: 60, flexWrap: "wrap" }}>
+            {/* Left: skill tags */}
+            <div style={{ flex: 1, minWidth: 280, display: "flex", flexWrap: "wrap", gap: 12, alignContent: "flex-start" }}>
+              {skills.map((s, i) => (
+                <span
+                  key={s}
+                  style={{
+                    fontFamily: "'DM Sans', sans-serif",
+                    fontSize: 15,
+                    padding: "10px 22px",
+                    borderRadius: 999,
+                    border: "1.5px dashed #3D4A1E",
+                    color: "#3D4A1E",
+                    background: "transparent",
+                    transform: `rotate(${(i % 3 - 1) * 1.5}deg)`,
+                    display: "inline-block",
+                    transition: "background 0.2s",
+                    cursor: "none",
+                  }}
+                  onMouseEnter={(e) => { e.currentTarget.style.background = "rgba(168,204,44,0.15)"; }}
+                  onMouseLeave={(e) => { e.currentTarget.style.background = "transparent"; }}
+                >
+                  {s}
+                </span>
+              ))}
+            </div>
+            {/* Right: tools grid */}
+            <div style={{ flex: 1, minWidth: 280, display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: 12 }}>
+              {tools.map((t) => (
+                <div
+                  key={t.name}
+                  data-testid={`card-tool-${t.name}`}
+                  style={{
+                    background: "hsl(var(--card))",
+                    border: "1px solid hsl(var(--border))",
+                    borderRadius: 12,
+                    padding: "16px 8px",
+                    display: "flex", flexDirection: "column", alignItems: "center", gap: 8,
+                    cursor: "none",
+                    transition: "transform 0.2s, box-shadow 0.2s",
+                  }}
+                  onMouseEnter={(e) => { e.currentTarget.style.transform = "translateY(-2px)"; e.currentTarget.style.boxShadow = "0 8px 24px rgba(61,74,30,0.12)"; }}
+                  onMouseLeave={(e) => { e.currentTarget.style.transform = ""; e.currentTarget.style.boxShadow = ""; }}
+                >
+                  <span style={{ fontSize: 22, color: "#3D4A1E" }}>{t.icon}</span>
+                  <span style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 11, fontWeight: 600, textAlign: "center", opacity: 0.7 }}>{t.name}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ── FOOTER ── */}
+      <footer id="contato" style={{ background: "hsl(var(--card))", borderTop: "1px solid hsl(var(--border))", padding: "80px 40px 0" }}>
+        <div style={{ maxWidth: 900, margin: "0 auto", textAlign: "center" }}>
+          <div style={{ fontFamily: "'Caveat', cursive", fontSize: "clamp(1.6rem, 4vw, 2.6rem)", marginBottom: 20, color: "#3D4A1E" }}>
+            Chegou até aqui e quer deixar um oi?
+          </div>
+          <a
+            href="mailto:biadesign.contate@gmail.com"
+            data-testid="link-email"
+            style={{
+              fontFamily: "'Playfair Display', serif",
+              fontStyle: "italic",
+              fontSize: "clamp(1.1rem, 3vw, 1.6rem)",
+              color: "#A8CC2C",
+              textDecoration: "underline",
+              textDecorationColor: "transparent",
+              cursor: "none",
+              transition: "text-decoration-color 0.3s",
+            }}
+            onMouseEnter={(e) => { e.currentTarget.style.textDecorationColor = "#A8CC2C"; }}
+            onMouseLeave={(e) => { e.currentTarget.style.textDecorationColor = "transparent"; }}
+          >
+            biadesign.contate@gmail.com
+          </a>
+          <div style={{ display: "flex", gap: 32, justifyContent: "center", marginTop: 40, flexWrap: "wrap" }}>
+            {[
+              { label: "LinkedIn", href: "https://linkedin.com/in/biancamesquita", testId: "link-footer-linkedin" },
+              { label: "Behance", href: "https://behance.net/biancamesquita", testId: "link-footer-behance" },
+              { label: "Currículo ↓", href: "#", testId: "link-footer-cv" },
+              { label: "Email", href: "mailto:biadesign.contate@gmail.com", testId: "link-footer-email" },
+            ].map((l) => (
+              <a
+                key={l.label}
+                href={l.href}
+                data-testid={l.testId}
+                style={{
+                  fontFamily: "'DM Sans', sans-serif",
+                  fontSize: 15, fontWeight: 600,
+                  color: "hsl(var(--foreground))",
+                  textDecoration: "none",
+                  cursor: "none",
+                  opacity: 0.7,
+                  transition: "opacity 0.2s",
+                }}
+                onMouseEnter={(e) => { e.currentTarget.style.opacity = "1"; }}
+                onMouseLeave={(e) => { e.currentTarget.style.opacity = "0.7"; }}
+              >
+                {l.label}
+              </a>
+            ))}
+          </div>
+        </div>
+
+        {/* Banner with beach + marquee */}
+        <div style={{ marginTop: 80, position: "relative", overflow: "hidden" }}>
+          <div style={{ display: "flex", alignItems: "flex-end", gap: 40, paddingLeft: 40 }}>
+            <div style={{ animation: "float 3s ease-in-out infinite", flexShrink: 0 }}>
+              <BeachScene />
+            </div>
+            <div style={{ flex: 1, overflow: "hidden" }}>
+              <Marquee text="Bianca Mesquita" />
+            </div>
+          </div>
+          <div style={{ height: 24, background: "#3D4A1E", marginTop: -2 }} />
+        </div>
+      </footer>
+
+      <style>{`
+        @keyframes pulse {
+          0%, 100% { opacity: 1; }
+          50% { opacity: 0.4; }
+        }
+        @media (max-width: 768px) {
+          nav { padding: 12px 20px !important; }
+          section { padding: 60px 20px !important; }
+          footer { padding: 60px 20px 0 !important; }
+          h1 span:nth-child(2) { font-size: 4.5rem !important; }
+          .hero-illustrations { display: none; }
+        }
+      `}</style>
+    </div>
+  );
+}
