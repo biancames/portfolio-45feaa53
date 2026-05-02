@@ -418,7 +418,7 @@ function ProjectCard({ project, featured }: {
         background: "hsl(var(--card))",
         boxShadow: "0 4px 24px rgba(61,74,30,0.10)",
         cursor: "pointer",
-        transform: featured ? "rotate(-0.5deg)" : undefined,
+        transform: undefined,
         border: project.placeholder ? "2px dashed hsl(var(--border))" : "1px solid hsl(var(--border))",
         flex: 1,
         minWidth: 0,
