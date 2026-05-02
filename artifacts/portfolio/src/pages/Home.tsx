@@ -239,8 +239,8 @@ function ProcessStep({ num, title, desc, delay }: { num: string; title: string; 
         minWidth: 120,
       }}
     >
-      <div style={{ fontFamily: "'Playfair Display', serif", fontSize: 42, color: "#3D4A1E", fontWeight: 700, lineHeight: 1 }}>{num}</div>
-      <div style={{ fontFamily: "'Playfair Display', serif", fontSize: 16, fontWeight: 700, margin: "8px 0 6px" }}>{title}</div>
+      <div style={{ fontFamily: "'Libre Baskerville', serif", fontSize: 42, color: "#3D4A1E", fontWeight: 700, lineHeight: 1 }}>{num}</div>
+      <div style={{ fontFamily: "'Libre Baskerville', serif", fontSize: 16, fontWeight: 700, margin: "8px 0 6px" }}>{title}</div>
       <div style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 13, opacity: 0.7, lineHeight: 1.5 }}>{desc}</div>
     </div>
   );
@@ -271,7 +271,7 @@ function ProjectCard({ project, featured }: {
       {project.placeholder ? (
         <div style={{ padding: 40, textAlign: "center", minHeight: 200, display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", gap: 12 }}>
           <div style={{ fontSize: 32, opacity: 0.3 }}>✦</div>
-          <div style={{ fontFamily: "'Playfair Display', serif", fontSize: 22, opacity: 0.4 }}>Em breve</div>
+          <div style={{ fontFamily: "'Libre Baskerville', serif", fontSize: 22, opacity: 0.4 }}>Em breve</div>
           <div style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 13, opacity: 0.3 }}>Próximo projeto chegando...</div>
         </div>
       ) : (
@@ -297,7 +297,7 @@ function ProjectCard({ project, featured }: {
             <div style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 11, letterSpacing: "0.12em", textTransform: "uppercase", opacity: 0.5, marginBottom: 6 }}>
               {project.tags[0]}
             </div>
-            <div style={{ fontFamily: "'Playfair Display', serif", fontSize: featured ? 28 : 20, fontWeight: 700, marginBottom: 6 }}>
+            <div style={{ fontFamily: "'Libre Baskerville', serif", fontSize: featured ? 28 : 20, fontWeight: 700, marginBottom: 6 }}>
               {project.title}
             </div>
             {featured && <div style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 14, opacity: 0.7, marginBottom: 12, lineHeight: 1.5 }}>{project.desc}</div>}
@@ -372,6 +372,14 @@ function Marquee({ text }: { text: string }) {
           0%, 100% { transform: translateY(0px); }
           50% { transform: translateY(-6px); }
         }
+        @keyframes floatA {
+          0%, 100% { transform: translateY(0px); }
+          50% { transform: translateY(-7px); }
+        }
+        @keyframes floatB {
+          0%, 100% { transform: translateY(0px); }
+          50% { transform: translateY(6px); }
+        }
         @keyframes bounce-btn {
           0%, 100% { transform: rotate(-2deg) translateY(0); }
           50% { transform: rotate(-2deg) translateY(-4px); }
@@ -383,8 +391,8 @@ function Marquee({ text }: { text: string }) {
         }
       `}</style>
       <div style={{ display: "inline-flex", animation: "marquee 18s linear infinite", whiteSpace: "nowrap" }}>
-        <span style={{ fontFamily: "'Playfair Display', serif", fontStyle: "italic", fontSize: "clamp(4rem,11vw,10rem)", fontWeight: 700, color: "hsl(var(--foreground))", opacity: 0.08, paddingRight: "4rem" }}>{text} &nbsp; {text} &nbsp;</span>
-        <span style={{ fontFamily: "'Playfair Display', serif", fontStyle: "italic", fontSize: "clamp(4rem,11vw,10rem)", fontWeight: 700, color: "hsl(var(--foreground))", opacity: 0.08, paddingRight: "4rem" }}>{text} &nbsp; {text} &nbsp;</span>
+        <span style={{ fontFamily: "'Libre Baskerville', serif", fontStyle: "italic", fontSize: "clamp(4rem,11vw,10rem)", fontWeight: 700, color: "hsl(var(--foreground))", opacity: 0.08, paddingRight: "4rem" }}>{text} &nbsp; {text} &nbsp;</span>
+        <span style={{ fontFamily: "'Libre Baskerville', serif", fontStyle: "italic", fontSize: "clamp(4rem,11vw,10rem)", fontWeight: 700, color: "hsl(var(--foreground))", opacity: 0.08, paddingRight: "4rem" }}>{text} &nbsp; {text} &nbsp;</span>
       </div>
     </div>
   );
@@ -486,10 +494,10 @@ export default function Home() {
             <span style={{ width: 8, height: 8, borderRadius: "50%", background: "#A8CC2C", display: "inline-block", animation: "pulse 2s infinite" }} />
             Disponível para trabalho
           </div>
-          <h1 style={{ fontFamily: "'Playfair Display', serif", lineHeight: 1.05, margin: 0 }}>
+          <h1 style={{ fontFamily: "'Libre Baskerville', serif", lineHeight: 1.05, margin: 0 }}>
             <span style={{ display: "block", fontSize: "clamp(1.4rem, 3vw, 2rem)", fontStyle: "italic", fontWeight: 400, color: "hsl(var(--foreground))" }}>Oi, eu sou a</span>
             <span style={{ display: "block", fontSize: "clamp(5rem, 11vw, 9rem)", fontStyle: "italic", fontWeight: 700, color: "#3D4A1E", lineHeight: 0.9 }}>Bia,</span>
-            <span style={{ display: "block", fontSize: "clamp(1.5rem, 4vw, 3rem)", fontStyle: "normal", fontWeight: 700, color: "#A8CC2C", fontFamily: "Menlo, monospace", letterSpacing: "-0.02em" }}>product_designer</span>
+            <span style={{ display: "block", fontSize: "clamp(1.5rem, 4vw, 3rem)", fontStyle: "normal", fontWeight: 700, color: "#A8CC2C", fontFamily: "'DM Mono', monospace", letterSpacing: "-0.02em" }}>product_designer</span>
           </h1>
           <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 17, lineHeight: 1.65, marginTop: 28, opacity: 0.75, maxWidth: 440 }}>
             que transforma necessidades dos usuários em experiências digitais claras e funcionais.
@@ -534,21 +542,38 @@ export default function Home() {
 
         {/* Illustrations */}
         <div style={{ position: "absolute", right: 0, top: 0, bottom: 0, width: "50%", pointerEvents: "none" }}>
+          {/* Draggable illustrations — all 120px */}
           <DraggableIllustration style={{ top: "12%", right: "30%", pointerEvents: "all" }}>
-            <img src={figmaIllustra} alt="Figma" width={100} style={{ display: "block", transform: "rotate(6deg)" }} draggable={false} />
+            <img src={figmaIllustra} alt="Figma" width={120} style={{ display: "block", transform: "rotate(6deg)" }} draggable={false} />
           </DraggableIllustration>
-          <DraggableIllustration style={{ top: "38%", right: "8%", pointerEvents: "all" }}>
-            <img src={cafeIllustra} alt="Cafeteira" width={110} style={{ display: "block", transform: "rotate(-8deg)" }} draggable={false} />
+          <DraggableIllustration style={{ top: "42%", right: "6%", pointerEvents: "all" }}>
+            <img src={cafeIllustra} alt="Cafeteira" width={120} style={{ display: "block", transform: "rotate(-8deg)" }} draggable={false} />
           </DraggableIllustration>
-          <DraggableIllustration style={{ top: "58%", right: "30%", pointerEvents: "all" }}>
-            <img src={pcIllustra} alt="Laptop" width={130} style={{ display: "block", transform: "rotate(3deg)" }} draggable={false} />
+          <DraggableIllustration style={{ top: "60%", right: "28%", pointerEvents: "all" }}>
+            <img src={pcIllustra} alt="Laptop" width={120} style={{ display: "block", transform: "rotate(3deg)" }} draggable={false} />
           </DraggableIllustration>
-          <DraggableIllustration style={{ top: "22%", right: "4%", pointerEvents: "all" }}>
-            <img src={caipirinhaIllustra} alt="Caipirinha" width={90} style={{ display: "block", transform: "rotate(-5deg)" }} draggable={false} />
+          <DraggableIllustration style={{ top: "20%", right: "4%", pointerEvents: "all" }}>
+            <img src={caipirinhaIllustra} alt="Caipirinha" width={120} style={{ display: "block", transform: "rotate(-5deg)" }} draggable={false} />
           </DraggableIllustration>
-          <DraggableIllustration style={{ top: "8%", right: "6%", pointerEvents: "all" }}>
-            <SparklesSVG />
-          </DraggableIllustration>
+          {/* Non-draggable floating sparkles scattered among illustrations */}
+          <div style={{ position: "absolute", top: "6%", right: "22%", animation: "floatA 3.2s ease-in-out infinite", pointerEvents: "none" }}>
+            <span style={{ fontSize: 22, color: "#A8CC2C", fontFamily: "serif" }}>✦</span>
+          </div>
+          <div style={{ position: "absolute", top: "18%", right: "48%", animation: "floatB 2.8s ease-in-out infinite", pointerEvents: "none" }}>
+            <span style={{ fontSize: 14, color: "#3D4A1E", fontFamily: "serif" }}>✧</span>
+          </div>
+          <div style={{ position: "absolute", top: "36%", right: "26%", animation: "floatA 3.6s ease-in-out infinite 0.4s", pointerEvents: "none" }}>
+            <span style={{ fontSize: 28, color: "#A8CC2C", fontFamily: "serif" }}>✦</span>
+          </div>
+          <div style={{ position: "absolute", top: "55%", right: "6%", animation: "floatB 2.5s ease-in-out infinite 0.8s", pointerEvents: "none" }}>
+            <span style={{ fontSize: 12, color: "#3D4A1E", fontFamily: "serif" }}>✦</span>
+          </div>
+          <div style={{ position: "absolute", top: "72%", right: "50%", animation: "floatA 3s ease-in-out infinite 1.2s", pointerEvents: "none" }}>
+            <span style={{ fontSize: 18, color: "#A8CC2C", fontFamily: "serif" }}>✧</span>
+          </div>
+          <div style={{ position: "absolute", top: "82%", right: "10%", animation: "floatB 3.4s ease-in-out infinite 0.2s", pointerEvents: "none" }}>
+            <span style={{ fontSize: 10, color: "#3D4A1E", fontFamily: "serif" }}>✦</span>
+          </div>
         </div>
 
         {/* Scroll indicator */}
@@ -561,7 +586,7 @@ export default function Home() {
       {/* ── PROJETOS ── */}
       <section id="projetos" style={{ padding: "100px 40px", maxWidth: 1200, margin: "0 auto" }}>
         <div style={{ marginBottom: 48 }}>
-          <h2 style={{ fontFamily: "'Playfair Display', serif", fontSize: "clamp(2rem,5vw,3.5rem)", fontStyle: "italic" }}>
+          <h2 style={{ fontFamily: "'Libre Baskerville', serif", fontSize: "clamp(2rem,5vw,3.5rem)", fontStyle: "italic" }}>
             [Projetos]
           </h2>
           <div style={{ width: 48, height: 3, background: "#A8CC2C", marginTop: 8, borderRadius: 2 }} />
@@ -595,7 +620,7 @@ export default function Home() {
       <section id="sobre" style={{ padding: "100px 40px", position: "relative" }}>
         <div style={{ maxWidth: 1000, margin: "0 auto" }}>
           <div style={{ marginBottom: 48 }}>
-            <h2 style={{ fontFamily: "'Playfair Display', serif", fontSize: "clamp(2rem,5vw,3.5rem)", fontStyle: "italic" }}>[Sobre mim]</h2>
+            <h2 style={{ fontFamily: "'Libre Baskerville', serif", fontSize: "clamp(2rem,5vw,3.5rem)", fontStyle: "italic" }}>[Sobre mim]</h2>
             <div style={{ width: 48, height: 3, background: "#A8CC2C", marginTop: 8, borderRadius: 2 }} />
           </div>
           <div style={{ position: "relative", paddingBottom: 60 }}>
@@ -640,7 +665,7 @@ export default function Home() {
                   display: "flex", alignItems: "center", justifyContent: "center",
                   boxShadow: "0 8px 32px rgba(61,74,30,0.3)",
                 }}>
-                  <span style={{ fontFamily: "'Playfair Display', serif", fontSize: 48, color: "#F5F0E8", fontStyle: "italic", fontWeight: 700 }}>BM</span>
+                  <span style={{ fontFamily: "'Libre Baskerville', serif", fontSize: 48, color: "#F5F0E8", fontStyle: "italic", fontWeight: 700 }}>BM</span>
                 </div>
               </div>
 
@@ -652,7 +677,7 @@ export default function Home() {
                 padding: "40px 36px",
                 display: "flex", flexDirection: "column", justifyContent: "center", gap: 12,
               }}>
-                <div style={{ fontFamily: "'Playfair Display', serif", fontSize: 26, fontWeight: 700 }}>Bianca Mesquita</div>
+                <div style={{ fontFamily: "'Libre Baskerville', serif", fontSize: 26, fontWeight: 700 }}>Bianca Mesquita</div>
                 <div style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 13, opacity: 0.8 }}>Product Designer ✦ UX/UI Designer</div>
                 <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 13, lineHeight: 1.65, opacity: 0.85, margin: "8px 0" }}>
                   Tenho 25 anos, sou caiçara nascida e criada no litoral de SP e, fora das telas, você vai me encontrar entre a praia, cafés, corridas, livros, viagens e bons drinks.
@@ -681,7 +706,7 @@ export default function Home() {
       <section id="processo" style={{ padding: "100px 40px", background: "hsl(var(--muted)/0.3)" }}>
         <div style={{ maxWidth: 1100, margin: "0 auto" }}>
           <div style={{ marginBottom: 60 }}>
-            <h2 style={{ fontFamily: "'Playfair Display', serif", fontSize: "clamp(2rem,5vw,3.5rem)", fontStyle: "italic" }}>[Processo]</h2>
+            <h2 style={{ fontFamily: "'Libre Baskerville', serif", fontSize: "clamp(2rem,5vw,3.5rem)", fontStyle: "italic" }}>[Processo]</h2>
             <div style={{ width: 48, height: 3, background: "#A8CC2C", marginTop: 8, borderRadius: 2 }} />
           </div>
           <div style={{ position: "relative" }}>
@@ -709,7 +734,7 @@ export default function Home() {
       <section id="skills" style={{ padding: "100px 40px" }}>
         <div style={{ maxWidth: 1100, margin: "0 auto" }}>
           <div style={{ marginBottom: 48 }}>
-            <h2 style={{ fontFamily: "'Playfair Display', serif", fontSize: "clamp(2rem,5vw,3.5rem)", fontStyle: "italic" }}>[Skills]</h2>
+            <h2 style={{ fontFamily: "'Libre Baskerville', serif", fontSize: "clamp(2rem,5vw,3.5rem)", fontStyle: "italic" }}>[Skills]</h2>
             <div style={{ width: 48, height: 3, background: "#A8CC2C", marginTop: 8, borderRadius: 2 }} />
           </div>
           <div style={{ display: "flex", gap: 60, flexWrap: "wrap" }}>
@@ -775,7 +800,7 @@ export default function Home() {
             href="mailto:biadesign.contate@gmail.com"
             data-testid="link-email"
             style={{
-              fontFamily: "'Playfair Display', serif",
+              fontFamily: "'Libre Baskerville', serif",
               fontStyle: "italic",
               fontSize: "clamp(1.1rem, 3vw, 1.6rem)",
               color: "#A8CC2C",

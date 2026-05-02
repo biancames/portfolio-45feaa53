@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400;1,700&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,400&family=Caveat:wght@400;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,400&family=DM+Mono:ital,wght@0,400;0,500;1,400&family=Caveat:wght@400;600&display=swap');
 @import "tailwindcss";
 @import "tw-animate-css";
 @plugin "@tailwindcss/typography";
@@ -115,8 +115,8 @@
   --sidebar-ring: 76 63% 48%;
 
   --app-font-sans: 'DM Sans', sans-serif;
-  --app-font-serif: 'Playfair Display', serif;
-  --app-font-mono: Menlo, monospace;
+  --app-font-serif: 'Libre Baskerville', serif;
+  --app-font-mono: 'DM Mono', monospace;
   --radius: .5rem; 
 
   --shadow-2xs: 0px 2px 0px 0px rgba(0,0,0,0.05);
