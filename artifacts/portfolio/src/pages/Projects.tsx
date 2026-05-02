@@ -38,6 +38,7 @@ function ProjectCard({ project }: { project: (typeof ALL_PROJECTS)[0] }) {
         border: "1px solid hsl(var(--border))",
         flex: "1 1 300px", minWidth: 280, maxWidth: "100%",
         cursor: "pointer",
+        userSelect: "none",
         transition: "box-shadow 0.3s ease, transform 0.3s ease",
         transform: hovered ? "translateY(-4px)" : "translateY(0)",
       }}
