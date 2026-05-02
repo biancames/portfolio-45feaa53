@@ -249,7 +249,7 @@ function PostcardSection() {
                 justifyContent: "center",
                 flexShrink: 0,
                 transition: "transform 0.35s ease",
-                transform: btnHover ? "rotate(0deg)" : "rotate(45deg)",
+                transform: btnHover ? "rotate(0deg)" : "rotate(-45deg)",
               }}>
                 <svg width="16" height="16" viewBox="0 0 18 18" fill="none">
                   <path d="M3.5 9H14.5M14.5 9L9.5 4M14.5 9L9.5 14" stroke="#C8E870" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/>
@@ -505,7 +505,7 @@ function VerTodosButton() {
         justifyContent: "center",
         flexShrink: 0,
         transition: "transform 0.35s ease",
-        transform: hovered ? "rotate(0deg)" : "rotate(45deg)",
+        transform: hovered ? "rotate(0deg)" : "rotate(-45deg)",
       }}>
         <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
           <path d="M3.5 9H14.5M14.5 9L9.5 4M14.5 9L9.5 14" stroke="#C8E870" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/>
