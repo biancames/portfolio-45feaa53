@@ -307,31 +307,91 @@ function PostcardSection() {
 }
 
 /* ─── Process Step ─── */
-function ProcessStep({ num, title, desc, delay }: { num: string; title: string; desc: string; delay: number }) {
+function ProcessStep({ num, title, desc, delay, total }: { num: string; title: string; desc: string; delay: number; total: number }) {
   const ref = useRef<HTMLDivElement>(null);
   const [visible, setVisible] = useState(false);
+  const [hovered, setHovered] = useState(false);
+
   useEffect(() => {
     const el = ref.current;
     if (!el) return;
-    const obs = new IntersectionObserver(([e]) => { if (e.isIntersecting) setVisible(true); }, { threshold: 0.3 });
+    const obs = new IntersectionObserver(([e]) => { if (e.isIntersecting) setVisible(true); }, { threshold: 0.2 });
     obs.observe(el);
     return () => obs.disconnect();
   }, []);
+
   return (
     <div
       ref={ref}
+      onMouseEnter={() => setHovered(true)}
+      onMouseLeave={() => setHovered(false)}
       style={{
         opacity: visible ? 1 : 0,
-        transform: visible ? "translateY(0)" : "translateY(32px)",
-        transition: `opacity 0.6s ease ${delay}ms, transform 0.6s ease ${delay}ms`,
-        textAlign: "center",
-        flex: 1,
-        minWidth: 120,
+        transform: visible ? "translateX(0)" : "translateX(-24px)",
+        display: "flex",
+        alignItems: "center",
+        gap: 32,
+        padding: "20px 28px",
+        borderRadius: 14,
+        borderLeft: `4px solid ${hovered ? "#A8CC2C" : "hsl(var(--border))"}`,
+        background: hovered ? "rgba(168,204,44,0.07)" : "transparent",
+        cursor: "default",
+        transition: `opacity 0.55s ease ${delay}ms, transform 0.55s ease ${delay}ms, border-color 0.25s, background 0.25s`,
       }}
     >
-      <div style={{ fontFamily: "'Libre Baskerville', serif", fontSize: 42, color: "#3D4A1E", fontWeight: 700, lineHeight: 1 }}>{num}</div>
-      <div style={{ fontFamily: "'Libre Baskerville', serif", fontSize: 16, fontWeight: 700, margin: "8px 0 6px" }}>{title}</div>
-      <div style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 13, opacity: 0.7, lineHeight: 1.5 }}>{desc}</div>
+      {/* Large italic number */}
+      <div style={{
+        fontFamily: "'Libre Baskerville', serif",
+        fontSize: "clamp(2.4rem, 4vw, 3.4rem)",
+        fontStyle: "italic",
+        fontWeight: 700,
+        color: hovered ? "#A8CC2C" : "#3D4A1E",
+        opacity: hovered ? 1 : 0.25,
+        lineHeight: 1,
+        minWidth: 64,
+        transition: "color 0.25s, opacity 0.25s",
+        userSelect: "none",
+      }}>
+        {num}
+      </div>
+
+      {/* Title + expandable description */}
+      <div style={{ flex: 1 }}>
+        <div style={{
+          fontFamily: "'Libre Baskerville', serif",
+          fontSize: 20,
+          fontWeight: 700,
+          color: "hsl(var(--foreground))",
+          marginBottom: hovered ? 8 : 0,
+          transition: "margin 0.25s",
+        }}>
+          {title}
+        </div>
+        <div style={{
+          fontFamily: "'DM Sans', sans-serif",
+          fontSize: 14,
+          color: "hsl(var(--foreground))",
+          opacity: hovered ? 0.75 : 0,
+          maxHeight: hovered ? 48 : 0,
+          overflow: "hidden",
+          lineHeight: 1.6,
+          transition: "opacity 0.3s, max-height 0.3s ease",
+        }}>
+          {desc}
+        </div>
+      </div>
+
+      {/* Counter */}
+      <div style={{
+        fontFamily: "'DM Mono', monospace",
+        fontSize: 11,
+        opacity: hovered ? 0.5 : 0.2,
+        color: "hsl(var(--foreground))",
+        transition: "opacity 0.25s",
+        whiteSpace: "nowrap",
+      }}>
+        {num}/{String(total).padStart(2, "0")}
+      </div>
     </div>
   );
 }
@@ -768,28 +828,21 @@ export default function Home() {
 
       {/* ── PROCESSO ── */}
       <section id="processo" style={{ padding: "100px 40px", background: "hsl(var(--muted)/0.3)" }}>
-        <div style={{ maxWidth: 1100, margin: "0 auto" }}>
-          <div style={{ marginBottom: 60 }}>
+        <div style={{ maxWidth: 860, margin: "0 auto" }}>
+          <div style={{ marginBottom: 52 }}>
             <h2 style={{ fontFamily: "'Libre Baskerville', serif", fontSize: "clamp(2rem,5vw,3.5rem)", fontStyle: "italic" }}>[Processo]</h2>
             <div style={{ width: 48, height: 3, background: "#A8CC2C", marginTop: 8, borderRadius: 2 }} />
           </div>
-          <div style={{ position: "relative" }}>
-            <div style={{
-              position: "absolute", top: 28, left: "10%", right: "10%",
-              height: 1, borderTop: "2px dashed hsl(var(--border))",
-              zIndex: 0,
-            }} />
-            <div style={{ display: "flex", gap: 16, justifyContent: "space-between", flexWrap: "wrap", position: "relative", zIndex: 1 }}>
-              {[
-                { num: "01", title: "Descoberta", desc: "Entender o problema, usuários e contexto" },
-                { num: "02", title: "Definição", desc: "Sintetizar insights e alinhar objetivos" },
-                { num: "03", title: "Ideação", desc: "Explorar soluções com criatividade e método" },
-                { num: "04", title: "Prototipação", desc: "Dar forma às ideias com clareza" },
-                { num: "05", title: "Entrega", desc: "Testar, refinar e lançar com impacto" },
-              ].map((s, i) => (
-                <ProcessStep key={s.num} num={s.num} title={s.title} desc={s.desc} delay={i * 120} />
-              ))}
-            </div>
+          <div style={{ display: "flex", flexDirection: "column", gap: 4 }}>
+            {[
+              { num: "01", title: "Descoberta", desc: "Entender o problema, os usuários e o contexto antes de qualquer solução." },
+              { num: "02", title: "Definição", desc: "Sintetizar insights e alinhar os objetivos com clareza e intenção." },
+              { num: "03", title: "Ideação", desc: "Explorar soluções diversas com criatividade, método e colaboração." },
+              { num: "04", title: "Prototipação", desc: "Dar forma às melhores ideias com rapidez e fidelidade ao contexto." },
+              { num: "05", title: "Entrega", desc: "Testar, refinar e lançar com impacto real para quem usa." },
+            ].map((s, i, arr) => (
+              <ProcessStep key={s.num} num={s.num} title={s.title} desc={s.desc} delay={i * 100} total={arr.length} />
+            ))}
           </div>
         </div>
       </section>
