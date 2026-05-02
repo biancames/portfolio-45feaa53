@@ -591,6 +591,7 @@ const ROLES = ["product_designer", "ux/ui_designer", "graphic_designer"];
 
 export default function Home() {
   const [scrolled, setScrolled] = useState(false);
+  const [activeSection, setActiveSection] = useState("início");
   const [typedText, setTypedText] = useState("");
   const [roleIdx, setRoleIdx] = useState(0);
   const [isDeleting, setIsDeleting] = useState(false);
@@ -599,6 +600,18 @@ export default function Home() {
     const onScroll = () => setScrolled(window.scrollY > 40);
     window.addEventListener("scroll", onScroll);
     return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
+  useEffect(() => {
+    const ids = ["início", "projetos", "sobre", "processo", "skills", "contato"];
+    const obs = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((e) => { if (e.isIntersecting) setActiveSection(e.target.id); });
+      },
+      { threshold: 0.25 }
+    );
+    ids.forEach((id) => { const el = document.getElementById(id); if (el) obs.observe(el); });
+    return () => obs.disconnect();
   }, []);
 
   useEffect(() => {
@@ -645,33 +658,43 @@ export default function Home() {
         position: "fixed", top: 0, left: 0, right: 0, zIndex: 1000,
         display: "flex", alignItems: "center", justifyContent: "space-between",
         padding: "16px 40px",
-        background: scrolled ? "hsla(var(--background)/0.85)" : "transparent",
-        backdropFilter: scrolled ? "blur(12px)" : "none",
+        background: scrolled ? "hsla(var(--background)/0.88)" : "transparent",
+        backdropFilter: scrolled ? "blur(14px)" : "none",
         borderBottom: scrolled ? "1px solid hsl(var(--border))" : "none",
-        transition: "all 0.3s ease",
+        transition: "all 0.35s ease",
       }}>
-        <span style={{ fontFamily: "'Caveat', cursive", fontSize: 22, color: "#A8CC2C", fontWeight: 600 }}>bia.design</span>
+        <a href="#início" style={{ fontFamily: "'Libre Baskerville', serif", fontStyle: "italic", fontSize: 20, color: "#A8CC2C", fontWeight: 700, textDecoration: "none", letterSpacing: "-0.02em" }}>bia.design</a>
         <div style={{ display: "flex", gap: 28, alignItems: "center" }}>
-          {["Início", "Projetos", "Sobre", "Contato"].map((item) => (
-            <a
-              key={item}
-              href={`#${item.toLowerCase()}`}
-              data-testid={`link-nav-${item.toLowerCase()}`}
-              style={{
-                fontFamily: "'DM Sans', sans-serif",
-                fontSize: 14,
-                color: "hsl(var(--foreground))",
-                textDecoration: "none",
-                cursor: "pointer",
-                opacity: 0.8,
-                transition: "opacity 0.2s",
-              }}
-              onMouseEnter={(e) => (e.currentTarget.style.opacity = "1")}
-              onMouseLeave={(e) => (e.currentTarget.style.opacity = "0.8")}
-            >
-              {item}
-            </a>
-          ))}
+          {[
+            { label: "Início",   id: "início" },
+            { label: "Projetos", id: "projetos" },
+            { label: "Sobre",    id: "sobre" },
+            { label: "Contato",  id: "contato" },
+          ].map(({ label, id }) => {
+            const isActive = activeSection === id || (id === "projetos" && ["processo", "skills"].includes(activeSection));
+            return (
+              <a
+                key={label}
+                href={`#${id}`}
+                data-testid={`link-nav-${label.toLowerCase()}`}
+                className="nav-link"
+                style={{
+                  fontFamily: "'DM Sans', sans-serif",
+                  fontSize: 14,
+                  color: isActive ? "#A8CC2C" : "hsl(var(--foreground))",
+                  textDecoration: "none",
+                  cursor: "pointer",
+                  opacity: isActive ? 1 : 0.75,
+                  transition: "color 0.3s, opacity 0.3s",
+                  position: "relative",
+                  paddingBottom: 2,
+                }}
+                data-active={isActive ? "true" : "false"}
+              >
+                {label}
+              </a>
+            );
+          })}
           <div style={{ display: "flex", gap: 16, alignItems: "center", marginLeft: 8 }}>
             <a data-testid="link-linkedin" href="https://linkedin.com/in/biancamesquita" target="_blank" rel="noreferrer" style={{ color: "hsl(var(--foreground))", opacity: 0.6, cursor: "pointer", transition: "opacity 0.2s" }} onMouseEnter={(e)=>(e.currentTarget.style.opacity="1")} onMouseLeave={(e)=>(e.currentTarget.style.opacity="0.6")}><Linkedin size={16}/></a>
             <a data-testid="link-behance" href="https://behance.net/biancamesquita" target="_blank" rel="noreferrer" style={{ color: "hsl(var(--foreground))", opacity: 0.6, cursor: "pointer", transition: "opacity 0.2s" }} onMouseEnter={(e)=>(e.currentTarget.style.opacity="1")} onMouseLeave={(e)=>(e.currentTarget.style.opacity="0.6")}><SiBehance size={16}/></a>
@@ -1011,6 +1034,21 @@ export default function Home() {
           60% { transform: translateY(12px); opacity: 0; }
           61% { transform: translateY(0); opacity: 0; }
           100% { transform: translateY(0); opacity: 1; }
+        }
+        .nav-link::after {
+          content: '';
+          position: absolute;
+          bottom: -2px;
+          left: 0;
+          width: 0;
+          height: 1.5px;
+          background: #A8CC2C;
+          transition: width 0.25s ease;
+          border-radius: 2px;
+        }
+        .nav-link:hover::after,
+        .nav-link[data-active="true"]::after {
+          width: 100%;
         }
         @media (max-width: 768px) {
           nav { padding: 12px 20px !important; }

@@ -108,9 +108,7 @@ export default function Projects() {
         backdropFilter: "blur(12px)",
         borderBottom: "1px solid hsl(var(--border))",
       }}>
-        <a href="/" style={{ fontFamily: "'Caveat', cursive", fontSize: 22, color: "#A8CC2C", fontWeight: 600, textDecoration: "none" }}>
-          bia.design
-        </a>
+        <a href="/" style={{ fontFamily: "'Libre Baskerville', serif", fontStyle: "italic", fontSize: 20, color: "#A8CC2C", fontWeight: 700, textDecoration: "none", letterSpacing: "-0.02em" }}>bia.design</a>
         <div style={{ display: "flex", gap: 28, alignItems: "center" }}>
           {[
             { label: "Início", href: "/" },
