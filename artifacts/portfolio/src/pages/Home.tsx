@@ -761,13 +761,9 @@ export default function Home() {
           </h2>
           <div style={{ width: 48, height: 3, background: "#A8CC2C", marginTop: 8, borderRadius: 2 }} />
         </div>
-        <div style={{ marginBottom: 20 }}>
-          <ProjectCard project={projects[0]} featured />
-        </div>
         <div style={{ display: "flex", gap: 20, flexWrap: "wrap" }}>
-          {projects.slice(1).map((p) => (
-            <ProjectCard key={p.title} project={p} />
-          ))}
+          <ProjectCard project={projects[0]} featured />
+          <ProjectCard project={projects[1]} />
         </div>
         <div style={{ marginTop: 40, textAlign: "center" }}>
           <button
