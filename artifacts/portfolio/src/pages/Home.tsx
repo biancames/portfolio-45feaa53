@@ -94,11 +94,9 @@ function DraggableIllustration({
   return (
     <div
       ref={ref}
-      onMouseEnter={() => setCursor("grab")}
-      onMouseLeave={() => setCursor("default")}
       style={{
         position: "absolute",
-        cursor: "none",
+        cursor: "grab",
         userSelect: "none",
         ...style,
       }}
@@ -125,11 +123,7 @@ function PostcardSection() {
   const loopTools = [...tools, ...tools];
 
   return (
-    <div
-      style={{ perspective: "1400px" }}
-      onMouseEnter={() => setCursor("grab")}
-      onMouseLeave={() => setCursor("default")}
-    >
+    <div style={{ perspective: "1400px" }}>
       {/* ── Flip wrapper ── */}
       <div
         onClick={() => setFlipped((f) => !f)}
@@ -139,7 +133,7 @@ function PostcardSection() {
           transformStyle: "preserve-3d",
           transform: flipped ? "rotateY(180deg)" : "rotateY(0deg)",
           transition: "transform 0.75s cubic-bezier(0.4, 0, 0.2, 1)",
-          cursor: "none",
+          cursor: "pointer",
           borderRadius: 20,
         }}
       >
@@ -243,7 +237,7 @@ function PostcardSection() {
                 padding: "13px 18px",
                 display: "flex", alignItems: "center", justifyContent: "space-between",
                 transition: "background 0.25s ease",
-                cursor: "none",
+                cursor: "pointer",
               }}
             >
               <span style={{
@@ -268,14 +262,6 @@ function PostcardSection() {
             </div>
           </div>
 
-          {/* Flip hint */}
-          <div style={{
-            position: "absolute", bottom: 14, right: 18,
-            fontFamily: "'Caveat', cursive", fontSize: 13,
-            color: "#A8CC2C", opacity: 0.75, pointerEvents: "none",
-          }}>
-            ✦ virar
-          </div>
         </div>
 
         {/* ── BACK FACE — postcard cover ── */}
@@ -747,7 +733,36 @@ export default function Home() {
             <h2 style={{ fontFamily: "'Libre Baskerville', serif", fontSize: "clamp(2rem,5vw,3.5rem)", fontStyle: "italic" }}>[Sobre mim]</h2>
             <div style={{ width: 48, height: 3, background: "#A8CC2C", marginTop: 8, borderRadius: 2 }} />
           </div>
-          <PostcardSection />
+          <div style={{ position: "relative" }}>
+            <PostcardSection />
+            {/* ── Doodle annotation ── */}
+            <div style={{
+              position: "absolute",
+              left: "calc(100% + 22px)",
+              top: "28%",
+              pointerEvents: "none",
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+              gap: 2,
+            }}>
+              <span style={{
+                fontFamily: "'Caveat', cursive",
+                fontSize: 19,
+                color: "#D4713A",
+                transform: "rotate(-10deg)",
+                display: "block",
+                whiteSpace: "nowrap",
+                lineHeight: 1.3,
+              }}>
+                click to flip
+              </span>
+              <svg width="64" height="58" viewBox="0 0 64 58" fill="none" style={{ marginTop: 2, transform: "rotate(-4deg)" }}>
+                <path d="M52 6 C58 20, 52 40, 12 52" stroke="#D4713A" strokeWidth="2.2" strokeLinecap="round" fill="none"/>
+                <path d="M12 52 L6 42 M12 52 L22 46" stroke="#D4713A" strokeWidth="2.2" strokeLinecap="round"/>
+              </svg>
+            </div>
+          </div>
         </div>
       </section>
 

@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react";
 import Home from "@/pages/Home";
-import CustomCursor from "@/components/CustomCursor";
 import DarkModeSwitch from "@/components/DarkModeSwitch";
 
 export default function App() {
@@ -23,7 +22,6 @@ export default function App() {
 
   return (
     <>
-      <CustomCursor />
       <Home />
       <DarkModeSwitch dark={dark} onToggle={() => setDark((d) => !d)} />
     </>
