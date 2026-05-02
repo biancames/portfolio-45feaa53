@@ -100,7 +100,9 @@ export function PostcardSection({ hideCta }: { hideCta?: boolean }) {
               background: "#4A5E28", borderRadius: 16,
               padding: "16px 20px", color: "#F5F0E8",
             }}>
-              <div style={{ fontFamily: "'Libre Baskerville', serif", fontSize: 20, fontWeight: 700, marginBottom: 8 }}>
+              <div
+                style={{ fontFamily: "'Libre Baskerville', serif", fontSize: 20, fontWeight: 700, marginBottom: 8 }}
+                className="text-[24px]">
                 Bianca Mesquita
               </div>
               <div style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 12, color: "#C8E870" }}>
@@ -210,7 +212,6 @@ export function PostcardSection({ hideCta }: { hideCta?: boolean }) {
         </div>
       </div>
       </div>
-
       <style>{`
         @keyframes toolsScroll {
           0%   { transform: translateX(0); }
