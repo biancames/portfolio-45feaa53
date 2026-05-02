@@ -7,13 +7,6 @@ import caipirinhaIllustra from "@assets/ilustras_1777742559195.png";
 import cafeIllustra from "@assets/IlustraCafe_1777742604142.png";
 import pcIllustra from "@assets/ilustraPC_1777742604142.png";
 
-/* ─── helpers ─── */
-function setCursor(mode: "default" | "project" | "postcard" | "grab") {
-  if (typeof window !== "undefined" && window.setCursorMode) {
-    window.setCursorMode(mode);
-  }
-}
-
 function useDragBack(
   ref: React.RefObject<HTMLElement | null>,
   origX: number,
@@ -35,7 +28,7 @@ function useDragBack(
       elStartY = curY;
       el.style.transition = "none";
       el.style.filter = "drop-shadow(0 8px 24px rgba(0,0,0,0.25))";
-      setCursor("grab");
+      el.style.cursor = "grabbing";
       e.preventDefault();
     };
     const onMove = (e: MouseEvent) => {
@@ -52,7 +45,7 @@ function useDragBack(
       el.style.transition = "transform 0.6s cubic-bezier(0.34,1.56,0.64,1), filter 0.3s";
       el.style.transform = `translate(${origX}px, ${origY}px)`;
       el.style.filter = "none";
-      setCursor("default");
+      el.style.cursor = "grab";
     };
 
     el.addEventListener("mousedown", onDown);
@@ -408,8 +401,6 @@ function ProjectCard({ project, featured }: {
   return (
     <div
       data-testid={`card-project-${project.title}`}
-      onMouseEnter={() => setCursor("project")}
-      onMouseLeave={() => setCursor("default")}
       style={{
         borderRadius: 16,
         overflow: "hidden",

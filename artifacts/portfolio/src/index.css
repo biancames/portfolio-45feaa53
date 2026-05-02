@@ -204,6 +204,7 @@
 
   body {
     @apply font-sans antialiased bg-background text-foreground;
+    cursor: none;
     transition: background-color 0.4s ease, color 0.4s ease;
     
     /* Noise texture */
