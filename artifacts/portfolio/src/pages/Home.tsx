@@ -1,5 +1,7 @@
 import { useEffect, useRef, useState } from "react";
-import { SiBehance, SiDribbble, SiFigma, SiLinkedin, SiNotion, SiFramer, SiHotjar, SiMiro } from "react-icons/si";
+import { HOME_PROJECTS } from "@/data/projects";
+import { SiBehance, SiDribbble, SiFigma, SiNotion, SiFramer, SiHotjar, SiMiro } from "react-icons/si";
+import { Linkedin } from "lucide-react";
 import postcardImg from "@assets/postc_1777742914935.png";
 import bioPhoto from "@assets/Perfil_1777746393399.jpeg";
 import figmaIllustra from "@assets/Figma_1777742554578.png";
@@ -480,7 +482,8 @@ function ProjectCard({ project, featured }: {
 function VerTodosButton() {
   const [hovered, setHovered] = useState(false);
   return (
-    <div
+    <a
+      href="/projetos"
       data-testid="button-ver-todos"
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
@@ -495,6 +498,7 @@ function VerTodosButton() {
         cursor: "pointer",
         transition: "background 0.3s ease",
         userSelect: "none",
+        textDecoration: "none",
       }}
     >
       <span style={{
@@ -522,7 +526,7 @@ function VerTodosButton() {
           <path d="M3.5 9H14.5M14.5 9L9.5 4M14.5 9L9.5 14" stroke={hovered ? "#3D4A1E" : "#C8E870"} strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/>
         </svg>
       </span>
-    </div>
+    </a>
   );
 }
 
@@ -619,11 +623,7 @@ export default function Home() {
     }
   }, [typedText, isDeleting, roleIdx]);
 
-  const projects = [
-    { title: "SisPat", desc: "Sistema público de patrimônio imobiliário. Redesign completo com foco em acessibilidade e eficiência para servidores públicos.", tags: ["Redesign", "UX Research", "UX Design"], img: "https://picsum.photos/seed/sispatbig/1200/700" },
-    { title: "SGTran", desc: "Sistema de gestão de transporte.", tags: ["Logística", "UX Design"], img: "https://picsum.photos/seed/sgtran/800/500" },
-    { title: "MundoLingo App", desc: "App mobile de eventos e idiomas.", tags: ["Eventos", "Product Design", "Mobile App"], img: "https://picsum.photos/seed/mundolingo/800/500" },
-  ];
+  const projects = HOME_PROJECTS;
 
   const tools = [
     { name: "Figma", icon: <SiFigma /> },
@@ -673,7 +673,7 @@ export default function Home() {
             </a>
           ))}
           <div style={{ display: "flex", gap: 16, alignItems: "center", marginLeft: 8 }}>
-            <a data-testid="link-linkedin" href="https://linkedin.com/in/biancamesquita" target="_blank" rel="noreferrer" style={{ color: "hsl(var(--foreground))", opacity: 0.6, cursor: "pointer", transition: "opacity 0.2s" }} onMouseEnter={(e)=>(e.currentTarget.style.opacity="1")} onMouseLeave={(e)=>(e.currentTarget.style.opacity="0.6")}><SiLinkedin size={16}/></a>
+            <a data-testid="link-linkedin" href="https://linkedin.com/in/biancamesquita" target="_blank" rel="noreferrer" style={{ color: "hsl(var(--foreground))", opacity: 0.6, cursor: "pointer", transition: "opacity 0.2s" }} onMouseEnter={(e)=>(e.currentTarget.style.opacity="1")} onMouseLeave={(e)=>(e.currentTarget.style.opacity="0.6")}><Linkedin size={16}/></a>
             <a data-testid="link-behance" href="https://behance.net/biancamesquita" target="_blank" rel="noreferrer" style={{ color: "hsl(var(--foreground))", opacity: 0.6, cursor: "pointer", transition: "opacity 0.2s" }} onMouseEnter={(e)=>(e.currentTarget.style.opacity="1")} onMouseLeave={(e)=>(e.currentTarget.style.opacity="0.6")}><SiBehance size={16}/></a>
             <a data-testid="link-dribbble" href="#" style={{ color: "hsl(var(--foreground))", opacity: 0.6, cursor: "pointer", transition: "opacity 0.2s" }} onMouseEnter={(e)=>(e.currentTarget.style.opacity="1")} onMouseLeave={(e)=>(e.currentTarget.style.opacity="0.6")}><SiDribbble size={16}/></a>
           </div>

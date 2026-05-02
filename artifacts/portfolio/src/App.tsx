@@ -1,5 +1,7 @@
 import { useState, useEffect } from "react";
+import { Switch, Route } from "wouter";
 import Home from "@/pages/Home";
+import Projects from "@/pages/Projects";
 import DarkModeSwitch from "@/components/DarkModeSwitch";
 import CustomCursor from "@/components/CustomCursor";
 
@@ -24,7 +26,10 @@ export default function App() {
   return (
     <>
       <CustomCursor />
-      <Home />
+      <Switch>
+        <Route path="/" component={Home} />
+        <Route path="/projetos" component={Projects} />
+      </Switch>
       <DarkModeSwitch dark={dark} onToggle={() => setDark((d) => !d)} />
     </>
   );
