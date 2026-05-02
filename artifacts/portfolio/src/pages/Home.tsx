@@ -415,7 +415,7 @@ function ProjectCard({ project, featured }: {
         overflow: "hidden",
         background: "hsl(var(--card))",
         boxShadow: "0 4px 24px rgba(61,74,30,0.10)",
-        cursor: "none",
+        cursor: "pointer",
         transform: featured ? "rotate(-0.5deg)" : undefined,
         border: project.placeholder ? "2px dashed hsl(var(--border))" : "1px solid hsl(var(--border))",
         flex: 1,
@@ -654,7 +654,7 @@ export default function Home() {
                 fontSize: 14,
                 color: "hsl(var(--foreground))",
                 textDecoration: "none",
-                cursor: "none",
+                cursor: "pointer",
                 opacity: 0.8,
                 transition: "opacity 0.2s",
               }}
@@ -665,9 +665,9 @@ export default function Home() {
             </a>
           ))}
           <div style={{ display: "flex", gap: 14, alignItems: "center", marginLeft: 8 }}>
-            <a data-testid="link-linkedin" href="https://linkedin.com/in/biancamesquita" target="_blank" rel="noreferrer" style={{ color: "hsl(var(--foreground))", opacity: 0.6, cursor: "none", transition: "opacity 0.2s", fontSize: 13, fontWeight: 700, fontFamily: "'DM Sans', sans-serif" }} onMouseEnter={(e)=>(e.currentTarget.style.opacity="1")} onMouseLeave={(e)=>(e.currentTarget.style.opacity="0.6")}>in</a>
-            <a data-testid="link-behance" href="https://behance.net/biancamesquita" target="_blank" rel="noreferrer" style={{ color: "hsl(var(--foreground))", opacity: 0.6, cursor: "none", transition: "opacity 0.2s" }} onMouseEnter={(e)=>(e.currentTarget.style.opacity="1")} onMouseLeave={(e)=>(e.currentTarget.style.opacity="0.6")}><SiBehance size={16}/></a>
-            <a data-testid="link-dribbble" href="#" style={{ color: "hsl(var(--foreground))", opacity: 0.6, cursor: "none", transition: "opacity 0.2s" }} onMouseEnter={(e)=>(e.currentTarget.style.opacity="1")} onMouseLeave={(e)=>(e.currentTarget.style.opacity="0.6")}><SiDribbble size={16}/></a>
+            <a data-testid="link-linkedin" href="https://linkedin.com/in/biancamesquita" target="_blank" rel="noreferrer" style={{ color: "hsl(var(--foreground))", opacity: 0.6, cursor: "pointer", transition: "opacity 0.2s", fontSize: 13, fontWeight: 700, fontFamily: "'DM Sans', sans-serif" }} onMouseEnter={(e)=>(e.currentTarget.style.opacity="1")} onMouseLeave={(e)=>(e.currentTarget.style.opacity="0.6")}>in</a>
+            <a data-testid="link-behance" href="https://behance.net/biancamesquita" target="_blank" rel="noreferrer" style={{ color: "hsl(var(--foreground))", opacity: 0.6, cursor: "pointer", transition: "opacity 0.2s" }} onMouseEnter={(e)=>(e.currentTarget.style.opacity="1")} onMouseLeave={(e)=>(e.currentTarget.style.opacity="0.6")}><SiBehance size={16}/></a>
+            <a data-testid="link-dribbble" href="#" style={{ color: "hsl(var(--foreground))", opacity: 0.6, cursor: "pointer", transition: "opacity 0.2s" }} onMouseEnter={(e)=>(e.currentTarget.style.opacity="1")} onMouseLeave={(e)=>(e.currentTarget.style.opacity="0.6")}><SiDribbble size={16}/></a>
           </div>
         </div>
       </nav>
@@ -713,7 +713,7 @@ export default function Home() {
                 background: "#A8CC2C", color: "#2C2A1E",
                 padding: "12px 28px", borderRadius: 999,
                 fontFamily: "'DM Sans', sans-serif", fontWeight: 600, fontSize: 14,
-                textDecoration: "none", cursor: "none",
+                textDecoration: "none", cursor: "pointer",
                 transform: "rotate(-1.5deg)",
                 boxShadow: "0 4px 20px rgba(168,204,44,0.3)",
                 transition: "transform 0.2s, box-shadow 0.2s",
@@ -731,7 +731,7 @@ export default function Home() {
                 border: "1.5px solid hsl(var(--border))", color: "hsl(var(--foreground))",
                 padding: "12px 28px", borderRadius: 999,
                 fontFamily: "'DM Sans', sans-serif", fontWeight: 500, fontSize: 14,
-                textDecoration: "none", cursor: "none",
+                textDecoration: "none", cursor: "pointer",
                 transition: "background 0.2s",
               }}
               onMouseEnter={(e) => { e.currentTarget.style.background = "hsl(var(--muted))"; }}

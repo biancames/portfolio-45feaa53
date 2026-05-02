@@ -200,7 +200,6 @@
 @layer base {
   * {
     @apply border-border;
-    cursor: none;
   }
 
   body {
