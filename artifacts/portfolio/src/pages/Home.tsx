@@ -396,59 +396,6 @@ function ProcessStep({ num, title, desc, delay, total }: { num: string; title: s
   );
 }
 
-/* ─── Ver Todos Button ─── */
-function VerTodosButton() {
-  const [hovered, setHovered] = useState(false);
-  return (
-    <div style={{ marginTop: 32 }}>
-      <button
-        data-testid="button-ver-todos"
-        onMouseEnter={() => setHovered(true)}
-        onMouseLeave={() => setHovered(false)}
-        style={{
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "space-between",
-          width: "100%",
-          padding: "18px 20px 18px 32px",
-          borderRadius: 999,
-          border: "none",
-          background: hovered ? "#3D4A1E" : "#C8E870",
-          cursor: "pointer",
-          transition: "background 0.3s ease",
-        }}
-      >
-        <span style={{
-          fontFamily: "'DM Sans', sans-serif",
-          fontWeight: 600,
-          fontSize: 17,
-          color: hovered ? "#C8E870" : "#2C2A1E",
-          transition: "color 0.3s ease",
-          letterSpacing: "-0.01em",
-        }}>
-          Ver todos
-        </span>
-        <span style={{
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-          width: 40,
-          height: 40,
-          borderRadius: "50%",
-          background: hovered ? "#C8E870" : "#3D4A1E",
-          transition: "background 0.3s ease, transform 0.35s ease",
-          transform: hovered ? "rotate(-45deg)" : "rotate(0deg)",
-          flexShrink: 0,
-        }}>
-          <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
-            <path d="M4 14 L14 4 M14 4 H7 M14 4 V11" stroke={hovered ? "#3D4A1E" : "#C8E870"} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ transition: "stroke 0.3s ease" }} />
-          </svg>
-        </span>
-      </button>
-    </div>
-  );
-}
-
 /* ─── Project Card ─── */
 function ProjectCard({ project, featured }: {
   project: { title: string; subtitle?: string; desc: string; tags: string[]; img?: string; placeholder?: boolean };
@@ -814,11 +761,29 @@ export default function Home() {
           </h2>
           <div style={{ width: 48, height: 3, background: "#A8CC2C", marginTop: 8, borderRadius: 2 }} />
         </div>
-        <div style={{ display: "flex", gap: 20, flexWrap: "wrap" }}>
+        <div style={{ marginBottom: 20 }}>
           <ProjectCard project={projects[0]} featured />
-          <ProjectCard project={projects[1]} />
         </div>
-        <VerTodosButton />
+        <div style={{ display: "flex", gap: 20, flexWrap: "wrap" }}>
+          {projects.slice(1).map((p) => (
+            <ProjectCard key={p.title} project={p} />
+          ))}
+        </div>
+        <div style={{ marginTop: 40, textAlign: "center" }}>
+          <button
+            data-testid="button-ver-todos"
+            style={{
+              background: "#A8CC2C", color: "#2C2A1E",
+              border: "none", padding: "14px 36px", borderRadius: 999,
+              fontFamily: "'DM Sans', sans-serif", fontWeight: 700, fontSize: 15,
+              cursor: "none", transform: "rotate(-2deg)",
+              boxShadow: "0 4px 20px rgba(168,204,44,0.3)",
+              animation: "bounce-btn 2s ease-in-out infinite",
+            }}
+          >
+            Ver todos →
+          </button>
+        </div>
       </section>
 
       {/* ── SOBRE ── */}
