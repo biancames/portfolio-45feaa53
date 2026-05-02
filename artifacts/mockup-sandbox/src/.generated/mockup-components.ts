@@ -3,5 +3,9 @@ type ModuleMap = Record<string, () => Promise<Record<string, unknown>>>;
 export const modules: ModuleMap = {
   "./components/mockups/bianca-about/Editorial.tsx": () => import("../components/mockups/bianca-about/Editorial.tsx"),
   "./components/mockups/bianca-about/Grid.tsx": () => import("../components/mockups/bianca-about/Grid.tsx"),
-  "./components/mockups/bianca-about/Stacked.tsx": () => import("../components/mockups/bianca-about/Stacked.tsx")
+  "./components/mockups/bianca-about/Stacked.tsx": () => import("../components/mockups/bianca-about/Stacked.tsx"),
+  "./components/mockups/bianca-concepts/Dashboard.tsx": () => import("../components/mockups/bianca-concepts/Dashboard.tsx"),
+  "./components/mockups/bianca-concepts/FlipCard.tsx": () => import("../components/mockups/bianca-concepts/FlipCard.tsx"),
+  "./components/mockups/bianca-concepts/Manifesto.tsx": () => import("../components/mockups/bianca-concepts/Manifesto.tsx"),
+  "./components/mockups/bianca-concepts/Timeline.tsx": () => import("../components/mockups/bianca-concepts/Timeline.tsx")
 };
