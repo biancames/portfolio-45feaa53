@@ -735,18 +735,18 @@ export default function Home() {
 
         {/* Illustrations */}
         <div style={{ position: "absolute", right: 0, top: 0, bottom: 0, width: "50%", pointerEvents: "none" }}>
-          {/* Draggable illustrations — all 120px */}
+          {/* Draggable illustrations — all 110px tall */}
           <DraggableIllustration style={{ top: "12%", right: "30%", pointerEvents: "all" }}>
-            <img src={figmaIllustra} alt="Figma" width={120} style={{ display: "block", transform: "rotate(6deg)" }} draggable={false} />
+            <img src={figmaIllustra} alt="Figma" style={{ display: "block", height: 110, width: "auto", transform: "rotate(6deg)" }} draggable={false} />
           </DraggableIllustration>
           <DraggableIllustration style={{ top: "42%", right: "6%", pointerEvents: "all" }}>
-            <img src={cafeIllustra} alt="Cafeteira" width={120} style={{ display: "block", transform: "rotate(-8deg)" }} draggable={false} />
+            <img src={cafeIllustra} alt="Cafeteira" style={{ display: "block", height: 110, width: "auto", transform: "rotate(-8deg)" }} draggable={false} />
           </DraggableIllustration>
           <DraggableIllustration style={{ top: "60%", right: "28%", pointerEvents: "all" }}>
-            <img src={pcIllustra} alt="Laptop" width={120} style={{ display: "block", transform: "rotate(3deg)" }} draggable={false} />
+            <img src={pcIllustra} alt="Laptop" style={{ display: "block", height: 110, width: "auto", transform: "rotate(3deg)" }} draggable={false} />
           </DraggableIllustration>
           <DraggableIllustration style={{ top: "20%", right: "4%", pointerEvents: "all" }}>
-            <img src={caipirinhaIllustra} alt="Caipirinha" width={120} style={{ display: "block", transform: "rotate(-5deg)" }} draggable={false} />
+            <img src={caipirinhaIllustra} alt="Caipirinha" style={{ display: "block", height: 110, width: "auto", transform: "rotate(-5deg)" }} draggable={false} />
           </DraggableIllustration>
           {/* Non-draggable floating sparkles scattered among illustrations */}
           <div style={{ position: "absolute", top: "6%", right: "22%", animation: "floatA 3.2s ease-in-out infinite", pointerEvents: "none" }}>
