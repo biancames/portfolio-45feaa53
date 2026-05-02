@@ -641,7 +641,7 @@ export default function Home() {
       </section>
 
       {/* ── SOBRE ── */}
-      <section id="sobre" style={{ padding: "100px 40px", position: "relative", background: "hsl(var(--muted)/0.25)" }}>
+      <section id="sobre" style={{ padding: "100px 40px", position: "relative", background: "hsl(var(--muted)/0.25)", isolation: "isolate" }}>
         <div style={{ maxWidth: 1000, margin: "0 auto" }}>
           <div style={{ marginBottom: 48 }}>
             <h2 className="section-heading" style={{ fontFamily: "'Libre Baskerville', serif", fontSize: "clamp(1.5rem,4vw,2.5rem)", fontStyle: "italic" }}>[Sobre mim]</h2>

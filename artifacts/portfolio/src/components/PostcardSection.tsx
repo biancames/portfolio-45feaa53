@@ -61,7 +61,7 @@ export function PostcardSection({ hideCta }: { hideCta?: boolean }) {
             <img
               src={bioPhoto}
               alt="Bianca Mesquita"
-              style={{ flex: 1, minHeight: 0, width: "100%", objectFit: "cover", objectPosition: "center top", display: "block" }}
+              style={{ flex: 1, minHeight: 0, width: "100%", objectFit: "cover", objectPosition: "center top", display: "block", willChange: "transform", transform: "translateZ(0.01px)" }}
               draggable={false}
             />
             <div style={{
